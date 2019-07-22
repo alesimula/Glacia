@@ -1,0 +1,9 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "snowy": {
+      "true": {"model": "greenapple_glacia:block/glacial_dirt.snowy"},
+      "false": {"model": "greenapple_glacia:block/glacial_dirt"}
+    }
+  }
+}

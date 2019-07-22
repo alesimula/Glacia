@@ -28,6 +28,8 @@ class BlockAnvilTest(override val unlocalizedName: String, material: Material) :
         private val field_220273_k = TranslationTextComponent("container.repair")
     }
 
+    override var blockItem: BlockItemBase?=null
+
     init {
         this.defaultState = this.stateContainer.baseState.with(FACING, Direction.NORTH)
     }
