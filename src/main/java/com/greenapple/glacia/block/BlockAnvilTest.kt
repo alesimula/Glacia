@@ -12,7 +12,7 @@ import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.IBlockReader
 
-class BlockAnvilTest(override val unlocalizedName: String, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockNamed {
+class BlockAnvilTest(registryName: String, override val unlocalizedName: String, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockNamed {
 
     companion object {
         val FACING = HorizontalBlock.HORIZONTAL_FACING
@@ -26,6 +26,10 @@ class BlockAnvilTest(override val unlocalizedName: String, material: Material) :
         private val X_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_X, PART_MID_X, PART_UPPER_X)
         private val Z_AXIS_AABB = VoxelShapes.or(PART_BASE, PART_LOWER_Z, PART_MID_Z, PART_UPPER_Z)
         private val field_220273_k = TranslationTextComponent("container.repair")
+    }
+
+    init {
+        setRegistryName(registryName)
     }
 
     override var blockItem: BlockItemBase?=null

@@ -17,27 +17,50 @@ import org.apache.logging.log4j.LogManager
 object RegistryEvents {
     private val LOGGER = LogManager.getLogger()
 
-    val testBlock2 = BlockAnvilTest("Whatever", Material.WOOD).apply {setRegistryName("test_block_fence")}
-    val testBlock = BlockBase("Weird dirt", Material.BAMBOO).apply {setRegistryName("test_block")}
-    val GLACIAL_DIRT = BlockGlaciaDirt("Glacial dirt", Material.BAMBOO).apply {setRegistryName("glacial_dirt")}
-
     // The value here should match an entry in the META-INF/mods.toml file
     @JvmStatic @SubscribeEvent
     fun onBlocksRegistry(event: RegistryEvent.Register<Block>) {
         event.registry.registerAll(
-                testBlock,
-                testBlock2,
-                GLACIAL_DIRT
+                Glacia_Blocks.testBlock,
+                Glacia_Blocks.testBlock2,
+                Glacia_Blocks.GLACIAL_DIRT,
+
+                Glacia_Blocks.GLACIAL_BEDROCK,
+                Glacia_Blocks.GLACIAL_STONE,
+                Glacia_Blocks.GLACIAL_COBBLESTONE,
+                Glacia_Blocks.GLACIAL_MAGIC_STONE,
+                Glacia_Blocks.GLACIAL_TREE_LOG,
+                Glacia_Blocks.GLACIAL_TREE_LEAVES,
+                Glacia_Blocks.GLACIAL_PLANKS,
+                Glacia_Blocks.GLACIAL_CRYSTAL_ORE,
+                Glacia_Blocks.GLACIAL_ICE_ORE,
+                Glacia_Blocks.SNOWY_SAND,
+                Glacia_Blocks.MAGIC_ICE,
+                Glacia_Blocks.COMPACTED_ICE
         )
     }
 
     @JvmStatic @SubscribeEvent
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
         event.registry.registerAll(
-                testBlock.toBlockItem(ItemGroup.BREWING),
-                testBlock2.toBlockItem(ItemGroup.BREWING),
-                GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
-                        .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
+                /** Block items **/
+                Glacia_Blocks.testBlock.toBlockItem(ItemGroup.BREWING),
+                Glacia_Blocks.testBlock2.toBlockItem(ItemGroup.BREWING),
+                Glacia_Blocks.GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
+                        .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)},
+
+                Glacia_Blocks.GLACIAL_BEDROCK.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_STONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_COBBLESTONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_MAGIC_STONE.toBlockItem(Glacia_ItemGroup.BREWING),
+                Glacia_Blocks.GLACIAL_TREE_LOG.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_TREE_LEAVES.toBlockItem(Glacia_ItemGroup.DECORATIONS),
+                Glacia_Blocks.GLACIAL_PLANKS.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_CRYSTAL_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.GLACIAL_ICE_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.SNOWY_SAND.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.MAGIC_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia_Blocks.COMPACTED_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS)
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
         )
     }
