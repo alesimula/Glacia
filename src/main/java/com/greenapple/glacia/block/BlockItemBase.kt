@@ -40,7 +40,7 @@ open class BlockItemBase private constructor(val blockState: BlockState, val unl
      * all variants have the same id as their parent plus ".SUFFIX"
      * Ex: mod_test:block_test.state_test
      */
-    fun addVariant(event: RegistryEvent.Register<Item>, registryNameSuffix: String, name: String="$unlocalizedName ($registryNameSuffix)", stateInit: BlockState.()->BlockState) : BlockItemBase {
+    fun addVariant(event: RegistryEvent.Register<Item>, registryNameSuffix: String, name: String="${getDisplayName(ItemStack(this)).formattedText} ($registryNameSuffix)", stateInit: BlockState.()->BlockState) : BlockItemBase {
         val blockVariant = block.toBlockItemVariant(name, registryNameSuffix, stateInit)
         event.registry.register(blockVariant)
         variants[registryNameSuffix] = blockVariant
