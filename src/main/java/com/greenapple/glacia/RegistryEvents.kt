@@ -36,7 +36,7 @@ object RegistryEvents {
         event.registry.registerAll(
                 testBlock.toBlockItem(ItemGroup.BREWING),
                 testBlock2.toBlockItem(ItemGroup.BREWING),
-                GLACIAL_DIRT.toBlockItem(ItemGroup.BREWING)
+                GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
                         .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
         )

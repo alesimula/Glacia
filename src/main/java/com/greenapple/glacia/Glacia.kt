@@ -3,6 +3,9 @@ package com.greenapple.glacia
 
 import com.greenapple.glacia.utils.addListenerKt
 import net.minecraft.block.*
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.InterModComms
@@ -17,11 +20,11 @@ import org.apache.logging.log4j.LogManager
 
 import java.util.stream.Collectors
 
-@Mod("greenapple_glacia")
+@Mod(Glacia.MODID)
 class Glacia {
 
     companion object {
-        // Directly reference a log4j logger.
+        const val MODID = "greenapple_glacia"
         @JvmStatic private val LOGGER = LogManager.getLogger()
     }
 

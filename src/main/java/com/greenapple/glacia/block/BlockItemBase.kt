@@ -4,8 +4,11 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.item.*
 import net.minecraft.util.NonNullList
+import net.minecraft.util.Util
+import net.minecraft.util.registry.Registry
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentUtils
+import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.event.RegistryEvent
 
 open class BlockItemBase private constructor(val blockState: BlockState, val unlocalizedName: String, private val registryNameSuffix: String, builder: Item.Properties) : BlockItem(blockState.block, builder) {
@@ -26,10 +29,11 @@ open class BlockItemBase private constructor(val blockState: BlockState, val unl
     }
 
     private val unlocalizedNameText : ITextComponent by lazy {TextComponentUtils.toTextComponent {unlocalizedName}}
+    private val variantTranslationKey by lazy {Util.makeTranslationKey("block", registryName);}
     private val variants = linkedMapOf<String, BlockItemBase>()
 
-    override fun getDisplayName(stack: ItemStack): ITextComponent = super.getDisplayName(stack).let {name ->
-        if (name.unformattedComponentText == block.translationKey) unlocalizedNameText
+    override fun getDisplayName(stack: ItemStack): ITextComponent = TranslationTextComponent(variantTranslationKey).let { name ->
+        if (name.unformattedComponentText == variantTranslationKey) unlocalizedNameText
         else name
     }
 
@@ -50,7 +54,7 @@ open class BlockItemBase private constructor(val blockState: BlockState, val unl
 
     override fun fillItemGroup(group: ItemGroup, items: NonNullList<ItemStack>) {
         super.fillItemGroup(group, items)
-        for (variant in variants.values) items.add(ItemStack(variant))
+        if (group===this.group) for (variant in variants.values) items.add(ItemStack(variant))
     }
 }
 
