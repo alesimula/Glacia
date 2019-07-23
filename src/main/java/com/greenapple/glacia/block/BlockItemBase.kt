@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextComponentUtils
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.event.RegistryEvent
 
-open class BlockItemBase private constructor(val blockState: BlockState, val unlocalizedName: String, private val registryNameSuffix: String, builder: Item.Properties) : BlockItem(blockState.block, builder) {
+open class BlockItemBase private constructor(val stateInit: BlockState.() -> BlockState, block: Block, val unlocalizedName: String, private val registryNameSuffix: String, builder: Properties) : BlockItem(block, builder) {
 
     init {
         if (registryNameSuffix.isEmpty()) {
@@ -20,16 +20,17 @@ open class BlockItemBase private constructor(val blockState: BlockState, val unl
         else setRegistryName(block.registryName?.path+"."+registryNameSuffix)
     }
 
-    constructor(block: Block, name: String, builder: Item.Properties) : this(block.defaultState, name,"", builder)
-    constructor(blockNamed: IBlockNamed, builder: Item.Properties) : this(blockNamed.block.defaultState, blockNamed.unlocalizedName,"", builder)
+    constructor(block: Block, name: String, builder: Item.Properties) : this({this}, block, name,"", builder)
+    constructor(blockNamed: IBlockNamed, builder: Item.Properties) : this({this}, blockNamed.block,  blockNamed.unlocalizedName,"", builder)
 
     companion object {
-        private fun Block.toBlockItemVariant(name: String, variant: String, stateInit: BlockState.()->BlockState) = BlockItemBase(stateInit.invoke(block.defaultState), name, variant, Properties())
+        private fun Block.toBlockItemVariant(name: String, variant: String, stateInit: BlockState.()->BlockState) = BlockItemBase(stateInit, this, name, variant, Properties())
     }
 
     private val unlocalizedNameText : ITextComponent by lazy {TextComponentUtils.toTextComponent {unlocalizedName}}
     private val variantTranslationKey by lazy {Util.makeTranslationKey("block", registryName);}
     private val variants = linkedMapOf<String, BlockItemBase>()
+    val isVariant = registryNameSuffix.isNotEmpty()
 
     override fun getTranslationKey() : String = variantTranslationKey
 
@@ -38,7 +39,7 @@ open class BlockItemBase private constructor(val blockState: BlockState, val unl
         else name
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? = super.getStateForPlacement(context)?.let{blockState}
+    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? = super.getStateForPlacement(context)?.let(stateInit)
 
     /**
      * Must be called before registering the associated ItemBlock

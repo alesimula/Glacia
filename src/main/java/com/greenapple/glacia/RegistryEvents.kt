@@ -21,8 +21,6 @@ object RegistryEvents {
     @JvmStatic @SubscribeEvent
     fun onBlocksRegistry(event: RegistryEvent.Register<Block>) {
         event.registry.registerAll(
-                Glacia_Blocks.testBlock,
-                Glacia_Blocks.testBlock2,
                 Glacia_Blocks.GLACIAL_DIRT,
 
                 Glacia_Blocks.GLACIAL_BEDROCK,
@@ -44,8 +42,6 @@ object RegistryEvents {
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
         event.registry.registerAll(
                 /** Block items **/
-                Glacia_Blocks.testBlock.toBlockItem(ItemGroup.BREWING),
-                Glacia_Blocks.testBlock2.toBlockItem(ItemGroup.BREWING),
                 Glacia_Blocks.GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
                         .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)},
 

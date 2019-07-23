@@ -1,5 +1,8 @@
 {
+  "forge_marker": 1,
   "variants": {
-    "": { "model": "greenapple_glacia:block/glacial_tree_log" }
+    "axis=y": { "model": "greenapple_glacia:block/glacial_tree_log"},
+    "axis=z": { "model": "greenapple_glacia:block/glacial_tree_log", "x": 90 },
+    "axis=x": { "model": "greenapple_glacia:block/glacial_tree_log", "x": 90, "y": 90 }
   }
 }
