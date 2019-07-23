@@ -42,6 +42,6 @@ description='''
 [[dependencies.greenapple_glacia]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.3]"
+    versionRange="[1.14.4]"
     ordering="NONE"
     side="BOTH"

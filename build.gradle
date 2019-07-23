@@ -42,7 +42,7 @@ compileTestKotlin {
 }
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190621-1.14.2'
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
     
     runs {
         client {
@@ -106,7 +106,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.0.11'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.0.13'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }

@@ -8,8 +8,6 @@ import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
 open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockNamed {
 
@@ -31,12 +29,10 @@ open class BlockBase private constructor (registryName: String, override val unl
     /**
      * First function in AbstractGlassBlock
      */
-    @OnlyIn(Dist.CLIENT)
     override fun func_220080_a(state: BlockState, world: IBlockReader, pos: BlockPos): Float = if (isTranslucent) 1.0f else super.func_220080_a(state, world, pos)
     override fun propagatesSkylightDown(state: BlockState, reader: IBlockReader, pos: BlockPos) = isTranslucent
     override fun isNormalCube(state: BlockState, worldIn: IBlockReader, pos: BlockPos) = !isTranslucent
 
-    @OnlyIn(Dist.CLIENT)
     override fun isSideInvisible(state: BlockState, adjacentBlockState: BlockState, side: Direction)
             = if (renderLayer !== BlockRenderLayer.SOLID && seeThroughGroup && adjacentBlockState.block === this) true else super.isSideInvisible(state, adjacentBlockState, side)
 

@@ -3,6 +3,7 @@ package com.greenapple.glacia
 import com.greenapple.glacia.block.BlockBase
 import com.greenapple.glacia.block.BlockGlaciaDirt
 import com.greenapple.glacia.block.BlockRotatedBase
+import com.greenapple.glacia.block.BlockStairsBase
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.util.BlockRenderLayer
@@ -18,9 +19,9 @@ object Glacia_Blocks {
     val GLACIAL_TREE_LOG = BlockRotatedBase("glacial_tree_log", "Glacial tree log", Material.WOOD) {hardnessAndResistance(2F).sound(SoundType.WOOD)}
     val GLACIAL_TREE_LEAVES = BlockBase("glacial_tree_leaves", "Glacial tree leaves", Material.LEAVES) {hardnessAndResistance(0.2F).sound(SoundType.PLANT)}
             .apply {renderLayer = BlockRenderLayer.CUTOUT}
-    val GLACIAL_PLANKS = BlockBase("glacial_planks", "Glacial planks", Material.WOOD) {hardnessAndResistance(2F, 3F).sound(SoundType.WOOD)}
+    val GLACIAL_PLANKS = BlockBase("glacial_planks", "Glacial wood planks", Material.WOOD) {hardnessAndResistance(2F, 3F).sound(SoundType.WOOD)}
     //TODO SLAB
-    //TODO STAIRS
+    val GLACIAL_STAIRS = BlockStairsBase("glacial_stairs", "Glacial wood stairs", GLACIAL_PLANKS)
     //TODO DOOR
     //TODO FENCE
     //TODO GATE

@@ -4,8 +4,6 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
-import net.minecraft.util.Rotation
-import org.apache.logging.log4j.LogManager
 
 class BlockRotatedBase private constructor(registryName: String, override val unlocalizedName: String, properties: Properties,  initializer: (Properties.()->Unit)?=null) : RotatedPillarBlock(properties.apply {initializer?.invoke(this)}), IBlockNamed {
 
@@ -15,11 +13,6 @@ class BlockRotatedBase private constructor(registryName: String, override val un
 
     init {
         setRegistryName(registryName)
-    }
-
-    override fun rotate(state: BlockState, rot: Rotation): BlockState {
-        LogManager.getLogger().info("AAAAAAAAA ROT")
-        return super<RotatedPillarBlock>.rotate(state, rot)
     }
 
     override var blockItem: BlockItemBase?=null

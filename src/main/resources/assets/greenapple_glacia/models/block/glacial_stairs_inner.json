@@ -1,0 +1,8 @@
+{
+  "parent": "block/inner_stairs",
+  "textures": {
+    "bottom": "greenapple_glacia:blocks/glacial_planks",
+    "top": "greenapple_glacia:blocks/glacial_planks",
+    "side": "greenapple_glacia:blocks/glacial_planks"
+  }
+}
