@@ -6,12 +6,17 @@ import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.DyeColor
+import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
+import net.minecraft.util.Direction
+import net.minecraft.util.Hand
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
+import net.minecraft.world.IWorld
+import org.apache.logging.log4j.LogManager
 
 class BlockPlantFacingBase private constructor(registryName: String, override val unlocalizedName: String, properties: Properties, val width: Double=16.0, val height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockNamed {
 
@@ -25,6 +30,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
 
     companion object {
         val FACING = HorizontalBlock.HORIZONTAL_FACING
+        val OVERWORLD = BooleanProperty.create("overworld")
     }
 
     private val shape = (width/2).let {halfDim -> Block.makeCuboidShape(8-halfDim, 0.0, 8-halfDim, 8+halfDim, height, 8+halfDim)}
@@ -36,7 +42,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
     }
 
     override fun rotate(state: BlockState, rot: Rotation): BlockState {
-        return state.with(BlockAnvilTest.FACING, rot.rotate(state.get(BlockAnvilTest.FACING)))
+        return state.with(FACING, rot.rotate(state.get(FACING)))
     }
 
     override fun isValidGround(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean = super.isValidGround(state, worldIn, pos).let {isVanillaValid ->
@@ -45,7 +51,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
-        builder.add(BlockAnvilTest.FACING)
+        builder.add(FACING, OVERWORLD)
     }
 
     /**
@@ -54,6 +60,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
     override fun func_220080_a(state: BlockState, world: IBlockReader, pos: BlockPos): Float = 1.0F
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
-        return this.defaultState.with(FACING, context.placementHorizontalFacing)
+        val notVanilla = (context.world.getBlockState(context.pos.down()).block === Glacia.Blocks.GLACIAL_DIRT)
+        return this.defaultState.with(FACING, context.placementHorizontalFacing).with(OVERWORLD, !notVanilla)
     }
 }

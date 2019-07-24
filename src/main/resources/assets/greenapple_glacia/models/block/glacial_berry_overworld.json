@@ -1,0 +1,6 @@
+{
+	"parent": "greenapple_glacia:block/glacial_berry_base",
+	"textures": {
+		"uvmap": "greenapple_glacia:blocks/glacial_berry_overworld"
+	}
+}
