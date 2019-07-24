@@ -4,10 +4,12 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
+import net.minecraft.item.ItemStack
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
+import net.minecraft.world.storage.loot.LootContext
 
 open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockNamed {
 
@@ -25,6 +27,8 @@ open class BlockBase private constructor (registryName: String, override val unl
 
     fun setRenderLayer(renderLayer: BlockRenderLayer) {customRenderLayer = renderLayer}
     override fun getRenderLayer(): BlockRenderLayer = customRenderLayer
+
+    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.let {item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
 
     /**
      * First function in AbstractGlassBlock

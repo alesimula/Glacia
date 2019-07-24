@@ -8,15 +8,11 @@ import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.DyeColor
 import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
-import net.minecraft.util.Direction
-import net.minecraft.util.Hand
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
-import net.minecraft.world.IWorld
-import org.apache.logging.log4j.LogManager
 
 class BlockPlantFacingBase private constructor(registryName: String, override val unlocalizedName: String, properties: Properties, val width: Double=16.0, val height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockNamed {
 

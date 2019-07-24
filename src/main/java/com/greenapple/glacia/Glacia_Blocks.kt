@@ -33,7 +33,7 @@ object Glacia_Blocks {
     val MAGIC_ICE = BlockGlaciaDirt("magic_ice", "Magic ice", Material.ICE) {hardnessAndResistance(0.8F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
     //TODO ICE COLUMN (custom model)
-    //TODO GRANITE COLUMN (custom model)
+    val GRANITE_COLUMN = BlockColumnBase("granite_column", "Granite column", Material.ROCK) {hardnessAndResistance(1.8F, 8F)}
     val COMPACTED_ICE = BlockGlaciaDirt("compacted_ice", "Compacted ice", Material.ICE) {hardnessAndResistance(1F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
 }

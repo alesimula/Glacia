@@ -1,0 +1,7 @@
+{
+	"parent": "greenapple_glacia:block/column_body",
+	"textures": {
+		"side": "greenapple_glacia:blocks/granite_column_side",
+		"base": "greenapple_glacia:blocks/granite_column_base"
+	}
+}
