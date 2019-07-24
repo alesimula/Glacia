@@ -36,6 +36,7 @@ object RegistryEvents {
                 Glacia.Blocks.SNOWY_SAND,
                 Glacia.Blocks.GLACIAL_BERRY,
                 Glacia.Blocks.MAGIC_ICE,
+                Glacia.Blocks.ICE_COLUMN,
                 Glacia.Blocks.GRANITE_COLUMN,
                 Glacia.Blocks.COMPACTED_ICE
         )
@@ -61,6 +62,7 @@ object RegistryEvents {
                 Glacia.Blocks.SNOWY_SAND.toBlockItem(Glacia_ItemGroup.BLOCKS),
                 Glacia.Blocks.GLACIAL_BERRY.toBlockItem(Glacia_ItemGroup.DECORATIONS),
                 Glacia.Blocks.MAGIC_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.ICE_COLUMN.toBlockItem(Glacia_ItemGroup.DECORATIONS),
                 Glacia.Blocks.GRANITE_COLUMN.toBlockItem(Glacia_ItemGroup.DECORATIONS),
                 Glacia.Blocks.COMPACTED_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS)
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
