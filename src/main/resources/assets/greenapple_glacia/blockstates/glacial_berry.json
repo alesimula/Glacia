@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "greenapple_glacia:block/glacial_berry" },
+    "facing=south": { "model": "greenapple_glacia:block/glacial_berry", "y": 180 },
+    "facing=west":  { "model": "greenapple_glacia:block/glacial_berry", "y": 270 },
+    "facing=east":  { "model": "greenapple_glacia:block/glacial_berry", "y": 90 }
+  }
+}

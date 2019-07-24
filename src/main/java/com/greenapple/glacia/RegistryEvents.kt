@@ -21,21 +21,22 @@ object RegistryEvents {
     @JvmStatic @SubscribeEvent
     fun onBlocksRegistry(event: RegistryEvent.Register<Block>) {
         event.registry.registerAll(
-                Glacia_Blocks.GLACIAL_DIRT,
+                Glacia.Blocks.GLACIAL_DIRT,
 
-                Glacia_Blocks.GLACIAL_BEDROCK,
-                Glacia_Blocks.GLACIAL_STONE,
-                Glacia_Blocks.GLACIAL_COBBLESTONE,
-                Glacia_Blocks.GLACIAL_MAGIC_STONE,
-                Glacia_Blocks.GLACIAL_TREE_LOG,
-                Glacia_Blocks.GLACIAL_TREE_LEAVES,
-                Glacia_Blocks.GLACIAL_PLANKS,
-                Glacia_Blocks.GLACIAL_STAIRS,
-                Glacia_Blocks.GLACIAL_CRYSTAL_ORE,
-                Glacia_Blocks.GLACIAL_ICE_ORE,
-                Glacia_Blocks.SNOWY_SAND,
-                Glacia_Blocks.MAGIC_ICE,
-                Glacia_Blocks.COMPACTED_ICE
+                Glacia.Blocks.GLACIAL_BEDROCK,
+                Glacia.Blocks.GLACIAL_STONE,
+                Glacia.Blocks.GLACIAL_COBBLESTONE,
+                Glacia.Blocks.GLACIAL_MAGIC_STONE,
+                Glacia.Blocks.GLACIAL_TREE_LOG,
+                Glacia.Blocks.GLACIAL_TREE_LEAVES,
+                Glacia.Blocks.GLACIAL_PLANKS,
+                Glacia.Blocks.GLACIAL_STAIRS,
+                Glacia.Blocks.GLACIAL_CRYSTAL_ORE,
+                Glacia.Blocks.GLACIAL_ICE_ORE,
+                Glacia.Blocks.SNOWY_SAND,
+                Glacia.Blocks.GLACIAL_BERRY,
+                Glacia.Blocks.MAGIC_ICE,
+                Glacia.Blocks.COMPACTED_ICE
         )
     }
 
@@ -43,22 +44,23 @@ object RegistryEvents {
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
         event.registry.registerAll(
                 /** Block items **/
-                Glacia_Blocks.GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
+                Glacia.Blocks.GLACIAL_DIRT.toBlockItem(Glacia_ItemGroup.BLOCKS)
                         .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)},
 
-                Glacia_Blocks.GLACIAL_BEDROCK.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_STONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_COBBLESTONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_MAGIC_STONE.toBlockItem(Glacia_ItemGroup.BREWING),
-                Glacia_Blocks.GLACIAL_TREE_LOG.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_TREE_LEAVES.toBlockItem(Glacia_ItemGroup.DECORATIONS),
-                Glacia_Blocks.GLACIAL_PLANKS.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_STAIRS.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_CRYSTAL_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.GLACIAL_ICE_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.SNOWY_SAND.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.MAGIC_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS),
-                Glacia_Blocks.COMPACTED_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS)
+                Glacia.Blocks.GLACIAL_BEDROCK.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_STONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_COBBLESTONE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_MAGIC_STONE.toBlockItem(Glacia_ItemGroup.BREWING),
+                Glacia.Blocks.GLACIAL_TREE_LOG.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_TREE_LEAVES.toBlockItem(Glacia_ItemGroup.DECORATIONS),
+                Glacia.Blocks.GLACIAL_PLANKS.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_STAIRS.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_CRYSTAL_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_ICE_ORE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.SNOWY_SAND.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.GLACIAL_BERRY.toBlockItem(Glacia_ItemGroup.DECORATIONS),
+                Glacia.Blocks.MAGIC_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS),
+                Glacia.Blocks.COMPACTED_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS)
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
         )
     }

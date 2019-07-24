@@ -25,6 +25,8 @@ class Glacia {
 
     companion object {
         const val MODID = "greenapple_glacia"
+        @JvmStatic val Blocks; get() = Glacia_Blocks
+        @JvmStatic val ItemGroup; get() = Glacia_ItemGroup
         @JvmStatic private val LOGGER = LogManager.getLogger()
     }
 
@@ -46,7 +48,7 @@ class Glacia {
     private fun setup(event: FMLCommonSetupEvent) {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT")
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
+        //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
         /*(event.container.modInfo as ModInfo).apply {
             LOGGER.info("DIRT BLOCK >> {}", ""+description)
             TextFormatting.GREEN.toString()

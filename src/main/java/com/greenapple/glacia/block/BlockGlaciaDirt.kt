@@ -1,6 +1,6 @@
 package com.greenapple.glacia.block
 
-import com.greenapple.glacia.Glacia_Blocks
+import com.greenapple.glacia.Glacia
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -43,7 +43,7 @@ open class BlockGlaciaDirt : BlockBase, IBlockNamed {
             else for (i in 0..3) {
                 val closeBlockPos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1)
                 val closeBlockState = world.getBlockState(closeBlockPos)
-                if (closeBlockState.block === Glacia_Blocks.GLACIAL_DIRT && !closeBlockState.get(SNOWY)) {
+                if (closeBlockState.block === Glacia.Blocks.GLACIAL_DIRT && !closeBlockState.get(SNOWY)) {
                     world.setBlockState(closeBlockPos, closeBlockState.with(SNOWY, true))
                 }
             }

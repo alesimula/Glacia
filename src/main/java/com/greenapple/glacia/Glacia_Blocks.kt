@@ -1,9 +1,6 @@
 package com.greenapple.glacia
 
-import com.greenapple.glacia.block.BlockBase
-import com.greenapple.glacia.block.BlockGlaciaDirt
-import com.greenapple.glacia.block.BlockRotatedBase
-import com.greenapple.glacia.block.BlockStairsBase
+import com.greenapple.glacia.block.*
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.util.BlockRenderLayer
@@ -31,7 +28,7 @@ object Glacia_Blocks {
     //TODO ICE FLOWER
     /*  TODO sand block properties  */
     val SNOWY_SAND = BlockGlaciaDirt("snowy_sand", "Snowy sand", Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
-    //TODO BERRY (custom model)
+    val GLACIAL_BERRY = BlockPlantFacingBase("glacial_berry", "Glacial berry", Material.ORGANIC, 8.0, 14.0) {doesNotBlockMovement().hardnessAndResistance(0F).sound(SoundType.PLANT)}
     //TODO CRYSTAL OF POWER (custom model)
     val MAGIC_ICE = BlockGlaciaDirt("magic_ice", "Magic ice", Material.ICE) {hardnessAndResistance(0.8F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
