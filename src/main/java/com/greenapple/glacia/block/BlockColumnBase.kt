@@ -9,6 +9,7 @@ import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.DyeColor
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.StateContainer
+import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.IStringSerializable
 import net.minecraft.util.math.BlockPos
@@ -84,6 +85,12 @@ open class BlockColumnBase : BlockBase, IBlockNamed {
 
         return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos)
     }
+
+    /**
+     * Determines whether adjacent faces with the "cullface" property should be rendered
+     */
+    override fun isSideInvisible(state: BlockState, adjacentBlockState: BlockState, side: Direction)
+            = renderLayer !== BlockRenderLayer.SOLID && seeThroughGroup && adjacentBlockState.block === this && state.get(PLACEMENT) == adjacentBlockState.get(PLACEMENT)
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(PLACEMENT)
