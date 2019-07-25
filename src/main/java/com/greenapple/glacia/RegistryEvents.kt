@@ -4,6 +4,7 @@ import com.greenapple.glacia.block.BlockAnvilTest
 import com.greenapple.glacia.block.BlockBase
 import com.greenapple.glacia.block.BlockGlaciaDirt
 import com.greenapple.glacia.block.toBlockItem
+import com.greenapple.glacia.world.GlaciaDimension
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.item.Item
@@ -12,6 +13,17 @@ import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import org.apache.logging.log4j.LogManager
+import net.minecraft.util.ResourceLocation
+import net.minecraftforge.common.DimensionManager
+import net.minecraftforge.common.ModDimension
+import net.minecraft.world.World
+import net.minecraft.world.dimension.Dimension
+import net.minecraft.world.dimension.DimensionType
+import java.util.function.BiFunction
+
+
+
+
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object RegistryEvents {
@@ -67,5 +79,13 @@ object RegistryEvents {
                 Glacia.Blocks.COMPACTED_ICE.toBlockItem(Glacia_ItemGroup.BLOCKS)
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
         )
+    }
+
+    @JvmStatic @SubscribeEvent
+    fun onDimensionModRegistry(event: RegistryEvent.Register<ModDimension>) {
+        LOGGER.info("AAAAAA: Registering dimension")
+        event.registry.register(Glacia.DIMENSION)
+        DimensionManager.registerDimension(Glacia.DIMENSION.registryName, Glacia.DIMENSION, null, true)
+        LOGGER.info("AAAAAA: Dimension registered")
     }
 }

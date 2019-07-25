@@ -2,11 +2,16 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.utils.addListenerKt
+import com.greenapple.glacia.world.GlaciaDimension
 import net.minecraft.block.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
+import net.minecraft.world.World
+import net.minecraft.world.dimension.Dimension
+import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.ModDimension
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
@@ -17,6 +22,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import org.apache.logging.log4j.LogManager
+import java.util.function.BiFunction
 
 import java.util.stream.Collectors
 
@@ -25,9 +31,12 @@ class Glacia {
 
     companion object {
         const val MODID = "greenapple_glacia"
+        @JvmStatic private val LOGGER = LogManager.getLogger()
+        @JvmStatic val DIMENSION = object : ModDimension() {override fun getFactory() = BiFunction {world : World, type : DimensionType -> GlaciaDimension(world, type)}}
+                .setRegistryName(MODID,"glacia")
+
         @JvmStatic val Blocks; get() = Glacia_Blocks
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup
-        @JvmStatic private val LOGGER = LogManager.getLogger()
     }
 
     init {
