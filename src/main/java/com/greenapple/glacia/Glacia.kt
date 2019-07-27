@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package com.greenapple.glacia
 
+import com.greenapple.glacia.delegate.LazyWithReceiver
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
 import net.minecraft.block.*
@@ -29,11 +30,18 @@ import java.util.stream.Collectors
 @Mod(Glacia.MODID)
 class Glacia {
 
+    class ModDimensionBase(modId: String, name: String, factory: DimensionType.(World)->Dimension) : ModDimension() {
+        private val javaFactory = BiFunction {world: World, type: DimensionType -> type.getOrInit; factory(type, world)}
+        override fun getFactory() = javaFactory
+        init {setRegistryName(modId, name)}
+        private val DimensionType?.getOrInit by LazyWithReceiver<DimensionType, DimensionType>(null) {this}
+        val dimensionType; get() = (null as DimensionType?).getOrInit
+    }
+
     companion object {
         const val MODID = "greenapple_glacia"
         @JvmStatic private val LOGGER = LogManager.getLogger()
-        @JvmStatic val DIMENSION = object : ModDimension() {override fun getFactory() = BiFunction {world : World, type : DimensionType -> GlaciaDimension(world, type)}}
-                .setRegistryName(MODID,"glacia")
+        @JvmStatic val DIMENSION = ModDimensionBase(MODID, "glacia") {world -> GlaciaDimension(world, this)}
 
         @JvmStatic val Blocks; get() = Glacia_Blocks
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup

@@ -14,18 +14,38 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.ChunkGeneratorType
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.gen.GenerationSettings
+import net.minecraft.world.gen.IChunkGeneratorFactory
+import java.util.function.Supplier
+import net.minecraft.world.biome.provider.SingleBiomeProviderSettings
+
 
 
 class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type) {
 
+    companion object {
+        private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
+        var generatorType = ChunkGeneratorType(IChunkGeneratorFactory {world, provider, settings -> GlaciaChunkGenerator(world, provider, settings)}, false, Supplier {GenerationSettings()})
+        var biomeProviderType = BiomeProviderType(java.util.function.Function<SingleBiomeProviderSettings, GlaciaBiomeProvider> {settings: SingleBiomeProviderSettings-> GlaciaBiomeProvider(settings)}, Supplier { SingleBiomeProviderSettings() })
+    }
+
     override fun createChunkGenerator(): ChunkGenerator<*> {
         //TODO biome provider (Thanks YAMDA)
-        //return YAMDA.generatorType.create(this.world, YAMDA.biomeProviderType.create(YAMDA.biomeProviderType.createSettings().setBiome(Biomes.PLAINS)), YAMDA.generatorType.createSettings())
-        val endgenerationsettings = ChunkGeneratorType.FLOATING_ISLANDS.createSettings()
+        return generatorType.create(this.world, biomeProviderType.create(biomeProviderType.createSettings().setBiome(Biomes.PLAINS)), generatorType.createSettings())
+
+        /*val endgenerationsettings = ChunkGeneratorType.FLOATING_ISLANDS.createSettings()
         endgenerationsettings.defaultBlock = Blocks.END_STONE.defaultState
         endgenerationsettings.defaultFluid = Blocks.AIR.defaultState
         endgenerationsettings.spawnPos = this.spawnCoordinate
-        return ChunkGeneratorType.FLOATING_ISLANDS.create(this.world, BiomeProviderType.THE_END.create(BiomeProviderType.THE_END.createSettings().setSeed(this.world.seed)), endgenerationsettings)
+        return ChunkGeneratorType.FLOATING_ISLANDS.create(this.world, BiomeProviderType.THE_END.create(BiomeProviderType.THE_END.createSettings().setSeed(this.world.seed)), endgenerationsettings)*/
+    }
+
+    override fun getSkyColor(cameraPos: BlockPos?, partialTicks: Float): Vec3d {
+        return SKY_RENDERER.customSkyColor
+    }
+
+    override fun getSkyRenderer(): net.minecraftforge.client.IRenderHandler {
+        return SKY_RENDERER
     }
 
     override fun findSpawn(chunkPos: ChunkPos, checkValid: Boolean): BlockPos? {
@@ -36,41 +56,13 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         return null
     }
 
+    /**
+     * Calculates the angle of sun and moon in the sky relative to a specified time (usually worldTime)
+     */
     override fun calculateCelestialAngle(worldTime: Long, partialTicks: Float): Float {
-        //TODO day/night stuff (Thanks YAMDA)
-        //if (YAMDAConfig.CONFIG.day.get()) {
-        if (true) {
-            val j = 6000
-            var f1 = (j + partialTicks) / 24000.0f - 0.25f
-
-            if (f1 < 0.0f) {
-                f1 += 1.0f
-            }
-
-            if (f1 > 1.0f) {
-                f1 -= 1.0f
-            }
-
-            val f2 = f1
-            f1 = 1.0f - ((Math.cos(f1 * Math.PI) + 1.0) / 2.0).toFloat()
-            f1 = f2 + (f1 - f2) / 3.0f
-            return f1
-        } else {
-            val i = (worldTime % 24000L).toInt()
-            var f = (i.toFloat() + partialTicks) / 24000.0f - 0.25f
-
-            if (f < 0.0f) {
-                ++f
-            }
-
-            if (f > 1.0f) {
-                --f
-            }
-
-            val f1 = 1.0f - ((Math.cos(f.toDouble() * Math.PI) + 1.0) / 2.0).toFloat()
-            f = f + (f1 - f) / 3.0f
-            return f
-        }
+        val d0 = MathHelper.frac(worldTime.toDouble() / 24000.0 - 0.25)
+        val d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0
+        return (d0 * 2.0 + d1).toFloat() / 3.0f
     }
 
 

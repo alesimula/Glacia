@@ -20,7 +20,7 @@ import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
 
-open class BlockColumnBase : BlockBase, IBlockNamed {
+open class BlockColumnBase : BlockBase {
 
     constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor =material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, materialColor, initializer.init)
     constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, dyeColor, initializer.init)
