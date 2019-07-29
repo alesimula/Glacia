@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.DimensionManager
 import net.minecraftforge.common.ModDimension
 import net.minecraft.world.World
+import net.minecraft.world.biome.Biome
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
 import java.util.function.BiFunction
@@ -80,6 +81,13 @@ object RegistryEvents {
                 Glacia.Blocks.COMPACTED_ICE.toBlockItem(Glacia.ItemGroup.BLOCKS)
                 //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
         )
+    }
+
+    @JvmStatic @SubscribeEvent
+    fun onBiomesRegistry(event: RegistryEvent.Register<Biome>) {
+        LOGGER.info("AAAAAA: Registering biomes")
+        event.registry.register(Glacia.Biomes.PLAINS)
+        LOGGER.info("AAAAAA: Registered biomes")
     }
 
     @JvmStatic @SubscribeEvent

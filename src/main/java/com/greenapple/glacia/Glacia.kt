@@ -45,6 +45,7 @@ class Glacia {
 
         @JvmStatic val Blocks; get() = Glacia_Blocks
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup
+        @JvmStatic val Biomes; get() = Glacia_Biomes
     }
 
     init {

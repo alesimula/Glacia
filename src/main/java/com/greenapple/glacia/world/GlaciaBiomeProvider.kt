@@ -1,6 +1,6 @@
 package com.greenapple.glacia.world
 
-import com.google.common.collect.Sets
+import com.greenapple.glacia.Glacia
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.biome.Biome
@@ -15,7 +15,8 @@ class GlaciaBiomeProvider(settings: SingleBiomeProviderSettings) : BiomeProvider
     private val biome: Biome
 
     init {
-        this.biome = settings.biome
+        //TODO Biomes
+        this.biome = /*settings.biome*/ Glacia.Biomes.PLAINS
     }
 
     companion object {
@@ -53,6 +54,6 @@ class GlaciaBiomeProvider(settings: SingleBiomeProviderSettings) : BiomeProvider
     }
 
     override fun getBiomesInSquare(centerX: Int, centerZ: Int, sideLength: Int): Set<Biome> {
-        return Sets.newHashSet(this.biome)
+        return hashSetOf(this.biome)
     }
 }
