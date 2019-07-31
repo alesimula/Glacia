@@ -1,10 +1,18 @@
 package com.greenapple.glacia.utils
 
+import com.greenapple.glacia.delegate.LazyWithReceiver
 import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.eventbus.api.IEventBus
+import net.minecraftforge.registries.ForgeRegistry
+import net.minecraftforge.registries.ForgeRegistryEntry
+import net.minecraftforge.registries.RegistryManager
 
 inline fun <E: Event>IEventBus.addListenerKt(crossinline method : (E)->Any) = addListener<E> {event-> method.invoke(event)}
 
+
+private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry by LazyWithReceiver<Class<T>, ForgeRegistry<T>> {(RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>)}
+val <T: ForgeRegistryEntry<T>> T.registry; get() = this.registryType.registry
+val <T: ForgeRegistryEntry<T>> T.id; get() = this.registry.getID(this)
 
 //val ModLifecycleEvent.container : ModContainer by ReflectField("container")
 //val ModContainer.modInfo : IModInfo by ReflectField("modInfo")
