@@ -9,8 +9,7 @@ import net.minecraftforge.registries.RegistryManager
 
 inline fun <E: Event>IEventBus.addListenerKt(crossinline method : (E)->Any) = addListener<E> {event-> method.invoke(event)}
 
-
-private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry by LazyWithReceiver<Class<T>, ForgeRegistry<T>> {(RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>)}
+private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry by LazyWithReceiver<Class<T>, ForgeRegistry<T>> {RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>}
 val <T: ForgeRegistryEntry<T>> T.registry; get() = this.registryType.registry
 val <T: ForgeRegistryEntry<T>> T.id; get() = this.registry.getID(this)
 
