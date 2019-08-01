@@ -4,6 +4,7 @@ package com.greenapple.glacia
 import com.greenapple.glacia.delegate.LazyWithReceiver
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
+import com.greenapple.glacia.world.layer.GlaciaLayerUtils
 import net.minecraft.block.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
@@ -26,6 +27,10 @@ import org.apache.logging.log4j.LogManager
 import java.util.function.BiFunction
 
 import java.util.stream.Collectors
+import net.minecraftforge.common.BiomeManager.BiomeEntry
+import net.minecraftforge.common.BiomeManager
+
+
 
 @Mod(Glacia.MODID)
 class Glacia {
@@ -66,6 +71,7 @@ class Glacia {
     private fun setup(event: FMLCommonSetupEvent) {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT")
+        ///BiomeManager.addBiome(GlaciaLayerUtils.BIOME_TYPE_GLACIA, BiomeEntry(Glacia.Biomes.PLAINS, 3))
         //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
         /*(event.container.modInfo as ModInfo).apply {
             LOGGER.info("DIRT BLOCK >> {}", ""+description)

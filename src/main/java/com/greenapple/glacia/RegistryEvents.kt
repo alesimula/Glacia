@@ -4,6 +4,7 @@ import com.greenapple.glacia.block.BlockAnvilTest
 import com.greenapple.glacia.block.BlockBase
 import com.greenapple.glacia.block.BlockGlaciaDirt
 import com.greenapple.glacia.block.toBlockItem
+import com.greenapple.glacia.utils.id
 import com.greenapple.glacia.world.GlaciaDimension
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
@@ -18,13 +19,10 @@ import net.minecraftforge.common.DimensionManager
 import net.minecraftforge.common.ModDimension
 import net.minecraft.world.World
 import net.minecraft.world.biome.Biome
+import net.minecraft.world.biome.Biomes
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
 import java.util.function.BiFunction
-
-
-
-
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object RegistryEvents {
@@ -86,7 +84,12 @@ object RegistryEvents {
     @JvmStatic @SubscribeEvent
     fun onBiomesRegistry(event: RegistryEvent.Register<Biome>) {
         LOGGER.info("AAAAAA: Registering biomes")
-        event.registry.register(Glacia.Biomes.PLAINS)
+        event.registry.registerAll(
+                Glacia.Biomes.PLAINS,
+                Glacia.Biomes.OCEAN,
+                Glacia.Biomes.BEACH,
+                Glacia.Biomes.RIVER
+        )
         LOGGER.info("AAAAAA: Registered biomes")
     }
 

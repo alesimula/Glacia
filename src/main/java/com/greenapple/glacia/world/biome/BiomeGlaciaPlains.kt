@@ -1,4 +1,4 @@
-package com.greenapple.glacia.world
+package com.greenapple.glacia.world.biome
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaDirt
@@ -18,7 +18,8 @@ import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig
 
 class BiomeGlaciaPlains : Biome {
-    constructor(registryName : String) : super(Biome.Builder().surfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilderConfig(Glacia.Blocks.GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true), Glacia.Blocks.GLACIAL_DIRT.defaultState, Glacia.Blocks.SNOWY_SAND.defaultState)).precipitation(RainType.SNOW).category(Category.PLAINS).depth(0.125f).scale(0.05f).temperature(-30F).downfall(0.5f).waterColor(4159204).waterFogColor(329011).parent(null as String?)) {
+    constructor(registryName : String) : super(Biome.Builder().surfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilderConfig(Glacia.Blocks.GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true), Glacia.Blocks.GLACIAL_DIRT.defaultState, Glacia.Blocks.SNOWY_SAND.defaultState))
+            .precipitation(RainType.SNOW).category(Category.PLAINS).depth(0.125f).scale(0.05f).temperature(-30F).downfall(0.5f).waterColor(4159204).waterFogColor(329011).parent(null as String?)) {
         setRegistryName(registryName)
 
         //////SurfaceBuilder.GRASS_DIRT_GRAVEL_CONFIG

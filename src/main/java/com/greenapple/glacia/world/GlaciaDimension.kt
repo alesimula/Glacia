@@ -7,8 +7,10 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldType
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.BiomeProviderType
+import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,6 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.function.Supplier
 import net.minecraft.world.biome.provider.SingleBiomeProviderSettings
 import net.minecraft.world.gen.*
+import net.minecraft.world.storage.WorldInfo
 
 
 class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type) {
@@ -23,16 +26,20 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
     companion object {
         private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
         private val generatorType = ChunkGeneratorType(IChunkGeneratorFactory {world, provider, settings -> GlaciaChunkGenerator(world, provider, settings)}, false, Supplier {OverworldGenSettings()})
-        private val biomeProviderType = BiomeProviderType(java.util.function.Function<SingleBiomeProviderSettings, GlaciaBiomeProvider> {settings: SingleBiomeProviderSettings-> GlaciaBiomeProvider(settings)}, Supplier {SingleBiomeProviderSettings()})
+        private val biomeProviderType = BiomeProviderType(java.util.function.Function<OverworldBiomeProviderSettings, GlaciaBiomeProvider> {settings: OverworldBiomeProviderSettings-> GlaciaBiomeProvider(settings)}, Supplier {OverworldBiomeProviderSettings() })
     }
 
     private fun<C : GenerationSettings> C.glaciaSettings() = this.apply {
         defaultBlock = Glacia.Blocks.GLACIAL_STONE.defaultState
     }
 
+    val WorldInfo.init; get() = this.apply {
+        //generator = WorldType.FLAT
+    }
+
     override fun createChunkGenerator(): ChunkGenerator<*> {
         //TODO biome provider (Thanks YAMDA)
-        return generatorType.create(this.world, biomeProviderType.create(biomeProviderType.createSettings().setBiome(Biomes.PLAINS)), generatorType.createSettings().glaciaSettings())
+        return generatorType.create(this.world, biomeProviderType.create(biomeProviderType.createSettings().setWorldInfo(world.worldInfo.init).setGeneratorSettings(OverworldGenSettings())), generatorType.createSettings().glaciaSettings())
 
         /*val endgenerationsettings = ChunkGeneratorType.FLOATING_ISLANDS.createSettings()
         endgenerationsettings.defaultBlock = Blocks.END_STONE.defaultState
@@ -48,7 +55,7 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
 
     override fun calcSunriseSunsetColors(celestialAngle: Float, partialTicks: Float): FloatArray? = super.calcSunriseSunsetColors(celestialAngle, partialTicks)?.apply {
         this[0] *= 0.55F
-        this[1] *= 0.15F
+        this[1] *= 2F
         this[2] *= 0.7F
     }
 
