@@ -24,8 +24,8 @@ object GlaciaLayerUtils {
     private val OCEANS = arrayOf(
             *SHALLOW_OCEANS
     )
-    private val SHALLOW_OCEANS_ID by lazy {SHALLOW_OCEANS.map {it.id}}
-    private val OCEANS_ID by lazy {SHALLOW_OCEANS.map {it.id}}
+    private val SHALLOW_OCEANS_ID by lazy {OCEANS_ID.copyOf(SHALLOW_OCEANS.size)}
+    private val OCEANS_ID by lazy {IntArray(OCEANS.size) {index -> OCEANS[index].id}}
 
 
     @JvmStatic fun isShallowOcean(biome: Biome) = biome in SHALLOW_OCEANS

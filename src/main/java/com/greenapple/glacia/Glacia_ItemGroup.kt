@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack
 class Glacia_ItemGroup private constructor(name: String, private val iconItemProvider: ()-> Item?) : net.minecraft.item.ItemGroup("${Glacia.MODID}.$name") {
     override fun createIcon(): ItemStack = ItemStack(iconItemProvider)
     companion object {
-        @JvmStatic val BLOCKS = Glacia_ItemGroup("blocks") {Glacia.Blocks.GLACIAL_DIRT.blockItem?.getVariant("snowy")}
+        @JvmStatic val BLOCKS = Glacia_ItemGroup("blocks") {Glacia.Blocks.GLACIAL_DIRT.blockItemVatiant("snowy")}
         @JvmStatic val DECORATIONS = Glacia_ItemGroup("decorations") {Glacia.Blocks.GLACIAL_BERRY.blockItem} //TODO sapling icon
         @JvmStatic val BLUESTONE = Glacia_ItemGroup("bluestone") {Glacia.Blocks.GLACIAL_STONE.blockItem}
         @JvmStatic val TRANSPORTING = Glacia_ItemGroup("transporting") {Glacia.Blocks.GLACIAL_STONE.blockItem}

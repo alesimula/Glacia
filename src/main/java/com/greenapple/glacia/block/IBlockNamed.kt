@@ -6,5 +6,5 @@ interface IBlockNamed : IForgeBlock {
     val unlocalizedName: String
     var blockItem: BlockItemBase?
 
-    fun getVariant(name: String) = blockItem?.getVariant(name)
+    fun blockItemVatiant(name: String) = blockItem?.getVariant(name)
 }
