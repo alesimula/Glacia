@@ -9,13 +9,12 @@ import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentUtils
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.event.RegistryEvent
-import org.apache.logging.log4j.LogManager
 
 open class BlockItemBase private constructor(val stateInit: BlockState.() -> BlockState, block: Block, val unlocalizedName: String, private val registryNameSuffix: String, builder: Properties) : BlockItem(block, builder) {
 
     init {
         if (registryNameSuffix.isEmpty()) {
-            (block as? IBlockNamed)?.blockItem = this
+            (block as? IBlockBase)?.blockItem = this
             registryName = block.registryName
             if (BLOCK_TO_ITEM[block] !is BlockItemBase) BLOCK_TO_ITEM[block] = this
         }
@@ -23,7 +22,7 @@ open class BlockItemBase private constructor(val stateInit: BlockState.() -> Blo
     }
 
     constructor(block: Block, name: String, builder: Properties) : this({this}, block, name,"", builder)
-    constructor(blockNamed: IBlockNamed, builder: Properties) : this({this}, blockNamed.block,  blockNamed.unlocalizedName,"", builder)
+    constructor(blockBase: IBlockBase, builder: Properties) : this({this}, blockBase.block,  blockBase.unlocalizedName,"", builder)
 
     companion object {
         private fun Block.toBlockItemVariant(name: String, variant: String, stateInit: BlockState.()->BlockState) = BlockItemBase(stateInit, this, name, variant, Properties())
@@ -63,4 +62,4 @@ open class BlockItemBase private constructor(val stateInit: BlockState.() -> Blo
 }
 
 fun Block.toBlockItem(name: String, group: ItemGroup?=null) = (Item.BLOCK_TO_ITEM[this] as? BlockItemBase)?.takeIf {it.unlocalizedName == name} ?: BlockItemBase(this, name, Item.Properties().apply {group?.let {group(it)}})
-fun IBlockNamed.toBlockItem(group: ItemGroup?=null) = blockItem?.let {group?.let {null} ?: it} ?: block.toBlockItem(unlocalizedName, group)
+fun IBlockBase.toBlockItem(group: ItemGroup?=null) = blockItem?.let {group?.let {null} ?: it} ?: block.toBlockItem(unlocalizedName, group)

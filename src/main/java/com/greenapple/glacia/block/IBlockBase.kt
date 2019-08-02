@@ -2,7 +2,7 @@ package com.greenapple.glacia.block
 
 import net.minecraftforge.common.extensions.IForgeBlock
 
-interface IBlockNamed : IForgeBlock {
+interface IBlockBase : IForgeBlock {
     val unlocalizedName: String
     var blockItem: BlockItemBase?
 

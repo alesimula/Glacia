@@ -12,7 +12,7 @@ import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.IBlockReader
 
-class BlockAnvilTest(registryName: String, override val unlocalizedName: String, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockNamed {
+class BlockAnvilTest(registryName: String, override val unlocalizedName: String, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockBase {
 
     companion object {
         val FACING = HorizontalBlock.HORIZONTAL_FACING

@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.storage.loot.LootContext
 
-open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockNamed {
+open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockBase {
 
     constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, materialColor), initializer)
     constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, dyeColor), initializer)

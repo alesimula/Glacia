@@ -1,16 +1,10 @@
 package com.greenapple.glacia.world.biome
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.block.BlockGlaciaDirt
-import net.minecraft.entity.EntityClassification
-import net.minecraft.entity.EntityType
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.structure.BuriedTreasureConfig
-import net.minecraft.world.gen.feature.structure.MineshaftConfig
-import net.minecraft.world.gen.feature.structure.MineshaftStructure
-import net.minecraft.world.gen.feature.structure.ShipwreckConfig
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig
 
@@ -25,12 +19,12 @@ class BiomeGlaciaBeach(registryName : String) : Biome(Biome.Builder().surfaceBui
         //this.addStructure(Feature.SHIPWRECK, ShipwreckConfig(true))
         //DefaultBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
-        DefaultBiomeFeatures.addLakes(this)
+        GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
         //DefaultBiomeFeatures.addStoneVariants(this)
         //DefaultBiomeFeatures.addOres(this)
         //DefaultBiomeFeatures.addSedimentDisks(this)
-        DefaultBiomeFeatures.addSprings(this)
+        GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
     }
 }

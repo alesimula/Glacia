@@ -14,7 +14,7 @@ import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
 
-class BlockPlantFacingBase private constructor(registryName: String, override val unlocalizedName: String, properties: Properties, val width: Double=16.0, val height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockNamed {
+class BlockPlantFacingBase private constructor(registryName: String, override val unlocalizedName: String, properties: Properties, val width: Double=16.0, val height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockBase {
 
     constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor =material.color, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, materialColor), width, height, initializer)
     constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, dyeColor), width, height, initializer)

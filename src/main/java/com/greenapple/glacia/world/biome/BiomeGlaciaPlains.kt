@@ -30,13 +30,14 @@ class BiomeGlaciaPlains : Biome {
         DefaultBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
         //TODO make one without lava
-        DefaultBiomeFeatures.addLakes(this)
+        GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
         //DefaultBiomeFeatures.func_222283_Y(this)
         //DefaultBiomeFeatures.addStoneVariants(this)
+        GlaciaBiomeFeatures.addSedimentDisks(this)
         //TODO custom ore generation
         DefaultBiomeFeatures.addOres(this)
-        DefaultBiomeFeatures.addSprings(this)
+        GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
         this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4))
     }

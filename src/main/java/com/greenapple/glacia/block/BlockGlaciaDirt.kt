@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import java.util.*
 
-open class BlockGlaciaDirt : BlockBase, IBlockNamed {
+open class BlockGlaciaDirt : BlockBase, IBlockBase {
 
     constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, materialColor, initializer.init)
     constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, dyeColor, initializer.init)

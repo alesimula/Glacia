@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.greenapple.glacia.Glacia;
 import com.greenapple.glacia.renderer.TessellatorCompat;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.RenderHelper;
@@ -33,14 +34,14 @@ public class GlaciaSkyRenderer implements IRenderHandler
 
     public GlaciaSkyRenderer()
     {
-        GL11.glPushMatrix();
-        GL11.glNewList(this.starGLCallList, GL11.GL_COMPILE);
+        GlStateManager.pushMatrix();
+        GlStateManager.newList(this.starGLCallList, GL11.GL_COMPILE);
         this.renderStars();
-        GL11.glEndList();
-        GL11.glPopMatrix();
+        GlStateManager.endList();
+        GlStateManager.popMatrix();
         final TessellatorCompat tessellator = TessellatorCompat.getInstance();
         this.glSkyList = this.starGLCallList + 1;
-        GL11.glNewList(this.glSkyList, GL11.GL_COMPILE);
+        GlStateManager.newList(this.glSkyList, GL11.GL_COMPILE);
         final byte byte2 = 64;
         final int i = 256 / byte2 + 2;
         float f = 16F;
@@ -58,9 +59,9 @@ public class GlaciaSkyRenderer implements IRenderHandler
             }
         }
 
-        GL11.glEndList();
+        GlStateManager.endList();
         this.glSkyList2 = this.starGLCallList + 2;
-        GL11.glNewList(this.glSkyList2, GL11.GL_COMPILE);
+        GlStateManager.newList(this.glSkyList2, GL11.GL_COMPILE);
         f = -16F;
         tessellator.startDrawingQuads();
 
@@ -76,7 +77,7 @@ public class GlaciaSkyRenderer implements IRenderHandler
         }
 
         tessellator.draw();
-        GL11.glEndList();
+        GlStateManager.endList();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class GlaciaSkyRenderer implements IRenderHandler
         float var12;
         final TessellatorCompat var23 = TessellatorCompat.getInstance();
 
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GlStateManager.disableTexture();
 
         BlockPos renderViewPos = (mc.renderViewEntity!=null) ? mc.renderViewEntity.getPosition() : new BlockPos(0,0,0);
         Vec3d vec3 = world.getSkyColor(renderViewPos, partialTicks);
@@ -105,16 +106,16 @@ public class GlaciaSkyRenderer implements IRenderHandler
             float f4;
 			float var20 = 0F;
 
-            GL11.glColor3f(f1, f2, f3);
+			GlStateManager.color3f(f1, f2, f3);
             TessellatorCompat tessellator1 = TessellatorCompat.getInstance();
-            GL11.glDepthMask(false);
-            GL11.glEnable(GL11.GL_FOG);
-            GL11.glColor3f(f1, f2, f3);
-            GL11.glCallList(this.glSkyList);
-            GL11.glDisable(GL11.GL_FOG);
-            GL11.glDisable(GL11.GL_ALPHA_TEST);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GlStateManager.depthMask(false);
+            GlStateManager.enableFog();
+            GlStateManager.color3f(f1, f2, f3);
+            GlStateManager.callList(this.glSkyList);
+            GlStateManager.disableFog();
+            GlStateManager.disableAlphaTest();
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             RenderHelper.disableStandardItemLighting();
 			
 			float f7;
@@ -125,12 +126,12 @@ public class GlaciaSkyRenderer implements IRenderHandler
 			
 			if (afloat != null)
             {
-                GL11.glDisable(GL11.GL_TEXTURE_2D);
-                GL11.glShadeModel(GL11.GL_SMOOTH);
-                GL11.glPushMatrix();
-                GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef(MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
-                GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.disableTexture();
+                GlStateManager.shadeModel(GL11.GL_SMOOTH);
+                GlStateManager.pushMatrix();
+                GlStateManager.rotatef(90.0F, 1.0F, 0.0F, 0.0F);
+                GlStateManager.rotatef(MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
+                GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
                 f4 = afloat[0];
                 f7 = afloat[1];
                 f8 = afloat[2];
@@ -162,33 +163,33 @@ public class GlaciaSkyRenderer implements IRenderHandler
                 }
 
                 tessellator1.draw();
-                GL11.glPopMatrix();
-                GL11.glShadeModel(GL11.GL_FLAT);
+                GlStateManager.popMatrix();
+                GlStateManager.shadeModel(GL11.GL_FLAT);
             }
 			
 			if (gcProvider != null)
 			{
 				var20 = gcProvider.getStarBrightness(partialTicks);
 			}
-			
-		GL11.glEnable(GL11.GL_BLEND);
-		
-		GL11.glEnable(GL11.GL_TEXTURE_2D);	
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+
+        GlStateManager.enableBlend();
+
+        GlStateManager.enableTexture();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		
 		//Sun blue:
-		
-		GL11.glPushMatrix();
+
+        GlStateManager.pushMatrix();
 		f7 = 0.0F;
             f8 = 0.0F;
             f9 = 0.0F;
 			f4 = 1.0F;
 			f10 = 30.0F;
-		
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, f4);
-            GL11.glTranslatef(0, -6, -3);
-            GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
+
+            GlStateManager.color4f(1.0F, 1.0F, 1.0F, f4);
+            GlStateManager.translatef(0, -6, -3);
+            GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
             mc.getTextureManager().bindTexture(this.sunTexture2);
             tessellator1.startDrawingQuads();
             tessellator1.addVertexWithUV((double)(-f10), 50.0D, (double)(-f10), 0.0D, 0.0D);
@@ -196,13 +197,13 @@ public class GlaciaSkyRenderer implements IRenderHandler
             tessellator1.addVertexWithUV((double)f10, 50.0D, (double)f10, 1.0D, 1.0D);
             tessellator1.addVertexWithUV((double)(-f10), 50.0D, (double)f10, 0.0D, 1.0D);
             tessellator1.draw();
-			
-			GL11.glPopMatrix();
 
-        GL11.glDisable(GL11.GL_BLEND);
+        GlStateManager.popMatrix();
 
-        GL11.glEnable(GL11.GL_TEXTURE_2D);	
-		GL11.glPushMatrix();
+        GlStateManager.disableBlend();
+
+        GlStateManager.enableTexture();
+        GlStateManager.pushMatrix();
 
         // Sun green:
 			f7 = 0.0F;
@@ -221,20 +222,20 @@ public class GlaciaSkyRenderer implements IRenderHandler
             tessellator1.addVertexWithUV((double)f10, 50.0D, (double)f10, 1.0D, 1.0D);
             tessellator1.addVertexWithUV((double)(-f10), 50.0D, (double)f10, 0.0D, 1.0D);
             tessellator1.draw();
-			
-        GL11.glPopMatrix();
-		
 
-        GL11.glPushMatrix();
+        GlStateManager.popMatrix();
 
-        GL11.glDisable(GL11.GL_BLEND);
+
+        GlStateManager.pushMatrix();
+
+        GlStateManager.disableBlend();
 		
 		// Distant Galaxy:
         var12 = 10.5F;
-        GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-		GL11.glRotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
         mc.getTextureManager().bindTexture(this.earthTexture);
-        GL11.glColor4f(0.8F, 0.8F, 0.8F, 1.0F);
+        GlStateManager.color4f(0.8F, 0.8F, 0.8F, 1.0F);
         var23.startDrawingQuads();
         var23.addVertexWithUV(-var12, -100.0D, var12, 0, 1);
         var23.addVertexWithUV(var12, -100.0D, var12, 1, 1);
@@ -242,36 +243,36 @@ public class GlaciaSkyRenderer implements IRenderHandler
         var23.addVertexWithUV(-var12, -100.0D, -var12, 0, 0);
         var23.draw();
 
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_FOG);
-        GL11.glPopMatrix();
+        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlphaTest();
+        GlStateManager.enableFog();
+        GlStateManager.popMatrix();
 
         if (var20 > 0.0F)
         {
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            GL11.glColor4f(var20, var20, var20, var20);
-            GL11.glCallList(this.starGLCallList);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GlStateManager.disableTexture();
+            GlStateManager.color4f(var20, var20, var20, var20);
+            GlStateManager.callList(this.starGLCallList);
+            GlStateManager.enableTexture();
         }
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_ALPHA_TEST);
-        GL11.glEnable(GL11.GL_FOG);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glColor3f(0.0F, 0.0F, 0.0F);
+        GlStateManager.disableBlend();
+        GlStateManager.enableAlphaTest();
+        GlStateManager.enableFog();
+        GlStateManager.disableTexture();
+        GlStateManager.color3f(0.0F, 0.0F, 0.0F);
         final double var25 = mc.player.getPosition().getY() - world.getHorizon();
 
         if (var25 < 0.0D)
         {
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0.0F, 12.0F, 0.0F);
-            GL11.glCallList(this.glSkyList2);
-            GL11.glPopMatrix();
+            GlStateManager.pushMatrix();
+            GlStateManager.translatef(0.0F, 12.0F, 0.0F);
+            GlStateManager.callList(this.glSkyList2);
+            GlStateManager.popMatrix();
             var10 = 1.0F;
             var11 = -((float) (var25 + 65.0D));
             var12 = -var10;
@@ -300,14 +301,14 @@ public class GlaciaSkyRenderer implements IRenderHandler
             var23.draw();
         }
 
-        GL11.glColor3f(70F / 256F, 70F / 256F, 70F / 256F);
+        GlStateManager.color3f(70F / 256F, 70F / 256F, 70F / 256F);
 
-        GL11.glPushMatrix();
-        GL11.glTranslatef(0.0F, -((float) (var25 - 16.0D)), 0.0F);
-        GL11.glCallList(this.glSkyList2);
-        GL11.glPopMatrix();
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(true);
+        GlStateManager.pushMatrix();
+        GlStateManager.translatef(0.0F, -((float) (var25 - 16.0D)), 0.0F);
+        GlStateManager.callList(this.glSkyList2);
+        GlStateManager.popMatrix();
+        GlStateManager.enableTexture();
+        GlStateManager.depthMask(true);
     }
 
     private void renderStars()
