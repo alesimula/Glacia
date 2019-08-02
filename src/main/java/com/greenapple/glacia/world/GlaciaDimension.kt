@@ -19,6 +19,7 @@ import java.util.function.Supplier
 import net.minecraft.world.biome.provider.SingleBiomeProviderSettings
 import net.minecraft.world.gen.*
 import net.minecraft.world.storage.WorldInfo
+import kotlin.math.cos
 
 
 class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type) {
@@ -89,7 +90,7 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
      */
     override fun calculateCelestialAngle(worldTime: Long, partialTicks: Float): Float {
         val d0 = MathHelper.frac(worldTime.toDouble() / 24000.0 - 0.25)
-        val d1 = 0.5 - Math.cos(d0 * Math.PI) / 2.0
+        val d1 = 0.5 - cos(d0 * Math.PI) / 2.0
         return (d0 * 2.0 + d1).toFloat() / 3.0f
     }
 
