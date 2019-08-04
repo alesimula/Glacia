@@ -22,37 +22,12 @@ import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
+import net.minecraft.world.gen.feature.Feature
 import java.util.function.BiFunction
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object RegistryEvents {
     private val LOGGER = LogManager.getLogger()
-
-    // The value here should match an entry in the META-INF/mods.toml file
-    @JvmStatic @SubscribeEvent
-    fun onBlocksRegistry(event: RegistryEvent.Register<Block>) {
-        event.registry.registerAll(
-                Glacia.Blocks.GLACIAL_DIRT,
-
-                Glacia.Blocks.GLACIAL_BEDROCK,
-                Glacia.Blocks.GLACIAL_STONE,
-                Glacia.Blocks.GLACIAL_COBBLESTONE,
-                Glacia.Blocks.GLACIAL_MAGIC_STONE,
-                Glacia.Blocks.GLACIA_PORTAL,
-                Glacia.Blocks.GLACIAL_TREE_LOG,
-                Glacia.Blocks.GLACIAL_TREE_LEAVES,
-                Glacia.Blocks.GLACIAL_PLANKS,
-                Glacia.Blocks.GLACIAL_STAIRS,
-                Glacia.Blocks.GLACIAL_CRYSTAL_ORE,
-                Glacia.Blocks.GLACIAL_ICE_ORE,
-                Glacia.Blocks.SNOWY_SAND,
-                Glacia.Blocks.GLACIAL_BERRY,
-                Glacia.Blocks.MAGIC_ICE,
-                Glacia.Blocks.ICE_COLUMN,
-                Glacia.Blocks.GRANITE_COLUMN,
-                Glacia.Blocks.COMPACTED_ICE
-        )
-    }
 
     @JvmStatic @SubscribeEvent
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
@@ -82,22 +57,19 @@ object RegistryEvents {
     }
 
     @JvmStatic @SubscribeEvent
-    fun onBiomesRegistry(event: RegistryEvent.Register<Biome>) {
-        LOGGER.info("AAAAAA: Registering biomes")
-        event.registry.registerAll(
-                Glacia.Biomes.PLAINS,
-                Glacia.Biomes.OCEAN,
-                Glacia.Biomes.BEACH,
-                Glacia.Biomes.RIVER
-        )
-        LOGGER.info("AAAAAA: Registered biomes")
-    }
-
-    @JvmStatic @SubscribeEvent
     fun onDimensionModRegistry(event: RegistryEvent.Register<ModDimension>) {
         LOGGER.info("AAAAAA: Registering dimension")
         event.registry.register(Glacia.DIMENSION)
         DimensionManager.registerDimension(Glacia.DIMENSION.registryName, Glacia.DIMENSION, null, true)
         LOGGER.info("AAAAAA: Dimension registered")
     }
+
+    @JvmStatic @SubscribeEvent
+    fun onBlocksRegistry(event: RegistryEvent.Register<Block>) = event.registry.register(Glacia.Blocks)
+
+    @JvmStatic @SubscribeEvent
+    fun onBiomesRegistry(event: RegistryEvent.Register<Biome>) = event.registry.register(Glacia.Biomes)
+
+    @JvmStatic @SubscribeEvent
+    fun onFeatureRegistry(event: RegistryEvent.Register<Feature<*>>) = event.registry.register(Glacia.Feature)
 }

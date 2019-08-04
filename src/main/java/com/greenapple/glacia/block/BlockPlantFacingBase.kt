@@ -22,6 +22,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
 
     init {
         setRegistryName(registryName)
+        defaultState = defaultState.with(OVERWORLD, false)
     }
 
     companion object {

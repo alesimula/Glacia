@@ -1,13 +1,14 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.block.*
+import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.util.BlockRenderLayer
 
-object Glacia_Blocks {
-    val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
-    val GLACIAL_BEDROCK = BlockBase("glacial_bedrock", "Glacial bedrock", Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops()}
+object Glacia_Blocks : IForgeRegistryCollection<Block> {
+    @JvmField val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
+    @JvmStatic val GLACIAL_BEDROCK = BlockBase("glacial_bedrock", "Glacial bedrock", Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops()}
     val GLACIAL_STONE = BlockBase("glacial_stone", "Glacial stone", Material.ROCK) {hardnessAndResistance(2F, 10F)}
     val GLACIAL_COBBLESTONE = BlockBase("glacial_cobblestone", "Glacial cobblestone", Material.ROCK) {hardnessAndResistance(1.8F, 8F)}
     val GLACIAL_MAGIC_STONE = BlockBase("glacial_magic_stone", "Glacial magic stone", Material.ROCK) {hardnessAndResistance(2.3F, 12F)}

@@ -12,6 +12,7 @@ class LayerGlaciaBiome(private val settings: OverworldGenSettings?) : IC0Transfo
     companion object {
         val BIOMES = listOf(
                 BiomeManager.BiomeEntry(Glacia.Biomes.PLAINS, 3),
+                BiomeManager.BiomeEntry(Glacia.Biomes.FOREST, 2),
                 BiomeManager.BiomeEntry(Glacia.Biomes.OCEAN, 2)
         )
     }

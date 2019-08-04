@@ -10,6 +10,8 @@ import net.minecraft.item.DyeColor
 import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorld
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.World
 import java.util.*
 
@@ -30,6 +32,8 @@ open class BlockGlaciaDirt : BlockBase, IBlockBase {
     init {
         defaultState = stateContainer.baseState.with(SNOWY, false)
     }
+
+    override fun canBeReplacedByLogs(state: BlockState?, world: IWorldReader?, pos: BlockPos?) = true
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(SNOWY)
