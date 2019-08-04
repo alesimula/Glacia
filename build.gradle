@@ -108,6 +108,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.14.4-28.0.13'
 
+    //implementation "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
@@ -143,9 +144,21 @@ shadowJar {
     mergeServiceFiles()
     dependencies {
         include(dependency('org.jetbrains.kotlin:.*'))
-        relocate 'kotlin', "${embeddedPackage}.kotlin"
+        //exclude 'kotlin/**/*.kotlin_builtins'
+        relocate ('kotlin', "${embeddedPackage}.kotlin") {
+            //exclude 'kotlin/**/*.kotlin_builtins'
+        }
+        //include 'kotlin/**/*.kotlin_builtins'
     }
 }
+
+/*task unzip(type: Copy) {
+    from reobfJar.matching {
+        include 'foo.txt'
+        include 'bar.txt'
+    }
+    into "$buildDir/unzipped"
+}*/
 
 def reobfFile = file("$buildDir/reobfJar/output.jar")
 def reobfArtifact = artifacts.add('default', reobfFile) {

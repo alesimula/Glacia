@@ -9,6 +9,7 @@ import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentUtils
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.event.RegistryEvent
+import net.minecraftforge.registries.IForgeRegistry
 
 open class BlockItemBase private constructor(val stateInit: BlockState.() -> BlockState, block: Block, val unlocalizedName: String, private val registryNameSuffix: String, builder: Properties) : BlockItem(block, builder) {
 
@@ -47,9 +48,9 @@ open class BlockItemBase private constructor(val stateInit: BlockState.() -> Blo
      * all variants have the same id as their parent plus ".SUFFIX"
      * Ex: mod_test:block_test.state_test
      */
-    fun addVariant(event: RegistryEvent.Register<Item>, registryNameSuffix: String, name: String="${getDisplayName(ItemStack(this)).formattedText} ($registryNameSuffix)", stateInit: BlockState.()->BlockState) : BlockItemBase {
+    fun addVariant(registry: IForgeRegistry<Item>, registryNameSuffix: String, name: String="${getDisplayName(ItemStack(this)).formattedText} ($registryNameSuffix)", stateInit: BlockState.()->BlockState) : BlockItemBase {
         val blockVariant = block.toBlockItemVariant(name, registryNameSuffix, stateInit)
-        event.registry.register(blockVariant)
+        registry.register(blockVariant)
         variants[registryNameSuffix] = blockVariant
         return this
     }

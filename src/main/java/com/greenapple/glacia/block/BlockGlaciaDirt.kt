@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
+import net.minecraft.item.ItemGroup
 import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.util.math.BlockPos
@@ -15,11 +16,11 @@ import net.minecraft.world.IWorldReader
 import net.minecraft.world.World
 import java.util.*
 
-open class BlockGlaciaDirt : BlockBase, IBlockBase {
+open class BlockGlaciaDirt : BlockBase {
 
-    constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, materialColor, initializer.init)
-    constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, dyeColor, initializer.init)
-    constructor(registryName: String, name: String, material: Material, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, initializer.init)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, materialColor, initializer.init)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, dyeColor, initializer.init)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, initializer.init)
 
     companion object {
         val SNOWY = BooleanProperty.create("snowy")

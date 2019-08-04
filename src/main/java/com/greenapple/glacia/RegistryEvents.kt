@@ -31,29 +31,7 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
-        event.registry.registerAll(
-                /** Block items **/
-                Glacia.Blocks.GLACIAL_DIRT.toBlockItem(Glacia.ItemGroup.BLOCKS)
-                        .addVariant(event, "snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)},
-                Glacia.Blocks.GLACIAL_BEDROCK.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_STONE.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_COBBLESTONE.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_MAGIC_STONE.toBlockItem(Glacia.ItemGroup.BREWING),
-                Glacia.Blocks.GLACIA_PORTAL.toBlockItem(Glacia.ItemGroup.BREWING),
-                Glacia.Blocks.GLACIAL_TREE_LOG.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_TREE_LEAVES.toBlockItem(Glacia.ItemGroup.DECORATIONS),
-                Glacia.Blocks.GLACIAL_PLANKS.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_STAIRS.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_CRYSTAL_ORE.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_ICE_ORE.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.SNOWY_SAND.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.GLACIAL_BERRY.toBlockItem(Glacia.ItemGroup.DECORATIONS),
-                Glacia.Blocks.MAGIC_ICE.toBlockItem(Glacia.ItemGroup.BLOCKS),
-                Glacia.Blocks.ICE_COLUMN.toBlockItem(Glacia.ItemGroup.DECORATIONS),
-                Glacia.Blocks.GRANITE_COLUMN.toBlockItem(Glacia.ItemGroup.DECORATIONS),
-                Glacia.Blocks.COMPACTED_ICE.toBlockItem(Glacia.ItemGroup.BLOCKS)
-                //GLACIAL_DIRT.defaultState.with(BlockGlaciaDirt.SNOWY, true).toBlockItem("Glacial Grass", "snowy", ItemGroup.BREWING)
-        )
+        event.registry.registerBlockItems(Glacia.Blocks)
     }
 
     @JvmStatic @SubscribeEvent

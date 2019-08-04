@@ -12,6 +12,7 @@ import net.minecraft.world.gen.Heightmap
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.Hand
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemGroup
 import net.minecraft.network.play.server.*
 import net.minecraft.world.World
 import net.minecraftforge.common.ForgeHooks
@@ -20,9 +21,9 @@ import net.minecraftforge.fml.hooks.BasicEventHooks
 
 open class BlockGlaciaPortal : BlockBase {
 
-    constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor =material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, materialColor, initializer)
-    constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, dyeColor, initializer)
-    constructor(registryName: String, name: String, material: Material, initializer: (Properties.()->Unit)?=null) : super(registryName, name, material, initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, materialColor: MaterialColor =material.color, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, materialColor, initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, dyeColor, initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, initializer: (Properties.()->Unit)?=null) : super(registryName, name, itemGroup, material, initializer)
 
     companion object {
         fun changeDim(player: ServerPlayerEntity, pos: BlockPos, destination: DimensionType) {

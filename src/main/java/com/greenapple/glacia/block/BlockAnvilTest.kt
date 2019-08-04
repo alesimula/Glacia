@@ -2,6 +2,8 @@ package com.greenapple.glacia.block
 
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroup
 import net.minecraft.state.StateContainer
 import net.minecraft.util.Direction
 import net.minecraft.util.Rotation
@@ -11,8 +13,9 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.IBlockReader
+import net.minecraftforge.registries.IForgeRegistry
 
-class BlockAnvilTest(registryName: String, override val unlocalizedName: String, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockBase {
+class BlockAnvilTest(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, material: Material) : FallingBlock(Block.Properties.create(material).apply {}), IBlockBase {
 
     companion object {
         val FACING = HorizontalBlock.HORIZONTAL_FACING
@@ -33,6 +36,7 @@ class BlockAnvilTest(registryName: String, override val unlocalizedName: String,
     }
 
     override var blockItem: BlockItemBase?=null
+    override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
     init {
         this.defaultState = this.stateContainer.baseState.with(FACING, Direction.NORTH)

@@ -4,22 +4,28 @@ import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
+import net.minecraft.item.Item
+import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.storage.loot.LootContext
+import net.minecraftforge.registries.IForgeRegistry
 
-open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockBase {
+open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockBase {
 
-    constructor(registryName: String, name: String, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, materialColor), initializer)
-    constructor(registryName: String, name: String, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : this(registryName, name, Properties.create(material, dyeColor), initializer)
-    constructor(registryName: String, name: String, material: Material, initializer: (Properties.()->Unit)?=null) : this(registryName, name, material, material.color, initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, materialColor: MaterialColor=material.color, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, Properties.create(material, materialColor), initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, Properties.create(material, dyeColor), initializer)
+    constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, material, material.color, initializer)
 
     init {
         setRegistryName(registryName)
     }
+
+    override var blockItem: BlockItemBase?=null
+    override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
     private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
     var isTranslucent = false
@@ -39,6 +45,4 @@ open class BlockBase private constructor (registryName: String, override val unl
 
     override fun isSideInvisible(state: BlockState, adjacentBlockState: BlockState, side: Direction)
             = if (renderLayer !== BlockRenderLayer.SOLID && seeThroughGroup && adjacentBlockState.block === this) true else super.isSideInvisible(state, adjacentBlockState, side)
-
-    override var blockItem: BlockItemBase?=null
 }
