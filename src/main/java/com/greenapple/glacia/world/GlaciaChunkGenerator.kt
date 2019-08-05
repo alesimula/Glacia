@@ -156,9 +156,9 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
 
     override fun carve(p_222538_1_: IChunk, p_222538_2_: GenerationStage.Carving) {}*/
 
-    override fun getPossibleCreatures(creatureType: EntityClassification, pos: BlockPos): List<Biome.SpawnListEntry> {
+    /*override fun getPossibleCreatures(creatureType: EntityClassification, pos: BlockPos): List<Biome.SpawnListEntry> {
         return Biomes.MOUNTAINS.getSpawns(creatureType)
-    }
+    }*/
 
     override fun hasStructure(biomeIn: Biome, structureIn: Structure<out IFeatureConfig>): Boolean {
         return true

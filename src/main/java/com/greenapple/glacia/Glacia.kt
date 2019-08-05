@@ -2,18 +2,18 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
-import com.greenapple.glacia.registry.Glacia_Biomes
-import com.greenapple.glacia.registry.Glacia_Blocks
-import com.greenapple.glacia.registry.Glacia_Feature
-import com.greenapple.glacia.registry.Glacia_ItemGroup
+import com.greenapple.glacia.entity.renderer.RendererGlacialTurtle
+import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
+import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.ModDimension
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -26,6 +26,10 @@ import org.apache.logging.log4j.LogManager
 import java.util.function.BiFunction
 
 import java.util.stream.Collectors
+import net.minecraftforge.fml.client.registry.RenderingRegistry
+import net.minecraftforge.fml.DistExecutor.runWhenOn
+
+
 
 
 @Mod(Glacia.MODID)
@@ -47,6 +51,7 @@ class Glacia {
         @JvmStatic val Blocks; get() = Glacia_Blocks
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup
         @JvmStatic val Biomes; get() = Glacia_Biomes
+        @JvmStatic val Entity; get() = Glacia_Entity
         @JvmStatic val Feature; get() = Glacia_Feature
     }
 
@@ -68,6 +73,9 @@ class Glacia {
     private fun setup(event: FMLCommonSetupEvent) {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT")
+        DistExecutor.runWhenOn(Dist.CLIENT) {Runnable{
+            Entity.registerRenderers()
+        }}
         ///BiomeManager.addBiome(GlaciaLayerUtils.BIOME_TYPE_GLACIA, BiomeEntry(Glacia.Biomes.PLAINS, 3))
         //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
         /*(event.container.modInfo as ModInfo).apply {

@@ -3,6 +3,7 @@ package com.greenapple.glacia
 import com.greenapple.glacia.registry.register
 import com.greenapple.glacia.registry.registerBlockItems
 import net.minecraft.block.Block
+import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -35,6 +36,9 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onBiomesRegistry(event: RegistryEvent.Register<Biome>) = event.registry.register(Glacia.Biomes)
+
+    @JvmStatic @SubscribeEvent
+    fun onEntityRegistry(event: RegistryEvent.Register<EntityType<*>>) = event.registry.register(Glacia.Entity)
 
     @JvmStatic @SubscribeEvent
     fun onFeatureRegistry(event: RegistryEvent.Register<Feature<*>>) = event.registry.register(Glacia.Feature)
