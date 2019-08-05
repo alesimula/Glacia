@@ -1,4 +1,4 @@
-package com.greenapple.glacia
+package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.world.feature.FeatureGlaciaFlora
 import com.greenapple.glacia.world.feature.FeatureGlacialTree

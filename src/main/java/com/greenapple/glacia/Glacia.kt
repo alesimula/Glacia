@@ -2,13 +2,12 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.registry.Glacia_Biomes
+import com.greenapple.glacia.registry.Glacia_Blocks
+import com.greenapple.glacia.registry.Glacia_Feature
+import com.greenapple.glacia.registry.Glacia_ItemGroup
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
-import com.greenapple.glacia.world.layer.GlaciaLayerUtils
-import net.minecraft.block.*
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
@@ -27,9 +26,6 @@ import org.apache.logging.log4j.LogManager
 import java.util.function.BiFunction
 
 import java.util.stream.Collectors
-import net.minecraftforge.common.BiomeManager.BiomeEntry
-import net.minecraftforge.common.BiomeManager
-
 
 
 @Mod(Glacia.MODID)

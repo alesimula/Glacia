@@ -1,4 +1,4 @@
-package com.greenapple.glacia
+package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.world.biome.*
 import net.minecraft.world.biome.Biome

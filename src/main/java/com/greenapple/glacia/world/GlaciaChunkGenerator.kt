@@ -38,7 +38,6 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
         var f = 0.0f
         var f1 = 0.0f
         var f2 = 0.0f
-        val i = 2
         val f3 = this.biomeProvider.func_222366_b(p_222549_1_, p_222549_2_).depth
 
         for (j in -2..2) {
@@ -72,7 +71,6 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
     }
 
     override fun func_222545_a(p_222545_1_: Double, p_222545_3_: Double, p_222545_5_: Int): Double {
-        val d0 = 8.5
         var d1 = (p_222545_5_.toDouble() - (8.5 + p_222545_1_ * 8.5 / 8.0 * 4.0)) * 12.0 * 128.0 / 256.0 / p_222545_3_
         if (d1 < 0.0) {
             d1 *= 4.0
@@ -82,12 +80,6 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
     }
 
     override fun func_222548_a(p_222548_1_: DoubleArray, p_222548_2_: Int, p_222548_3_: Int) {
-        val d0 = 684.412f.toDouble()
-        val d1 = 684.412f.toDouble()
-        val d2 = 8.555149841308594
-        val d3 = 4.277574920654297
-        val i = -10
-        val j = 3
         this.func_222546_a(p_222548_1_, p_222548_2_, p_222548_3_, 684.412f.toDouble(), 684.412f.toDouble(), 8.555149841308594, 4.277574920654297, 3, -10)
     }
 

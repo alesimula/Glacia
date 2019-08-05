@@ -3,7 +3,6 @@ package com.greenapple.glacia.world.layer
 import com.google.common.collect.ImmutableList
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.utils.id
-import net.minecraft.util.registry.Registry
 import net.minecraft.world.WorldType
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.IExtendedNoiseRandom
@@ -12,7 +11,6 @@ import net.minecraft.world.gen.OverworldGenSettings
 import net.minecraft.world.gen.area.IArea
 import net.minecraft.world.gen.area.IAreaFactory
 import net.minecraft.world.gen.layer.*
-import net.minecraftforge.common.BiomeManager
 import net.minecraftforge.common.extensions.IForgeWorldType
 import java.util.function.LongFunction
 
@@ -39,12 +37,12 @@ object GlaciaLayerUtils {
     }}*/
 
     fun <T : IArea, C : IExtendedNoiseRandom<T>> IForgeWorldType.getBiomeLayerGlacia(parentLayer: IAreaFactory<T>, chunkSettings: OverworldGenSettings, contextFactory: LongFunction<C>): IAreaFactory<T> {
-        var parentLayer = parentLayer
-        parentLayer = LayerGlaciaBiome(chunkSettings).apply(contextFactory.apply(200L), parentLayer)
+        var layer = parentLayer
+        layer = LayerGlaciaBiome(chunkSettings).apply(contextFactory.apply(200L), layer)
         //parentLayer = AddBambooForestLayer.INSTANCE.apply(contextFactory.apply(1001L), parentLayer)
-        parentLayer = LayerUtil.repeat(1000L, ZoomLayer.NORMAL, parentLayer, 2, contextFactory)
-        parentLayer = EdgeBiomeLayer.INSTANCE.apply(contextFactory.apply(1000L), parentLayer)
-        return parentLayer
+        layer = LayerUtil.repeat(1000L, ZoomLayer.NORMAL, layer, 2, contextFactory)
+        layer = EdgeBiomeLayer.INSTANCE.apply(contextFactory.apply(1000L), layer)
+        return layer
     }
 
     private fun <T : IArea, C : IExtendedNoiseRandom<T>> buildOverworldProcedure(worldTypeIn: WorldType, settings: OverworldGenSettings, contextFactory: LongFunction<C>): ImmutableList<IAreaFactory<T>> {
@@ -112,7 +110,6 @@ object GlaciaLayerUtils {
     }
 
     fun buildOverworldProcedure(seed: Long, typeIn: WorldType, settings: OverworldGenSettings): Array<Layer> {
-        val i = 25
         val immutablelist = buildOverworldProcedure(typeIn, settings, LongFunction{ p_215737_2_ -> LazyAreaLayerContext(25, seed, p_215737_2_) })
         val layer = Layer(immutablelist[0])
         val layer1 = Layer(immutablelist[1])
