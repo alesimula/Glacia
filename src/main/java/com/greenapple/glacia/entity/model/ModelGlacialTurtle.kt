@@ -8,34 +8,34 @@ import net.minecraft.util.math.MathHelper
 class ModelGlacialTurtle<T: Entity> : EntityModel<T>() {
 
     init {
-        textureWidth = 256
-        textureHeight = 128
+        textureWidth = 88
+        textureHeight = 69
     }
 
-    private val turtleShellBase: RendererModel = RendererModel(this, 0, 0)
-    private val shellRidge: RendererModel = RendererModel(this, 124, 0)
-    private val legFrontRight: RendererModel = RendererModel(this, 0, 44)
-    private val legFrontLeft = RendererModel(this, 0, 44)
-    private val legBackLeft = RendererModel(this, 0, 44)
-    private val legBackRight = RendererModel(this, 0, 44)
-    private val neck = RendererModel(this, 19, 41)
-    private val head = RendererModel(this, 48, 42)
-    private val spike1 = RendererModel(this, 0, 59)
-    private val spike2 = RendererModel(this, 0, 59)
-    private val spike3 = RendererModel(this, 0, 59)
-    private val spike4 = RendererModel(this, 0, 59)
-    private val spike5 = RendererModel(this, 0, 59)
-    private val spike6 = RendererModel(this, 0, 59)
-    private val spike7 = RendererModel(this, 0, 59)
-    private val spike8 = RendererModel(this, 0, 59)
-    private val spike9 = RendererModel(this, 0, 59)
-    private val spike10 = RendererModel(this, 0, 59)
-    private val spike11 = RendererModel(this, 0, 59)
-    private val spike12 = RendererModel(this, 0, 59)
-    private val spike13 = RendererModel(this, 0, 59)
-    private val spike14 = RendererModel(this, 0, 59)
-    private val spike15 = RendererModel(this, 0, 59)
-    private val spike16 = RendererModel(this, 0, 59)
+    private val turtleShellBase: RendererModel = RendererModel(this, 0, 29)
+    private val shellRidge: RendererModel = RendererModel(this, 0, 0)
+    private val legFrontRight: RendererModel = RendererModel(this, 5, 12)
+    private val legFrontLeft = RendererModel(this, 5, 12)
+    private val legBackLeft = RendererModel(this, 5, 12)
+    private val legBackRight = RendererModel(this, 5, 12)
+    private val neck = RendererModel(this, 0, 35)
+    private val head = RendererModel(this, 56, 33)
+    private val spike1 = RendererModel(this, 11, 2)
+    private val spike2 = RendererModel(this, 11, 2)
+    private val spike3 = RendererModel(this, 11, 2)
+    private val spike4 = RendererModel(this, 11, 2)
+    private val spike5 = RendererModel(this, 11, 2)
+    private val spike6 = RendererModel(this, 11, 2)
+    private val spike7 = RendererModel(this, 11, 2)
+    private val spike8 = RendererModel(this, 11, 2)
+    private val spike9 = RendererModel(this, 11, 2)
+    private val spike10 = RendererModel(this, 11, 2)
+    private val spike11 = RendererModel(this, 11, 2)
+    private val spike12 = RendererModel(this, 11, 2)
+    private val spike13 = RendererModel(this, 11, 2)
+    private val spike14 = RendererModel(this, 11, 2)
+    private val spike15 = RendererModel(this, 11, 2)
+    private val spike16 = RendererModel(this, 11, 2)
 
     init {
         turtleShellBase.addBox(0f, 0f, 0f, 16, 16, 24)
