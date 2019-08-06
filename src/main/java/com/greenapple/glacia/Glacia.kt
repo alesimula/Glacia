@@ -2,7 +2,6 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
-import com.greenapple.glacia.entity.renderer.RendererGlacialTurtle
 import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
