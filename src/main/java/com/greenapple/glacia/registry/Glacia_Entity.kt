@@ -14,14 +14,14 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry
 
 object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     private inline fun <reified E: Entity> entityType(registryName: String, classification: EntityClassification, crossinline provider: EntityType<E>.(world: World)->E) : EntityType<E> = EntityType.Builder.create({ type: EntityType<E>, world -> provider(type, world)}, classification).build(registryName).apply {setRegistryName(registryName)}
-    private inline fun <reified E: Entity> EntityType<E>.registerRenderer(crossinline renderer: (manager: EntityRendererManager)->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(E::class.java) {manager -> renderer(manager)}
+    private inline fun <reified E: Entity> EntityType<E>.registerRenderer(crossinline renderer: EntityRendererManager.()->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(E::class.java) {manager -> renderer(manager)}
 
     val GLACIAL_TURTLE = entityType<EntityGlacialTurtle>("glacial_turtle", EntityClassification.CREATURE) {world ->  EntityGlacialTurtle(world)}
     val SABER_TOOTHED_CAT = entityType<EntitySaberToothedCat>("saber_toothed_cat", EntityClassification.CREATURE) {world -> EntitySaberToothedCat(world)}
 
     fun registerRenderers() {
-        GLACIAL_TURTLE.registerRenderer {RendererGlacialTurtle(it)}
-        SABER_TOOTHED_CAT.registerRenderer {RendererSaberToothedCat(it)}
+        GLACIAL_TURTLE.registerRenderer {RendererGlacialTurtle(this)}
+        SABER_TOOTHED_CAT.registerRenderer {RendererSaberToothedCat(this)}
     }
 
     /*init {
