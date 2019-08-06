@@ -15,10 +15,6 @@ import net.minecraftforge.api.distmarker.OnlyIn
 
 class EntitySaberToothedCat(world: World) : TameableEntity(Glacia.Entity.SABER_TOOTHED_CAT, world) {
 
-    companion object {
-        val entityType = EntityType.Builder.create({type : EntityType<EntitySaberToothedCat>, world-> EntitySaberToothedCat(world)}, EntityClassification.CREATURE)
-    }
-
     init {
         this.sitGoal = SitGoal(this)
         this.goalSelector.addGoal(1, SwimGoal(this))
