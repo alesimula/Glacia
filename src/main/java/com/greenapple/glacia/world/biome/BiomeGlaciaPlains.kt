@@ -34,5 +34,6 @@ class BiomeGlaciaPlains : Biome {
         DefaultBiomeFeatures.addFreezeTopLayer(this)
         this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4))
         this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.GLACIAL_TURTLE, 30, 4, 4))
+        this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.SABER_TOOTHED_CAT, 30, 4, 4))
     }
 }

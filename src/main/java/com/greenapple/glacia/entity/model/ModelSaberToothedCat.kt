@@ -3,10 +3,10 @@ package com.greenapple.glacia.entity.model
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.client.renderer.entity.model.RendererModel
 import net.minecraft.client.renderer.model.ModelBox
-import net.minecraft.entity.Entity
+import net.minecraft.entity.passive.TameableEntity
 import net.minecraft.util.math.MathHelper
 
-class ModelSaberToothedCat<T : Entity> : EntityModel<T>() {
+class ModelSaberToothedCat<T : TameableEntity> : EntityModel<T>() {
 
     init {
         textureWidth = 49
@@ -206,8 +206,8 @@ class ModelSaberToothedCat<T : Entity> : EntityModel<T>() {
         this.rotateAngleZ = z
     }
 
-    override fun setLivingAnimations(entityIn: T?, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
-        if (/*entityIn.isSitting()*/ false) {
+    override fun setLivingAnimations(entityIn: T, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+        if (entityIn.isSitting) {
             this.main.rotateAngleX = -Math.PI.toFloat() / 12f
             this.head_bone.rotateAngleX = -main.rotateAngleX
             this.body.rotateAngleX = -Math.PI.toFloat() / 6f
