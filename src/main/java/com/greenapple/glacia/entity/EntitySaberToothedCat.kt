@@ -1,19 +1,14 @@
 package com.greenapple.glacia.entity
 
-import com.greenapple.glacia.Glacia
 import net.minecraft.entity.AgeableEntity
-import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.math.MathHelper
 import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
-class EntitySaberToothedCat(world: World) : TameableEntity(Glacia.Entity.SABER_TOOTHED_CAT, world) {
+class EntitySaberToothedCat(val entityType: EntityType<out TameableEntity>, world: World) : TameableEntity(entityType, world) {
 
     init {
         this.sitGoal = SitGoal(this)
@@ -36,7 +31,7 @@ class EntitySaberToothedCat(world: World) : TameableEntity(Glacia.Entity.SABER_T
         //this.targetSelector.addGoal(5, NearestAttackableTargetGoal(this, AbstractSkeletonEntity::class.java, false))
     }
 
-    override fun createChild(ageable: AgeableEntity) = EntitySaberToothedCat(world)
+    override fun createChild(ageable: AgeableEntity) = EntitySaberToothedCat(entityType, world)
     override fun getVerticalFaceSpeed() = if (this.isSitting) 20 else super.getVerticalFaceSpeed()
 
     override fun registerAttributes() {
