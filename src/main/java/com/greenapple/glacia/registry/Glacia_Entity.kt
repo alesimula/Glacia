@@ -2,9 +2,11 @@ package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.entity.EntityGlacialTurtle
+import com.greenapple.glacia.entity.EntityPenguin
 import com.greenapple.glacia.entity.EntityReindeer
 import com.greenapple.glacia.entity.EntitySaberToothedCat
 import com.greenapple.glacia.entity.model.ModelGlacialTurtle
+import com.greenapple.glacia.entity.model.ModelPenguin
 import com.greenapple.glacia.entity.model.ModelReindeer
 import com.greenapple.glacia.entity.model.ModelSaberToothedCat
 import net.minecraft.client.renderer.entity.EntityRenderer
@@ -30,14 +32,12 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     val GLACIAL_TURTLE = entityType<EntityGlacialTurtle>("glacial_turtle", EntityClassification.CREATURE) {world ->  EntityGlacialTurtle(this, world)}
     val SABER_TOOTHED_CAT = entityType<EntitySaberToothedCat>("saber_toothed_cat", EntityClassification.CREATURE) {world -> EntitySaberToothedCat(this, world)}
     val REINDEER = entityType<EntityReindeer>("reindeer", EntityClassification.CREATURE) {world ->  EntityReindeer(this, world)}
+    val PENGUIN = entityType<EntityPenguin>("penguin", EntityClassification.CREATURE) {world ->  EntityPenguin(this, world) }
 
     fun registerRenderers() {
-        GLACIAL_TURTLE.registerRenderer(ModelGlacialTurtle(), 0.4F)
+        GLACIAL_TURTLE.registerRenderer(ModelGlacialTurtle(), 1F)
         SABER_TOOTHED_CAT.registerRenderer(ModelSaberToothedCat(), 0.2F)
         REINDEER.registerRenderer(ModelReindeer(), 0.33f)
+        PENGUIN.registerRenderer(ModelPenguin(), 0.35f)
     }
-
-    /*init {
-        RenderingRegistry.registerEntityRenderingHandler(EntityGlacialTurtle::class.java) { manager -> RendererGlacialTurtle(manager)}
-    }*/
 }
