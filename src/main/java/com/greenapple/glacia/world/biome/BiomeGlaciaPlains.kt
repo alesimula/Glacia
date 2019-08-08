@@ -37,5 +37,6 @@ class BiomeGlaciaPlains : Biome {
         this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.SABER_TOOTHED_CAT, 12, 4, 4))
         this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.REINDEER, 6, 5, 8))
         this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.PENGUIN, 5, 5, 8))
+        //this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(Glacia.Entity.GLACIAL_SEEKER, 100, 5, 8))
     }
 }
