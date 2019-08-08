@@ -23,7 +23,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry
 
 object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     @Suppress("TYPE_PARAMETER_OF_PROPERTY_NOT_USED_IN_RECEIVER", "UNCHECKED_CAST")
-    private inline val <reified E: Entity> EntityType<*>.type; get() = this as EntityType<E>
+    private inline val <E: Entity> EntityType<*>.type; get() = this as EntityType<E>
     private inline fun <reified E: Entity> entityType(registryName: String, classification: EntityClassification, crossinline provider: EntityType<*>.(world: World)->E) : EntityType<E> = EntityType.Builder.create({ type: EntityType<E>, world -> provider(type, world)}, classification).build(registryName).apply {setRegistryName(registryName)}
     private inline fun <reified E: Entity> EntityType<E>.registerRenderer(crossinline renderer: EntityRendererManager.()->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(E::class.java) {manager -> renderer(manager)}
     private inline fun <reified E: MobEntity> EntityType<E>.registerRenderer(model: EntityModel<E>, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : MobRenderer<E, EntityModel<E>>(this, model, scale) {
