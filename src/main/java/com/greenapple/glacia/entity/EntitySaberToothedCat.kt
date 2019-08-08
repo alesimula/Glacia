@@ -8,7 +8,7 @@ import net.minecraft.entity.passive.*
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.world.World
 
-class EntitySaberToothedCat(val entityType: EntityType<out TameableEntity>, world: World) : TameableEntity(entityType, world) {
+class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: World) : TameableEntity(entityType, world) {
 
     init {
         this.sitGoal = SitGoal(this)
