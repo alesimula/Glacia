@@ -6,6 +6,8 @@ import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraft.item.ItemStack
+import net.minecraft.world.storage.loot.LootContext
 import net.minecraftforge.registries.IForgeRegistry
 
 class BlockRotatedBase private constructor(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, properties: Properties, initializer: (Properties.()->Unit)?=null) : RotatedPillarBlock(properties.apply {initializer?.invoke(this)}), IBlockBase {
@@ -20,4 +22,6 @@ class BlockRotatedBase private constructor(registryName: String, override val un
 
     override var blockItem: BlockItemBase?=null
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
+
+    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.let { item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
 }
