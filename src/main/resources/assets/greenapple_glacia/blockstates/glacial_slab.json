@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "greenapple_glacia:block/glacial_slab" },
+    "type=top": { "model": "greenapple_glacia:block/glacial_slab_top" },
+    "type=double": { "model": "greenapple_glacia:block/glacial_planks" }
+  }
+}

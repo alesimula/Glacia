@@ -29,9 +29,9 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
     }}
-    private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), scale) {
+    private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(zombieArms: Boolean, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), scale) {
         init {
-            this.addLayer(BipedArmorLayer(this, ModelBipedBase(0.5f, true), ModelBipedBase(1.0f, true)))
+            this.addLayer(BipedArmorLayer(this, ModelBipedBase(0.5f, true), ModelBipedBase(0F, zombieArms)))
         }
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
@@ -51,6 +51,6 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
         SABER_TOOTHED_CAT.registerRenderer(ModelSaberToothedCat(), 0.2F)
         REINDEER.registerRenderer(ModelReindeer(), 0.33f)
         PENGUIN.registerRenderer(ModelPenguin(), 0.35f)
-        GLACIAL_SEEKER.registerRendererBiped(1F)
+        GLACIAL_SEEKER.registerRendererBiped(true, 1F)
     }
 }

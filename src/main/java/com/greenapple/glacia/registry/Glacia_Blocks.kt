@@ -19,7 +19,7 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_TREE_LEAVES = BlockBase("glacial_tree_leaves", "Glacial tree leaves", Glacia_ItemGroup.DECORATIONS, Material.LEAVES) {hardnessAndResistance(0.2F).sound(SoundType.PLANT)}
             .apply {renderLayer = BlockRenderLayer.CUTOUT}
     val GLACIAL_PLANKS = BlockBase("glacial_planks", "Glacial wood planks", Glacia_ItemGroup.BLOCKS, Material.WOOD) {hardnessAndResistance(2F, 3F).sound(SoundType.WOOD)}
-    //TODO SLAB
+    val GLACIAL_SLAB = BlockSlabBase("glacial_slab", "Glacial wood slab", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
     val GLACIAL_STAIRS = BlockStairsBase("glacial_stairs", "Glacial wood stairs", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
     //TODO DOOR
     //TODO FENCE
@@ -29,15 +29,17 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     //TODO GLACIAL SAPLING
     //TODO ICE FLOWER
     /*  TODO sand block properties  */
-    val SNOWY_SAND = BlockGlaciaDirt("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
+    val SNOWY_SAND = BlockBase("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
     val GLACIAL_BERRY = BlockPlantFacingBase("glacial_berry", "Glacial berry", Glacia_ItemGroup.DECORATIONS, Material.ORGANIC, 8.0, 14.0) {doesNotBlockMovement().hardnessAndResistance(0F).sound(SoundType.PLANT)}
-    //TODO CRYSTAL OF POWER (custom model)
-    val MAGIC_ICE = BlockGlaciaDirt("magic_ice", "Magic ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(0.8F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
+    val CATALYST_CRYSTAL = BlockGrowingBase("catalyst_crystal", "Catalyst crystal", Glacia_ItemGroup.DECORATIONS, Material.ROCK, 13.0, 9.6) {doesNotBlockMovement().hardnessAndResistance(3.0F).lightValue(14).variableOpacity().sound(SoundType.GLASS)}
+            .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; isTranslucent = true}
+            .validGroundBlocks {material === Material.ROCK}
+    val MAGIC_ICE = BlockBase("magic_ice", "Magic ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(0.8F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
     val ICE_COLUMN = BlockColumnBase("ice_column", "Ice column", Glacia_ItemGroup.DECORATIONS, Material.ICE) {hardnessAndResistance(1.2F, 3F).slipperiness(0.98F).sound(SoundType.GLASS).variableOpacity()}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true}
     val GRANITE_COLUMN = BlockColumnBase("granite_column", "Granite column", Glacia_ItemGroup.DECORATIONS, Material.ROCK) {hardnessAndResistance(1.8F, 8F)}
             .apply {renderLayer = BlockRenderLayer.CUTOUT}
-    val COMPACTED_ICE = BlockGlaciaDirt("compacted_ice", "Compacted ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(1F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
+    val COMPACTED_ICE = BlockBase("compacted_ice", "Compacted ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(1F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
 }
