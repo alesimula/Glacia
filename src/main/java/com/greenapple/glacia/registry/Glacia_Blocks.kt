@@ -4,6 +4,7 @@ import com.greenapple.glacia.block.*
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
+import net.minecraft.potion.Effects
 import net.minecraft.util.BlockRenderLayer
 
 object Glacia_Blocks : IForgeRegistryCollection<Block> {
@@ -22,12 +23,12 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_SLAB = BlockSlabBase("glacial_slab", "Glacial wood slab", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
     val GLACIAL_STAIRS = BlockStairsBase("glacial_stairs", "Glacial wood stairs", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
     //TODO DOOR
-    //TODO FENCE
+    val GLACIAL_FENCE = BlockFenceBase("glacial_fence", "Glacial fence", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
     //TODO GATE
     val GLACIAL_CRYSTAL_ORE = BlockBase("glacial_crystal_ore", "Glacial crystal ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(3.5F, 7F)}
     val GLACIAL_ICE_ORE = BlockBase("glacial_ice_ore", "Glacial ice ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(4F, 8F)}
     //TODO GLACIAL SAPLING
-    //TODO ICE FLOWER
+    val ICE_FLOWER = BlockFlowerBase("ice_flower", "Ice flower", Glacia_ItemGroup.DECORATIONS, Effects.SLOWNESS, 4)
     /*  TODO sand block properties  */
     val SNOWY_SAND = BlockBase("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
     val GLACIAL_BERRY = BlockPlantFacingBase("glacial_berry", "Glacial berry", Glacia_ItemGroup.DECORATIONS, Material.ORGANIC, 8.0, 14.0) {doesNotBlockMovement().hardnessAndResistance(0F).sound(SoundType.PLANT)}

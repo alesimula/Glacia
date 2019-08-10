@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "greenapple_glacia:blocks/ice_flower"
+  }
+}

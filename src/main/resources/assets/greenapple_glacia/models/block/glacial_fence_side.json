@@ -1,0 +1,6 @@
+{
+    "parent": "block/fence_side",
+    "textures": {
+        "texture": "greenapple_glacia:blocks/glacial_planks"
+    }
+}
