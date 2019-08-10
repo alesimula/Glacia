@@ -1,10 +1,11 @@
 package com.greenapple.glacia.delegate
 
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 open class ReflectField<This: Any,Return> (thisRef: KClass<This>, name: String) {
-    private val field by lazy {thisRef.java.getDeclaredField(name).apply {isAccessible=true}}
+    private val field by lazy {ObfuscationReflectionHelper.findField(thisRef.java, name)}
 
     @Suppress("UNCHECKED_CAST")
     operator fun getValue(thisRef:This?,property:KProperty<*>) = field.get(thisRef) as Return
