@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "greenapple_glacia:blocks/glacial_stone"
+    "all": "greenapple_glacia:block/glacial_stone"
   }
 }

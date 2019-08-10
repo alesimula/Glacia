@@ -29,8 +29,8 @@
 		}
 	},
 	"textures": {
-		"surface": "greenapple_glacia:blocks/catalyst_crystal",
-		"particle": "greenapple_glacia:blocks/catalyst_crystal"
+		"surface": "greenapple_glacia:block/catalyst_crystal",
+		"particle": "greenapple_glacia:block/catalyst_crystal"
 	},
 	"elements": [
 		{

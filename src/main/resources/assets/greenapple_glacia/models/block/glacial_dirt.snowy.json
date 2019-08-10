@@ -1,12 +1,12 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "up": "greenapple_glacia:blocks/glacial_snow",
-    "east": "greenapple_glacia:blocks/glacial_snowy_dirt",
-    "west": "greenapple_glacia:blocks/glacial_snowy_dirt",
-    "north": "greenapple_glacia:blocks/glacial_snowy_dirt",
-    "south": "greenapple_glacia:blocks/glacial_snowy_dirt",
-    "down": "greenapple_glacia:blocks/glacial_dirt",
-    "particle": "greenapple_glacia:blocks/glacial_dirt"
+    "up": "greenapple_glacia:block/glacial_snow",
+    "east": "greenapple_glacia:block/glacial_snowy_dirt",
+    "west": "greenapple_glacia:block/glacial_snowy_dirt",
+    "north": "greenapple_glacia:block/glacial_snowy_dirt",
+    "south": "greenapple_glacia:block/glacial_snowy_dirt",
+    "down": "greenapple_glacia:block/glacial_dirt",
+    "particle": "greenapple_glacia:block/glacial_dirt"
   }
 }
