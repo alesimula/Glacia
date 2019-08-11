@@ -32,9 +32,9 @@ fun PlayerEntity.morph(renderer: PlayerRenderer, model: PlayerModel<AbstractClie
     renderer.MODEL_PLAYER_DEFAULT
     if (renderer.entityModel !== newModel) {
         (player as? AbstractClientPlayerEntity)?.playerInfoKt?.playerTexturesKt?.apply {
-            texture?.also {
+            if (texture != null)
                 this[MinecraftProfileTexture.Type.SKIN] = texture
-            } ?: apply {
+            else {
                 this.remove(MinecraftProfileTexture.Type.SKIN)
                 player.playerInfoKt.playerTexturesLoadedKt = false
                 this[MinecraftProfileTexture.Type.SKIN] = player.locationSkin
