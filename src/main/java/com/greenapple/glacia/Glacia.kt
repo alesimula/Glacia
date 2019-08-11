@@ -2,20 +2,14 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
-import com.greenapple.glacia.entity.model.ModelPlayerSnowMan
 import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
-import com.greenapple.glacia.utils.morph
 import com.greenapple.glacia.world.GlaciaDimension
-import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.entity.PlayerRenderer
-import net.minecraft.util.ResourceLocation
+import com.greenapple.glacia.event.RenderingEvents
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
 import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.client.event.RenderHandEvent
-import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.ModDimension
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -67,6 +61,7 @@ class Glacia {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this)
+        MinecraftForge.EVENT_BUS.register(RenderingEvents())
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
@@ -110,19 +105,5 @@ class Glacia {
     fun onServerStarting(event: FMLServerStartingEvent) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting")
-    }
-
-    private val MODEL_SNOWMAN = ModelPlayerSnowMan(0)
-    private val TEXTURE_SNOWMAN = ResourceLocation(MODID, "textures/entity/player_snowman.png")
-
-    @SubscribeEvent
-    fun onRenderPlayerThirdPerson(event: RenderPlayerEvent.Pre) {
-        event.renderer.morph(event.entityPlayer, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
-    }
-
-    @SubscribeEvent
-    fun onRenderPlayerFirstPerson(event: RenderHandEvent) = Minecraft.getInstance().apply {
-        val renderer = renderManager.getRenderer(player) as PlayerRenderer
-        renderer.morph(player, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
     }
 }

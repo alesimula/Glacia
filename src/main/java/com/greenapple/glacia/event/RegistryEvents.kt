@@ -1,5 +1,6 @@
-package com.greenapple.glacia
+package com.greenapple.glacia.event
 
+import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.registry.register
 import com.greenapple.glacia.registry.registerBlockItems
 import net.minecraft.block.Block
