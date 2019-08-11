@@ -1,6 +1,5 @@
 package com.greenapple.glacia.utils
 
-import com.greenapple.glacia.delegate.LazyWithReceiver
 import com.greenapple.glacia.delegate.ReflectField
 import com.greenapple.glacia.delegate.SingletonReceiver
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
@@ -27,10 +26,13 @@ private val PlayerRenderer.MODEL_PLAYER_DEFAULT by SingletonReceiver<PlayerRende
 private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT by SingletonReceiver<BipedArmorLayer<*,*,*>, BipedArmorLayer<*,*,*>> {this}
 private fun <T: Entity, M: EntityModel<T>> LayerRenderer<*, *>.autoCast() = this as LayerRenderer<T, M>
 
-fun PlayerEntity.morph(renderer: PlayerRenderer, model: PlayerModel<AbstractClientPlayerEntity>?=null, texture: ResourceLocation?=null) = (model?:renderer.MODEL_PLAYER_DEFAULT).let { newModel ->
-    val player = this
-    renderer.MODEL_PLAYER_DEFAULT
-    if (renderer.entityModel !== newModel) {
+/**
+ * Morphs a player with given model and texture
+ * Not passing model and texture will morph the player to its original form
+ */
+fun PlayerRenderer.morph(player: PlayerEntity, model: PlayerModel<AbstractClientPlayerEntity>?=null, texture: ResourceLocation?=null) = (model?:MODEL_PLAYER_DEFAULT).let { newModel ->
+    MODEL_PLAYER_DEFAULT
+    if (entityModel !== newModel) {
         (player as? AbstractClientPlayerEntity)?.playerInfoKt?.playerTexturesKt?.apply {
             if (texture != null)
                 this[MinecraftProfileTexture.Type.SKIN] = texture
@@ -40,15 +42,15 @@ fun PlayerEntity.morph(renderer: PlayerRenderer, model: PlayerModel<AbstractClie
                 this[MinecraftProfileTexture.Type.SKIN] = player.locationSkin
             }
         }
-        renderer.layerRenderersKt.let {renderers-> renderers.forEachIndexed {index, layerRenderer ->
+        layerRenderersKt.let {renderers-> renderers.forEachIndexed {index, layerRenderer ->
             (layerRenderer as? BipedArmorLayer<*, *, *>)?.apply {
                 LAYER_ARMOR_DEFAULT
                 //if (model != null) renderers[index] = BipedArmorLayer(renderer, modelPlayerSnowManArmor, modelPlayerSnowManArmor2)
-                if (model != null) renderers[index] = BipedArmorLayer(renderer, null, null)
+                if (model != null) renderers[index] = BipedArmorLayer(this@morph, null, null)
                 else renderers[index] = LAYER_ARMOR_DEFAULT.autoCast()
                 return@forEachIndexed
             }
         }}
-        renderer.entityModelKt = newModel
+        entityModelKt = newModel
     }
 }

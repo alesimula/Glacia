@@ -117,12 +117,12 @@ class Glacia {
 
     @SubscribeEvent
     fun onRenderPlayerThirdPerson(event: RenderPlayerEvent.Pre) {
-        event.entityPlayer.morph(event.renderer, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
+        event.renderer.morph(event.entityPlayer, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
     }
 
     @SubscribeEvent
     fun onRenderPlayerFirstPerson(event: RenderHandEvent) = Minecraft.getInstance().apply {
         val renderer = renderManager.getRenderer(player) as PlayerRenderer
-        player.morph(renderer, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
+        renderer.morph(player, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
     }
 }
