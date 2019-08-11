@@ -30,3 +30,5 @@ open class LazyWithReceiver<This: Any,Return> (weak: Boolean?=true, nullable: No
 
     class Consumer<This: Any> (weak: Boolean?=true, initializer:This.()->Unit) : LazyWithReceiver<This, Unit>(weak,{initializer()})
 }
+
+inline fun <reified This: Any, Return>SingletonReceiver(crossinline initializer: This.()->Return) = LazyWithReceiver<This, Return>(This::class.let {null}) {initializer.invoke(this)}

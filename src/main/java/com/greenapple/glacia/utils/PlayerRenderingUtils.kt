@@ -2,6 +2,7 @@ package com.greenapple.glacia.utils
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
 import com.greenapple.glacia.delegate.ReflectField
+import com.greenapple.glacia.delegate.SingletonReceiver
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity
 import net.minecraft.client.network.play.NetworkPlayerInfo
@@ -22,8 +23,8 @@ private var AbstractClientPlayerEntity.playerInfoKt : NetworkPlayerInfo by Refle
 private var NetworkPlayerInfo.playerTexturesKt : MutableMap<MinecraftProfileTexture.Type, ResourceLocation> by ReflectField("field_187107_a")
 private var NetworkPlayerInfo.playerTexturesLoadedKt : Boolean by ReflectField("field_178864_d")
 
-private val PlayerRenderer.MODEL_PLAYER_DEFAULT by LazyWithReceiver<PlayerRenderer, PlayerModel<AbstractClientPlayerEntity>>(null) {entityModel}
-private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT by LazyWithReceiver<BipedArmorLayer<*,*,*>, BipedArmorLayer<*,*,*>>(null) {this}
+private val PlayerRenderer.MODEL_PLAYER_DEFAULT by SingletonReceiver<PlayerRenderer, PlayerModel<AbstractClientPlayerEntity>> {entityModel}
+private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT by SingletonReceiver<BipedArmorLayer<*,*,*>, BipedArmorLayer<*,*,*>> {this}
 private fun <T: Entity, M: EntityModel<T>> LayerRenderer<*, *>.autoCast() = this as LayerRenderer<T, M>
 
 fun PlayerEntity.morph(renderer: PlayerRenderer, model: PlayerModel<AbstractClientPlayerEntity>?=null, texture: ResourceLocation?=null) = (model?:renderer.MODEL_PLAYER_DEFAULT).let { newModel ->
