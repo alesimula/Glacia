@@ -33,6 +33,7 @@ open class BlockGlaciaDirt : BlockBase {
     init {
         defaultState = stateContainer.baseState.with(SNOWY, false)
     }
+    val stateSnowy = defaultState.with(SNOWY, true)
 
     override fun canBeReplacedByLogs(state: BlockState?, world: IWorldReader?, pos: BlockPos?) = true
 

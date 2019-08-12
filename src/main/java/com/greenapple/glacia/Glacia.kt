@@ -47,6 +47,7 @@ class Glacia {
         @JvmStatic val Biomes; get() = Glacia_Biomes
         @JvmStatic val Entity; get() = Glacia_Entity
         @JvmStatic val Feature; get() = Glacia_Feature
+        @JvmStatic val Effects; get() = Glacia_Effects
     }
 
     init {
@@ -68,7 +69,7 @@ class Glacia {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT")
         DistExecutor.runWhenOn(Dist.CLIENT) {Runnable{
-            Entity.registerRenderers()
+            Entity.registerProperties()
         }}
         ///BiomeManager.addBiome(GlaciaLayerUtils.BIOME_TYPE_GLACIA, BiomeEntry(Glacia.Biomes.PLAINS, 3))
         //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)

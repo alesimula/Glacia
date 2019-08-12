@@ -6,6 +6,7 @@ import com.greenapple.glacia.registry.registerBlockItems
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.item.Item
+import net.minecraft.potion.Effect
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
@@ -43,4 +44,7 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onFeatureRegistry(event: RegistryEvent.Register<Feature<*>>) = event.registry.register(Glacia.Feature)
+
+    @JvmStatic @SubscribeEvent
+    fun onPotionEffectRegistry(event: RegistryEvent.Register<Effect>) = event.registry.register(Glacia.Effects)
 }
