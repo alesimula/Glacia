@@ -1,5 +1,6 @@
-package com.greenapple.glacia.block
+package com.greenapple.glacia.item
 
+import com.greenapple.glacia.block.IBlockBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.item.*
@@ -8,7 +9,6 @@ import net.minecraft.util.Util
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentUtils
 import net.minecraft.util.text.TranslationTextComponent
-import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.registries.IForgeRegistry
 
 open class BlockItemBase private constructor(val stateInit: BlockState.() -> BlockState, block: Block, val unlocalizedName: String, private val registryNameSuffix: String, builder: Properties) : BlockItem(block, builder) {
@@ -62,5 +62,5 @@ open class BlockItemBase private constructor(val stateInit: BlockState.() -> Blo
     }
 }
 
-fun Block.toBlockItem(name: String, group: ItemGroup?=null) = (Item.BLOCK_TO_ITEM[this] as? BlockItemBase)?.takeIf {it.unlocalizedName == name} ?: BlockItemBase(this, name, Item.Properties().apply {group?.let {group(it)}})
+fun Block.toBlockItem(name: String, group: ItemGroup?=null) = (Item.BLOCK_TO_ITEM[this] as? BlockItemBase)?.takeIf {it.unlocalizedName == name} ?: BlockItemBase(this, name, Item.Properties().apply { group?.let { group(it) } })
 fun IBlockBase.toBlockItem(group: ItemGroup?=null) = blockItem?.let {group?.let {null} ?: it} ?: block.toBlockItem(unlocalizedName, group)

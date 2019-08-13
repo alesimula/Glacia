@@ -43,6 +43,7 @@ class Glacia {
         @JvmStatic val DIMENSION = ModDimensionBase(MODID, "glacia") {world -> GlaciaDimension(world, this)}
 
         @JvmStatic val Blocks; get() = Glacia_Blocks
+        @JvmStatic val Items; get() = Glacia_Items
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup
         @JvmStatic val Biomes; get() = Glacia_Biomes
         @JvmStatic val Entity; get() = Glacia_Entity

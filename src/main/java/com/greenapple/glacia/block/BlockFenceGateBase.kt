@@ -1,5 +1,6 @@
 package com.greenapple.glacia.block
 
+import com.greenapple.glacia.item.BlockItemBase
 import net.minecraft.block.*
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup

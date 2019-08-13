@@ -1,6 +1,7 @@
 package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
+import com.greenapple.glacia.item.BlockItemBase
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor

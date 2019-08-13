@@ -1,12 +1,11 @@
 package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.utils.registry
-import net.minecraft.block.Block
+import com.greenapple.glacia.item.BlockItemBase
+import com.greenapple.glacia.item.toBlockItem
 import net.minecraft.block.BlockState
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
 import net.minecraftforge.common.extensions.IForgeBlock
