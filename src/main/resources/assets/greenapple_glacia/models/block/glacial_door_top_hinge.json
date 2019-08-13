@@ -1,0 +1,7 @@
+{
+    "parent": "block/door_top_rh",
+    "textures": {
+        "bottom": "greenapple_glacia:block/glacial_door_bottom",
+        "top": "greenapple_glacia:block/glacial_door_top"
+    }
+}

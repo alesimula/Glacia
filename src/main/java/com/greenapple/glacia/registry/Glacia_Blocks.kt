@@ -22,9 +22,9 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_PLANKS = BlockBase("glacial_planks", "Glacial wood planks", Glacia_ItemGroup.BLOCKS, Material.WOOD) {hardnessAndResistance(2F, 3F).sound(SoundType.WOOD)}
     val GLACIAL_SLAB = BlockSlabBase("glacial_slab", "Glacial wood slab", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
     val GLACIAL_STAIRS = BlockStairsBase("glacial_stairs", "Glacial wood stairs", Glacia_ItemGroup.BLOCKS, GLACIAL_PLANKS)
-    //TODO DOOR
+    val GLACIAL_DOOR = BlockDoorBase("glacial_door", "Glacial door", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
     val GLACIAL_FENCE = BlockFenceBase("glacial_fence", "Glacial fence", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
-    //TODO GATE
+    val GLACIAL_FENCE_GATE = BlockFenceGateBase("glacial_fence_gate", "Glacial fence gate", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
     val GLACIAL_CRYSTAL_ORE = BlockBase("glacial_crystal_ore", "Glacial crystal ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(3.5F, 7F)}
     val GLACIAL_ICE_ORE = BlockBase("glacial_ice_ore", "Glacial ice ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(4F, 8F)}
     //TODO GLACIAL SAPLING
