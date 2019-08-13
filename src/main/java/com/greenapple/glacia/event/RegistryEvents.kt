@@ -21,16 +21,17 @@ object RegistryEvents {
     private val LOGGER = LogManager.getLogger()
 
     @JvmStatic @SubscribeEvent
-    fun onItemsRegistry(event: RegistryEvent.Register<Item>) {
-        event.registry.registerBlockItems(Glacia.Blocks)
-    }
-
-    @JvmStatic @SubscribeEvent
     fun onDimensionModRegistry(event: RegistryEvent.Register<ModDimension>) {
         LOGGER.info("AAAAAA: Registering dimension")
         event.registry.register(Glacia.DIMENSION)
         DimensionManager.registerDimension(Glacia.DIMENSION.registryName, Glacia.DIMENSION, null, true)
         LOGGER.info("AAAAAA: Dimension registered")
+    }
+
+    @JvmStatic @SubscribeEvent
+    fun onItemsRegistry(event: RegistryEvent.Register<Item>) = event.registry.run {
+        registerBlockItems(Glacia.Blocks)
+        register(Glacia.Items)
     }
 
     @JvmStatic @SubscribeEvent
