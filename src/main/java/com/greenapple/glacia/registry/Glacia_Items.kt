@@ -6,57 +6,62 @@ import com.greenapple.glacia.item.ItemFoodBase
 import net.minecraft.item.Item
 
 object Glacia_Items : IForgeRegistryCollection<Item> {
-    val THING = ItemBase("thing", "I am stuff", Glacia.ItemGroup.FOOD)
     //Food
     val SABER_TOOTHED_CAT_MEAT = ItemFoodBase("saber_toothed_cat_meat", "Saber-toothed Cat Meat", 3, 0.3F) {meat()}
     val SABER_TOOTHED_CAT_MEAT_COOKED = ItemFoodBase("saber_toothed_cat_meat_cooked", "Seared Saber-toothed Cat Meat", 9, 0.9F) {meat()}
-    val GLACIAL_BERRY = ItemFoodBase("glacial_berry2", "Glacial berry", 1, 0.1F)
+    val GLACIAL_BERRY = ItemFoodBase("glacial_berry", "Glacial berry", 1, 0.1F)
+    //Materials
+    val GLACIAL_CRYSTAL = ItemBase("glacial_crystal", "Glacial Crystal", Glacia.ItemGroup.MATERIALS)
+    val GLACIAL_ICE = ItemBase("glacial_ice", "Glacial Ice", Glacia.ItemGroup.MATERIALS)
+    val CRYSTAL_ROD = ItemBase("crystal_rod", "Crystal Rod", Glacia.ItemGroup.MATERIALS)
+    val ICE_ROD = ItemBase("ice_rod", "Ice Rod", Glacia.ItemGroup.MATERIALS)
+    val MAGIC_STONE_SHARD = ItemBase("magic_stone_shard", "Magic Stone Shard", Glacia.ItemGroup.MATERIALS)
+    val GLACIAL_WOOD_ROD = ItemBase("glacial_wood_rod", "Glacial Wood Rod", Glacia.ItemGroup.MATERIALS)
 
-    //var ItemGlacialDoor: Item? = null
-    //var ItemGlacialCrystal: Item? = null
-    //var CrystalHelmet: Item? = null
-    //var CrystalBody: Item? = null
-    //var CrystalLegs: Item? = null
-    //var CrystalBoots: Item? = null
-    //var CrystalSword: Item? = null
-    //var CrystalPickaxe: Item? = null
-    //var CrystalAxe: Item? = null
-    //var CrystalShovel: Item? = null
-    //var CrystalHoe: Item? = null
-    //var ItemGlacialIce: Item? = null
-    //var IceHelmet: Item? = null
-    //var IceBody: Item? = null
-    //var IceLegs: Item? = null
-    //var IceBoots: Item? = null
-    //var IceSword: Item? = null
-    //var CrystalRod: Item? = null
-    //var IceBastardSword: Item? = null
-    //var IceDagger: Item? = null
-    //var IceWarHammer: Item? = null
-    //var IceRod: Item? = null
-    //var IcePickaxe: Item? = null
-    //var IceAxe: Item? = null
-    //var IceShovel: Item? = null
-    //var IceHoe: Item? = null
-    //var PortalSwitcher: Item? = null
-    //var MagicStonePiece: Item? = null
-    //var GlacialWoodRod: Item? = null
-    //var GlacialWoodSword: Item? = null
-    //var GlacialWoodPickaxe: Item? = null
-    //var GlacialWoodAxe: Item? = null
-    //var GlacialWoodShovel: Item? = null
-    //var GlacialWoodHoe: Item? = null
-    //var MisteriousBody: Item? = null
-    //var MisteriousArmorPiece: Item? = null
-    //var BrokenQuadiumBulb: Item? = null
-    //var QuadiumBulb: Item? = null
-    //var PenguinFeathers: Item? = null
-    //var ItemGlaciaBlueStone: Item? = null
-    //var QuadiumPearl: Item? = null
+    //CrystalHelmet.setCreativeTab(GlaciaCreativeTabCombat);
+    //CrystalBody.setCreativeTab(GlaciaCreativeTabCombat);
+    //CrystalLegs.setCreativeTab(GlaciaCreativeTabCombat);
+    //CrystalBoots.setCreativeTab(GlaciaCreativeTabCombat);
+    //CrystalSword.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceHelmet.setCreativeTab(GlaciaCreativeTabCombat);
     //var GlacialTurtleHead: Item? = null
     //var GlacialTurtleShell: Item? = null
     //var GlacialTurtleLimbs: Item? = null
     //var GlacialTurtlePaws: Item? = null
     //var GlacialReturnRune: Item? = null
-    //var GlaciaPotionMorphSnowman: Item? = null
+    //IceBody.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceLegs.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceBoots.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceSword.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceBastardSword.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceDagger.setCreativeTab(GlaciaCreativeTabCombat);
+    //IceWarHammer.setCreativeTab(GlaciaCreativeTabCombat);
+    //GlacialWoodSword.setCreativeTab(GlaciaCreativeTabCombat);
+    //MisteriousBody.setCreativeTab(GlaciaCreativeTabCombat);
+
+    //ItemGlacialDoor.setCreativeTab(GlaciaCreativeTabMisc);
+    //MisteriousArmorPiece.setCreativeTab(GlaciaCreativeTabMisc);
+    //PenguinFeathers.setCreativeTab(GlaciaCreativeTabMisc);
+
+    //CrystalPickaxe.setCreativeTab(GlaciaCreativeTabTools);
+    //CrystalAxe.setCreativeTab(GlaciaCreativeTabTools);
+    //CrystalShovel.setCreativeTab(GlaciaCreativeTabTools);
+    //CrystalHoe.setCreativeTab(GlaciaCreativeTabTools);
+    //IcePickaxe.setCreativeTab(GlaciaCreativeTabTools);
+    //IceAxe.setCreativeTab(GlaciaCreativeTabTools);
+    //IceShovel.setCreativeTab(GlaciaCreativeTabTools);
+    //IceHoe.setCreativeTab(GlaciaCreativeTabTools);
+    //GlacialWoodPickaxe.setCreativeTab(GlaciaCreativeTabTools);
+    //GlacialWoodAxe.setCreativeTab(GlaciaCreativeTabTools);
+    //GlacialWoodShovel.setCreativeTab(GlaciaCreativeTabTools);
+    //GlacialWoodHoe.setCreativeTab(GlaciaCreativeTabTools);
+
+    //PortalSwitcher.setCreativeTab(GlaciaCreativeTabBrewing);
+    //BrokenQuadiumBulb.setCreativeTab(GlaciaCreativeTabBrewing);
+    //QuadiumBulb.setCreativeTab(GlaciaCreativeTabBrewing);
+    //QuadiumPearl.setCreativeTab(GlaciaCreativeTabBrewing);
+    //GlacialReturnRune.setCreativeTab(GlaciaCreativeTabBrewing);
+    //GlaciaPotionMorphSnowman.setCreativeTab(GlaciaCreativeTabBrewing);
+
+    //ItemGlaciaBlueStone.setCreativeTab(GlaciaCreativeTabBluestone);
 }
