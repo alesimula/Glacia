@@ -5,6 +5,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.item.*
 import net.minecraft.util.NonNullList
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.Util
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TextComponentUtils
@@ -13,13 +14,14 @@ import net.minecraftforge.registries.IForgeRegistry
 
 open class BlockItemBase private constructor(val stateInit: BlockState.() -> BlockState, block: Block, val unlocalizedName: String, private val registryNameSuffix: String, builder: Properties) : BlockItem(block, builder) {
 
+    private val translationRegistryName = if (registryNameSuffix.isEmpty()) block.registryName else block.registryName?.run {ResourceLocation(namespace,"$path.$registryNameSuffix")}
+
     init {
+        translationRegistryName?.run {setRegistryName(namespace, "block.$path")}
         if (registryNameSuffix.isEmpty()) {
             (block as? IBlockBase)?.blockItem = this
-            registryName = block.registryName
             if (BLOCK_TO_ITEM[block] !is BlockItemBase) BLOCK_TO_ITEM[block] = this
         }
-        else setRegistryName("${block.registryName?.path}.$registryNameSuffix")
     }
 
     constructor(block: Block, name: String, builder: Properties) : this({this}, block, name,"", builder)
@@ -30,7 +32,7 @@ open class BlockItemBase private constructor(val stateInit: BlockState.() -> Blo
     }
 
     private val unlocalizedNameText : ITextComponent by lazy {TextComponentUtils.toTextComponent {unlocalizedName}}
-    private val variantTranslationKey by lazy {Util.makeTranslationKey("block", registryName);}
+    private val variantTranslationKey by lazy {Util.makeTranslationKey("block", translationRegistryName);}
     private val variants = linkedMapOf<String, BlockItemBase>()
     val isVariant = registryNameSuffix.isNotEmpty()
 
