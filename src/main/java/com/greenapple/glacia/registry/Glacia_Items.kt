@@ -17,6 +17,9 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val ICE_ROD = ItemBase("ice_rod", "Ice Rod", Glacia.ItemGroup.MATERIALS)
     val MAGIC_STONE_SHARD = ItemBase("magic_stone_shard", "Magic Stone Shard", Glacia.ItemGroup.MATERIALS)
     val GLACIAL_WOOD_ROD = ItemBase("glacial_wood_rod", "Glacial Wood Rod", Glacia.ItemGroup.MATERIALS)
+    //Misc
+    val MYSTERIUS_ARMOR_SHARD = ItemBase("mysterious_armor_shard", "Mysterious Armor Shard", Glacia.ItemGroup.MISC)
+    val PENGUIN_FEATHERS = ItemBase("penguin_feathers", "Penguin Feathers", Glacia.ItemGroup.MISC)
 
     //CrystalHelmet.setCreativeTab(GlaciaCreativeTabCombat);
     //CrystalBody.setCreativeTab(GlaciaCreativeTabCombat);
@@ -38,10 +41,6 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     //IceWarHammer.setCreativeTab(GlaciaCreativeTabCombat);
     //GlacialWoodSword.setCreativeTab(GlaciaCreativeTabCombat);
     //MisteriousBody.setCreativeTab(GlaciaCreativeTabCombat);
-
-    //ItemGlacialDoor.setCreativeTab(GlaciaCreativeTabMisc);
-    //MisteriousArmorPiece.setCreativeTab(GlaciaCreativeTabMisc);
-    //PenguinFeathers.setCreativeTab(GlaciaCreativeTabMisc);
 
     //CrystalPickaxe.setCreativeTab(GlaciaCreativeTabTools);
     //CrystalAxe.setCreativeTab(GlaciaCreativeTabTools);

@@ -12,7 +12,7 @@ class Glacia_ItemGroup private constructor(name: String, private val iconItemPro
         @JvmStatic val DECORATIONS : ItemGroup = Glacia_ItemGroup("decorations") {Glacia.Blocks.GLACIAL_BERRY.blockItem} //TODO sapling icon
         @JvmStatic val BLUESTONE : ItemGroup = Glacia_ItemGroup("bluestone") {Glacia.Blocks.GLACIAL_STONE.blockItem}
         @JvmStatic val TRANSPORTING : ItemGroup = Glacia_ItemGroup("transporting") {Glacia.Blocks.GLACIAL_STONE.blockItem}
-        @JvmStatic val MISC : ItemGroup = Glacia_ItemGroup("misc") {Glacia.Blocks.GLACIAL_STONE.blockItem}
+        @JvmStatic val MISC : ItemGroup = Glacia_ItemGroup("misc") {Glacia.Items.PENGUIN_FEATHERS}
         @JvmStatic val FOOD : ItemGroup = Glacia_ItemGroup("food") {Glacia.Items.SABER_TOOTHED_CAT_MEAT}
         @JvmStatic val TOOLS : ItemGroup = Glacia_ItemGroup("tools") {Glacia.Blocks.GLACIAL_STONE.blockItem}
         @JvmStatic val COMBAT : ItemGroup = Glacia_ItemGroup("combat") {Glacia.Blocks.GLACIAL_STONE.blockItem}
