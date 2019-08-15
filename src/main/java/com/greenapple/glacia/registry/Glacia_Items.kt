@@ -2,6 +2,7 @@ package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.*
+import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.*
 
 @Suppress("UNUSED")
@@ -40,22 +41,21 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val ICE_DAGGER = ItemSwordBase("ice_dagger", "Ice Dagger", ItemTier.DIAMOND, 3, -1.3F)
     val ICE_BASTARD_SWORD = ItemSwordBase("ice_bastard_sword", "Ice Bastard Sword", ItemTier.DIAMOND, 5, -2.7F)
     val ICE_WARHAMMER = ItemSwordBase("ice_warhammer", "Ice Warhammer", ItemTier.DIAMOND, 8, -3.8F)
+    val CRYSTAL_HELMET = ItemArmorBase("crystal_helmet", "Crystal Helmet", ArmorMaterial.IRON, EquipmentSlotType.HEAD)
+    val CRYSTAL_CHESTPLATE = ItemArmorBase("crystal_chestplate", "Crystal Chestplate", ArmorMaterial.IRON, EquipmentSlotType.CHEST)
+    val CRYSTAL_LEGGINGS = ItemArmorBase("crystal_leggings", "Crystal Leggings", ArmorMaterial.IRON, EquipmentSlotType.LEGS)
+    val CRYSTAL_BOOTS = ItemArmorBase("crystal_boots", "Crystal Boots", ArmorMaterial.IRON, EquipmentSlotType.FEET)
+    val ICE_HELMET = ItemArmorBase("ice_helmet", "Ice Helmet", ArmorMaterial.DIAMOND, EquipmentSlotType.HEAD)
+    val ICE_CHESTPLATE = ItemArmorBase("ice_chestplate", "Ice Chestplate", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
+    val ICE_LEGGINGS = ItemArmorBase("ice_leggings", "Ice Leggings", ArmorMaterial.DIAMOND, EquipmentSlotType.LEGS)
+    val ICE_BOOTS = ItemArmorBase("ice_boots", "Ice Boots", ArmorMaterial.DIAMOND, EquipmentSlotType.FEET)
+    val TURTLE_HEAD = ItemArmorBase("turtle_head", "Turtle Head", ArmorMaterial.DIAMOND, EquipmentSlotType.HEAD)
+    val TURTLE_SHELL = ItemArmorBase("turtle_shell", "Turtle Shell", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
+    val TURTLE_LIMBS = ItemArmorBase("turtle_limbs", "Turtle Limbs", ArmorMaterial.DIAMOND, EquipmentSlotType.LEGS)
+    val TURTLE_PAWS = ItemArmorBase("turtle_paws", "Turtle Paws", ArmorMaterial.DIAMOND, EquipmentSlotType.FEET)
+    val MYSTERIOUS_CHESTPLATE = ItemArmorBase("mysterious_chestplate", "Mysterious Chestplate", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
 
-    //CrystalHelmet.setCreativeTab(GlaciaCreativeTabCombat);
-    //CrystalBody.setCreativeTab(GlaciaCreativeTabCombat);
-    //CrystalLegs.setCreativeTab(GlaciaCreativeTabCombat);
-    //CrystalBoots.setCreativeTab(GlaciaCreativeTabCombat);
-    //var GlacialTurtleHead: Item? = null
-    //var GlacialTurtleShell: Item? = null
-    //var GlacialTurtleLimbs: Item? = null
-    //var GlacialTurtlePaws: Item? = null
     //var GlacialReturnRune: Item? = null
-    //IceHelmet.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceBody.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceLegs.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceBoots.setCreativeTab(GlaciaCreativeTabCombat);
-    //MisteriousBody.setCreativeTab(GlaciaCreativeTabCombat);
-
     //PortalSwitcher.setCreativeTab(GlaciaCreativeTabBrewing);
     //BrokenQuadiumBulb.setCreativeTab(GlaciaCreativeTabBrewing);
     //QuadiumBulb.setCreativeTab(GlaciaCreativeTabBrewing);
