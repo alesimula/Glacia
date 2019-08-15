@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "greenapple_glacia:item/glacial_wood_rod"
+        "layer0": "greenapple_glacia:item/crystal_sword"
     }
 }
