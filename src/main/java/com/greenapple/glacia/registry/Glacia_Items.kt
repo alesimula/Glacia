@@ -4,6 +4,7 @@ import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.*
 import net.minecraft.item.*
 
+@Suppress("UNUSED")
 object Glacia_Items : IForgeRegistryCollection<Item> {
     // Food
     val SABER_TOOTHED_CAT_MEAT = ItemFoodBase("saber_toothed_cat_meat", "Saber-toothed Cat Meat", 3, 0.3F) {meat()}
@@ -40,28 +41,19 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val ICE_BASTARD_SWORD = ItemSwordBase("ice_bastard_sword", "Ice Bastard Sword", ItemTier.DIAMOND, 5, -2.7F)
     val ICE_WARHAMMER = ItemSwordBase("ice_warhammer", "Ice Warhammer", ItemTier.DIAMOND, 8, -3.8F)
 
-    //IcePickaxe.setCreativeTab(GlaciaCreativeTabTools);
-    //IceAxe.setCreativeTab(GlaciaCreativeTabTools);
-    //IceShovel.setCreativeTab(GlaciaCreativeTabTools);
-    //IceHoe.setCreativeTab(GlaciaCreativeTabTools);
-
     //CrystalHelmet.setCreativeTab(GlaciaCreativeTabCombat);
     //CrystalBody.setCreativeTab(GlaciaCreativeTabCombat);
     //CrystalLegs.setCreativeTab(GlaciaCreativeTabCombat);
     //CrystalBoots.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceHelmet.setCreativeTab(GlaciaCreativeTabCombat);
     //var GlacialTurtleHead: Item? = null
     //var GlacialTurtleShell: Item? = null
     //var GlacialTurtleLimbs: Item? = null
     //var GlacialTurtlePaws: Item? = null
     //var GlacialReturnRune: Item? = null
+    //IceHelmet.setCreativeTab(GlaciaCreativeTabCombat);
     //IceBody.setCreativeTab(GlaciaCreativeTabCombat);
     //IceLegs.setCreativeTab(GlaciaCreativeTabCombat);
     //IceBoots.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceSword.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceBastardSword.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceDagger.setCreativeTab(GlaciaCreativeTabCombat);
-    //IceWarHammer.setCreativeTab(GlaciaCreativeTabCombat);
     //MisteriousBody.setCreativeTab(GlaciaCreativeTabCombat);
 
     //PortalSwitcher.setCreativeTab(GlaciaCreativeTabBrewing);

@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material
 import net.minecraft.potion.Effects
 import net.minecraft.util.BlockRenderLayer
 
+@Suppress("UNUSED")
 object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Glacia_ItemGroup.BLOCKS, Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
             .addItemVariant("snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
