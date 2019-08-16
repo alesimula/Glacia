@@ -24,7 +24,7 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
         private val _name = "${ModLoadingContext.get().activeNamespace}:${name.toLowerCase()}"
         private val _repairMaterial : Ingredient by lazy {Ingredient.fromItems(repairMatrialItem)}
         override fun getName() = _name
-        override fun getDurability(slot: EquipmentSlotType) = MAX_DAMAGE_ARRAY[slot.index] * this.maxDamageFactor
+        override fun getDurability(slot: EquipmentSlotType) = MAX_DAMAGE_ARRAY[slot.index] * maxDamageFactor
         override fun getDamageReductionAmount(p_200902_1_: EquipmentSlotType) = damageReductionArray[p_200902_1_.index]
         override fun getEnchantability() = enchantability
         override fun getSoundEvent() = soundEvent
