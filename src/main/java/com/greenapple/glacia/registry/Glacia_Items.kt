@@ -4,9 +4,35 @@ import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.*
 import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.*
+import net.minecraft.item.crafting.Ingredient
+import net.minecraft.util.SoundEvent
+import net.minecraft.util.SoundEvents
+import net.minecraftforge.fml.ModLoadingContext
 
 @Suppress("UNUSED")
 object Glacia_Items : IForgeRegistryCollection<Item> {
+
+    enum class ArmorMaterial(private val maxDamageFactor: Int, private val damageReductionArray : IntArray, private val enchantability: Int, private val soundEvent: SoundEvent, private val toughness: Float, private val repairMatrialItem: Item) : IArmorMaterial {
+        CRYSTAL(24, intArrayOf(2, 6, 7, 2), 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0f, GLACIAL_CRYSTAL),
+        ICE(33, intArrayOf(3, 7, 9, 3), 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2f, GLACIAL_ICE),
+        TURTLE(13, intArrayOf(4, 7, 10, 3), 10, SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 2f, Items.AIR),
+        MYSTERIOUS(33, intArrayOf(3, 6, 8, 3), 10, SoundEvents.ITEM_ARMOR_EQUIP_ELYTRA, 2f, MYSTERIUS_ARMOR_SHARD);
+        // <editor-fold defaultstate="collapsed" desc="Interface implementation">
+        companion object {
+            private val MAX_DAMAGE_ARRAY = intArrayOf(13, 15, 16, 11)
+        }
+        private val _name = "${ModLoadingContext.get().activeNamespace}:${name.toLowerCase()}"
+        private val _repairMaterial : Ingredient by lazy {Ingredient.fromItems(repairMatrialItem)}
+        override fun getName() = _name
+        override fun getDurability(slot: EquipmentSlotType) = MAX_DAMAGE_ARRAY[slot.index] * this.maxDamageFactor
+        override fun getDamageReductionAmount(p_200902_1_: EquipmentSlotType) = damageReductionArray[p_200902_1_.index]
+        override fun getEnchantability() = enchantability
+        override fun getSoundEvent() = soundEvent
+        override fun getToughness() = toughness
+        override fun getRepairMaterial() = _repairMaterial
+        // </editor-fold>
+    }
+
     // Food
     val SABER_TOOTHED_CAT_MEAT = ItemFoodBase("saber_toothed_cat_meat", "Saber-toothed Cat Meat", 3, 0.3F) {meat()}
     val SABER_TOOTHED_CAT_MEAT_COOKED = ItemFoodBase("saber_toothed_cat_meat_cooked", "Seared Saber-toothed Cat Meat", 9, 0.9F) {meat()}
@@ -41,19 +67,19 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val ICE_DAGGER = ItemSwordBase("ice_dagger", "Ice Dagger", ItemTier.DIAMOND, 3, -1.3F)
     val ICE_BASTARD_SWORD = ItemSwordBase("ice_bastard_sword", "Ice Bastard Sword", ItemTier.DIAMOND, 5, -2.7F)
     val ICE_WARHAMMER = ItemSwordBase("ice_warhammer", "Ice Warhammer", ItemTier.DIAMOND, 8, -3.8F)
-    val CRYSTAL_HELMET = ItemArmorBase("crystal_helmet", "Crystal Helmet", ArmorMaterial.IRON, EquipmentSlotType.HEAD)
-    val CRYSTAL_CHESTPLATE = ItemArmorBase("crystal_chestplate", "Crystal Chestplate", ArmorMaterial.IRON, EquipmentSlotType.CHEST)
-    val CRYSTAL_LEGGINGS = ItemArmorBase("crystal_leggings", "Crystal Leggings", ArmorMaterial.IRON, EquipmentSlotType.LEGS)
-    val CRYSTAL_BOOTS = ItemArmorBase("crystal_boots", "Crystal Boots", ArmorMaterial.IRON, EquipmentSlotType.FEET)
-    val ICE_HELMET = ItemArmorBase("ice_helmet", "Ice Helmet", ArmorMaterial.DIAMOND, EquipmentSlotType.HEAD)
-    val ICE_CHESTPLATE = ItemArmorBase("ice_chestplate", "Ice Chestplate", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
-    val ICE_LEGGINGS = ItemArmorBase("ice_leggings", "Ice Leggings", ArmorMaterial.DIAMOND, EquipmentSlotType.LEGS)
-    val ICE_BOOTS = ItemArmorBase("ice_boots", "Ice Boots", ArmorMaterial.DIAMOND, EquipmentSlotType.FEET)
-    val TURTLE_HEAD = ItemArmorBase("turtle_head", "Turtle Head", ArmorMaterial.DIAMOND, EquipmentSlotType.HEAD)
-    val TURTLE_SHELL = ItemArmorBase("turtle_shell", "Turtle Shell", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
-    val TURTLE_LIMBS = ItemArmorBase("turtle_limbs", "Turtle Limbs", ArmorMaterial.DIAMOND, EquipmentSlotType.LEGS)
-    val TURTLE_PAWS = ItemArmorBase("turtle_paws", "Turtle Paws", ArmorMaterial.DIAMOND, EquipmentSlotType.FEET)
-    val MYSTERIOUS_CHESTPLATE = ItemArmorBase("mysterious_chestplate", "Mysterious Chestplate", ArmorMaterial.DIAMOND, EquipmentSlotType.CHEST)
+    val CRYSTAL_HELMET = ItemArmorBase("crystal_helmet", "Crystal Helmet", ArmorMaterial.CRYSTAL, EquipmentSlotType.HEAD)
+    val CRYSTAL_CHESTPLATE = ItemArmorBase("crystal_chestplate", "Crystal Chestplate", ArmorMaterial.CRYSTAL, EquipmentSlotType.CHEST)
+    val CRYSTAL_LEGGINGS = ItemArmorBase("crystal_leggings", "Crystal Leggings", ArmorMaterial.CRYSTAL, EquipmentSlotType.LEGS)
+    val CRYSTAL_BOOTS = ItemArmorBase("crystal_boots", "Crystal Boots", ArmorMaterial.CRYSTAL, EquipmentSlotType.FEET)
+    val ICE_HELMET = ItemArmorBase("ice_helmet", "Ice Helmet", ArmorMaterial.ICE, EquipmentSlotType.HEAD)
+    val ICE_CHESTPLATE = ItemArmorBase("ice_chestplate", "Ice Chestplate", ArmorMaterial.ICE, EquipmentSlotType.CHEST)
+    val ICE_LEGGINGS = ItemArmorBase("ice_leggings", "Ice Leggings", ArmorMaterial.ICE, EquipmentSlotType.LEGS)
+    val ICE_BOOTS = ItemArmorBase("ice_boots", "Ice Boots", ArmorMaterial.ICE, EquipmentSlotType.FEET)
+    val TURTLE_HEAD = ItemArmorBase("turtle_head", "Turtle Head", ArmorMaterial.TURTLE, EquipmentSlotType.HEAD)
+    val TURTLE_SHELL = ItemArmorBase("turtle_shell", "Turtle Shell", ArmorMaterial.TURTLE, EquipmentSlotType.CHEST)
+    val TURTLE_LIMBS = ItemArmorBase("turtle_limbs", "Turtle Limbs", ArmorMaterial.TURTLE, EquipmentSlotType.LEGS)
+    val TURTLE_PAWS = ItemArmorBase("turtle_paws", "Turtle Paws", ArmorMaterial.TURTLE, EquipmentSlotType.FEET)
+    val MYSTERIOUS_CHESTPLATE = ItemArmorBase("mysterious_chestplate", "Mysterious Chestplate", ArmorMaterial.MYSTERIOUS, EquipmentSlotType.CHEST)
 
     //var GlacialReturnRune: Item? = null
     //PortalSwitcher.setCreativeTab(GlaciaCreativeTabBrewing);
