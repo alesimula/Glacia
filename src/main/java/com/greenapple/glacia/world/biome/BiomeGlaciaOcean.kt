@@ -31,7 +31,7 @@ class BiomeGlaciaOcean : Biome {
         GlaciaBiomeFeatures.addLakes(this)
         DefaultBiomeFeatures.addMonsterRooms(this)
         DefaultBiomeFeatures.addStoneVariants(this)
-        DefaultBiomeFeatures.addOres(this)
+        GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
         DefaultBiomeFeatures.func_222296_u(this)
         DefaultBiomeFeatures.addDefaultFlowers(this)

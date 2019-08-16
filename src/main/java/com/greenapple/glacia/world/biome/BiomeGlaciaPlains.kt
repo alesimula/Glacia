@@ -28,8 +28,7 @@ class BiomeGlaciaPlains : Biome {
         //DefaultBiomeFeatures.func_222283_Y(this)
         //DefaultBiomeFeatures.addStoneVariants(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
-        //TODO custom ore generation
-        DefaultBiomeFeatures.addOres(this)
+        GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
         this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(EntityType.SLIME, 50, 4, 4))

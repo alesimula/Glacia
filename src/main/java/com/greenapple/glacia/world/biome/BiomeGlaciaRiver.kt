@@ -24,7 +24,7 @@ class BiomeGlaciaRiver(registryName : String) : Biome(Biome.Builder().surfaceBui
         GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
         //DefaultBiomeFeatures.addStoneVariants(this)
-        //DefaultBiomeFeatures.addOres(this)
+        GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
         GlaciaBiomeFeatures.addSprings(this)
         this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.SEAGRASS, SeaGrassConfig(48, 0.4), Placement.TOP_SOLID_HEIGHTMAP, IPlacementConfig.NO_PLACEMENT_CONFIG))
