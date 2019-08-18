@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager
 import net.minecraftforge.common.DimensionManager
 import net.minecraftforge.common.ModDimension
 import net.minecraft.world.biome.Biome
+import net.minecraft.world.gen.carver.WorldCarver
 import net.minecraft.world.gen.feature.Feature
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -45,6 +46,9 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onFeatureRegistry(event: RegistryEvent.Register<Feature<*>>) = event.registry.register(Glacia.Feature)
+
+    @JvmStatic @SubscribeEvent
+    fun onWorldCarverRegistry(event: RegistryEvent.Register<WorldCarver<*>>) = event.registry.register(Glacia.WorldCarver)
 
     @JvmStatic @SubscribeEvent
     fun onPotionEffectRegistry(event: RegistryEvent.Register<Effect>) = event.registry.register(Glacia.Effects)

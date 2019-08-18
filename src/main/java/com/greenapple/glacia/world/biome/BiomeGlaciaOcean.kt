@@ -26,7 +26,8 @@ class BiomeGlaciaOcean : Biome {
         this.addStructure(Feature.MINESHAFT, MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL))
         this.addStructure(Feature.SHIPWRECK, ShipwreckConfig(false))
         this.addStructure(Feature.OCEAN_RUIN, OceanRuinConfig(OceanRuinStructure.Type.COLD, 0.3f, 0.9f))
-        DefaultBiomeFeatures.addOceanCarvers(this)
+        //TODO ocean carvers
+        GlaciaBiomeFeatures.addCarvers(this)
         DefaultBiomeFeatures.addStructures(this)
         GlaciaBiomeFeatures.addLakes(this)
         DefaultBiomeFeatures.addMonsterRooms(this)

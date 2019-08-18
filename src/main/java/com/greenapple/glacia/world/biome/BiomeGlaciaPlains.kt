@@ -19,7 +19,7 @@ class BiomeGlaciaPlains : Biome {
         this.addStructure(Feature.PILLAGER_OUTPOST, PillagerOutpostConfig(0.004))
         this.addStructure(Feature.MINESHAFT, MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL))
         this.addStructure(Feature.STRONGHOLD, IFeatureConfig.NO_FEATURE_CONFIG)*/
-        DefaultBiomeFeatures.addCarvers(this)
+        GlaciaBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
         //TODO make one without lava
         GlaciaBiomeFeatures.addPlainsVegetation(this)

@@ -31,7 +31,7 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     //TODO GLACIAL SAPLING
     val ICE_FLOWER = BlockFlowerBase("ice_flower", "Ice flower", Glacia_ItemGroup.DECORATIONS, Effects.SLOWNESS, 4)
     /*  TODO sand block properties  */
-    val SNOWY_SAND = BlockBase("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
+    val SNOWY_SAND = BlockFallingBase("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
     val GLACIAL_BERRY = BlockPlantFacingBase("glacial_berry", "Glacial berry", Glacia_ItemGroup.DECORATIONS, Material.ORGANIC, 8.0, 14.0) {doesNotBlockMovement().hardnessAndResistance(0F).sound(SoundType.PLANT)}
     val CATALYST_CRYSTAL = BlockGrowingBase("catalyst_crystal", "Catalyst crystal", Glacia_ItemGroup.DECORATIONS, Material.ROCK, 13.0, 9.6) {doesNotBlockMovement().hardnessAndResistance(3.0F).lightValue(14).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; isTranslucent = true}

@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 private val constructorAccessorField by lazy {Constructor::class.java.getDeclaredField("constructorAccessor").apply {isAccessible = true}}
 private val constructorAccessorRetriever by lazy {Constructor::class.java.getDeclaredMethod("acquireConstructorAccessor").apply {isAccessible = true}}
 
-open class ReflectEnumConstructor<This: Any> (thisRef: KClass<This>) {
+open class ReflectEnumConstructor<This: Enum<*>> (thisRef: KClass<This>) {
     private val oreFeatureConfigConstructor by lazy {thisRef.java.declaredConstructors[0].run {
         isAccessible = true
         (constructorAccessorField.get(this) ?: constructorAccessorRetriever.invoke(this)) as ConstructorAccessor
@@ -21,4 +21,4 @@ open class ReflectEnumConstructor<This: Any> (thisRef: KClass<This>) {
     operator fun getValue(thisRef:This?,property:KProperty<*>) = EnumConstructor()
 }
 
-inline fun <reified This: Any>ReflectEnumConstructor() = ReflectEnumConstructor(This::class)
+inline fun <reified This: Enum<*>>ReflectEnumConstructor() = ReflectEnumConstructor(This::class)

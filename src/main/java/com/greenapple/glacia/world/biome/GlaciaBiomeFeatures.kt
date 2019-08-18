@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.GenerationStage
+import net.minecraft.world.gen.carver.WorldCarver
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.placement.*
 import java.util.function.Predicate
@@ -18,6 +19,11 @@ fun fillerBlockType(name: String, shouldReplace: BlockState.()->Boolean) = fille
 
 object GlaciaBiomeFeatures {
     val FILLER_GLACIAL_STONE = fillerBlockType("glacial_stone") {block === Glacia.Blocks.GLACIAL_STONE}
+
+    fun addCarvers(biome: Biome) {
+        biome.addCarver(GenerationStage.Carving.AIR, Biome.createCarver(Glacia.WorldCarver.CAVE, ProbabilityConfig(0.14285715f)))
+        //biome.addCarver(GenerationStage.Carving.AIR, Biome.createCarver(WorldCarver.CANYON, ProbabilityConfig(0.02f)))
+    }
 
     fun addLakes(biomeIn: Biome) {
         biomeIn.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, Biome.createDecoratedFeature(Feature.LAKE, LakesConfig(Blocks.WATER.defaultState), Placement.WATER_LAKE, LakeChanceConfig(4)))

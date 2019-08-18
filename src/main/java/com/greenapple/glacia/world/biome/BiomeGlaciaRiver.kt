@@ -19,7 +19,7 @@ class BiomeGlaciaRiver(registryName : String) : Biome(Biome.Builder().surfaceBui
         setRegistryName(registryName)
 
         //this.addStructure(Feature.MINESHAFT, MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL))
-        //DefaultBiomeFeatures.addCarvers(this)
+        GlaciaBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
         GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)

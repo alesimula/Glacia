@@ -48,6 +48,7 @@ class Glacia {
         @JvmStatic val Biomes; get() = Glacia_Biomes
         @JvmStatic val Entity; get() = Glacia_Entity
         @JvmStatic val Feature; get() = Glacia_Feature
+        @JvmStatic val WorldCarver; get() = Glacia_WorldCarver
         @JvmStatic val Effects; get() = Glacia_Effects
     }
 
