@@ -19,6 +19,7 @@ open class ReflectEnumConstructor<This: Enum<*>> (thisRef: KClass<This>) {
     }
 
     operator fun getValue(thisRef:This?,property:KProperty<*>) = EnumConstructor()
+    operator fun getValue(thisRef:Any?,property:KProperty<*>) = EnumConstructor()
 }
 
 inline fun <reified This: Enum<*>>ReflectEnumConstructor() = ReflectEnumConstructor(This::class)
