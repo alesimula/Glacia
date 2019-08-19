@@ -25,8 +25,8 @@ private var NetworkPlayerInfo.playerTexturesKt : MutableMap<MinecraftProfileText
 private var NetworkPlayerInfo.playerTexturesLoadedKt : Boolean by ReflectField("field_178864_d")
 
 private fun <T: Entity, M: EntityModel<T>> LayerRenderer<*, *>.autoCast() = this as LayerRenderer<T, M>
-private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT by SingletonReceiver<BipedArmorLayer<*,*,*>, BipedArmorLayer<*,*,*>> {this}
-private val PlayerRenderer.MODEL_PLAYER_DEFAULT by SingletonReceiver<PlayerRenderer, PlayerModel<AbstractClientPlayerEntity>> {entityModel}
+private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT : BipedArmorLayer<*,*,*> by SingletonReceiver {this}
+private val PlayerRenderer.MODEL_PLAYER_DEFAULT : PlayerModel<AbstractClientPlayerEntity> by SingletonReceiver {entityModel}
 private val MODEL_ARMOR_EMPTY = object : BipedModel<AbstractClientPlayerEntity>() {
     override fun setRotationAngles(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float) {}
     override fun render(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {}

@@ -21,8 +21,7 @@ open class LazyWithReceiver<This: Any,Return> (weak: Boolean?=true, nullable: No
     }
 
     @Suppress("UNCHECKED_CAST")
-    operator fun getValue(thisRef:Any?,property:KProperty<*>):Return = synchronized(values) {
-        thisRef as This?
+    operator fun getValue(thisRef:This?,property:KProperty<*>):Return = synchronized(values) {
         return values.getOrPut(thisRef) {runCatching {initializer.invoke(thisRef)}.getOrElse {
             throw ExceptionInInitializerError(this::class.java.simpleName+": value not initialized")
         }}

@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package com.greenapple.glacia
 
-import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.delegate.SingletonReceiver
 import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
@@ -33,7 +33,7 @@ class Glacia {
         private val javaFactory = BiFunction {world: World, type: DimensionType -> type.getOrInit; factory(type, world)}
         override fun getFactory() = javaFactory
         init {setRegistryName(modId, name)}
-        private val DimensionType?.getOrInit by LazyWithReceiver<DimensionType, DimensionType>(null) {this}
+        private val DimensionType?.getOrInit : DimensionType by SingletonReceiver {this}
         val dimensionType; get() = (null as DimensionType?).getOrInit
     }
 
