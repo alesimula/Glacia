@@ -1,28 +1,17 @@
 package com.greenapple.glacia.world
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.Sets
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.world.layer.GlaciaLayerUtils
 import net.minecraft.block.BlockState
 import net.minecraft.util.math.BlockPos
-import net.minecraft.world.WorldType
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.Biomes
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings
-import net.minecraft.world.biome.provider.SingleBiomeProviderSettings
-import net.minecraft.world.gen.IExtendedNoiseRandom
-import net.minecraft.world.gen.LazyAreaLayerContext
-import net.minecraft.world.gen.OverworldGenSettings
-import net.minecraft.world.gen.area.IArea
-import net.minecraft.world.gen.area.IAreaFactory
-import net.minecraft.world.gen.area.LazyArea
 import net.minecraft.world.gen.feature.structure.Structure
 import net.minecraft.world.gen.layer.*
 import java.util.Collections
 import java.util.Random
-import java.util.function.LongFunction
 
 /**
  * Look at OverworldBiomeProvider if any function name changes
@@ -32,8 +21,18 @@ class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvi
     private var genBiomes : Layer
     private val biomeFactoryLayer: Layer
 
+    private val seed = settings.worldInfo.seed.run {
+        var seed = this
+        seed += 0x67726565 + (seed shl 12)
+        seed = seed xor 0x6e617070 xor (seed shr 19)
+        seed += 0x6c657275 + (seed shl 5)
+        seed = seed + 0x6c657321 xor (seed shl 9)
+        seed += 0x68696672 + (seed shl 3)
+        seed xor 0x69656e64 xor (seed shr 16)
+    }
+
     init {
-        val layers = GlaciaLayerUtils.buildOverworldProcedure(settings.worldInfo.seed, settings.worldInfo.generator, settings.generatorSettings)
+        val layers = GlaciaLayerUtils.buildOverworldProcedure(seed, settings.worldInfo.generator, settings.generatorSettings)
         genBiomes = layers[0]
         biomeFactoryLayer = layers[1]
     }

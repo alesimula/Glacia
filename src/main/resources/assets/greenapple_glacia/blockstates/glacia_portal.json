@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "axis=z": { "model": "greenapple_glacia:block/glacia_portal_ew" },
+        "axis=x": { "model": "greenapple_glacia:block/glacia_portal_ns" }
+    }
+}

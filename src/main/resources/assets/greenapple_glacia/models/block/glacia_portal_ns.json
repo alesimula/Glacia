@@ -1,0 +1,7 @@
+{
+	"parent": "block/nether_portal_ns",
+	"textures": {
+		"particle": "greenapple_glacia:block/glacia_portal",
+		"portal": "greenapple_glacia:block/glacia_portal"
+	}
+}
