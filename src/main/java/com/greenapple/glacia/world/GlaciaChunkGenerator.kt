@@ -1,14 +1,12 @@
 package com.greenapple.glacia.world
 
 import com.greenapple.glacia.Glacia
-import net.minecraft.entity.EntityClassification
 import net.minecraft.util.Util
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.IWorld
 import net.minecraft.world.WorldType
 import net.minecraft.world.biome.Biome
-import net.minecraft.world.biome.Biomes
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.chunk.IChunk
 import net.minecraft.world.gen.*
@@ -115,7 +113,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
             if (l > 0) {
                 for (i1 in l downTo l - 4) {
                     if (i1 >= l - rand.nextInt(5)) {
-                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, i1, blockpos.z), Glacia.Blocks.GLACIAL_BEDROCK.defaultState, false)
+                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, i1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
                     }
                 }
             }
@@ -123,7 +121,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
             if (k < 256) {
                 for (j1 in k + 4 downTo k) {
                     if (j1 <= k + rand.nextInt(5)) {
-                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, j1, blockpos.z), Glacia.Blocks.GLACIAL_BEDROCK.defaultState, false)
+                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, j1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
                     }
                 }
             }

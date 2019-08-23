@@ -42,6 +42,7 @@ class Glacia {
         @JvmStatic private val LOGGER = LogManager.getLogger()
         @JvmStatic val DIMENSION = ModDimensionBase(MODID, "glacia") {world -> GlaciaDimension(world, this)}
 
+        @JvmStatic val Fluids; get() = Glacia_Fluids
         @JvmStatic val Blocks; get() = Glacia_Blocks
         @JvmStatic val Items; get() = Glacia_Items
         @JvmStatic val ItemGroup; get() = Glacia_ItemGroup

@@ -1,9 +1,12 @@
 package com.greenapple.glacia.registry
 
+import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.*
 import net.minecraft.block.Block
+import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
+import net.minecraft.fluid.Fluids
 import net.minecraft.potion.Effects
 import net.minecraft.util.BlockRenderLayer
 
@@ -11,7 +14,8 @@ import net.minecraft.util.BlockRenderLayer
 object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Glacia_ItemGroup.BLOCKS, Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
             .addItemVariant("snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
-    val GLACIAL_BEDROCK = BlockBase("glacial_bedrock", "Glacial bedrock", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops()}
+    val PERMAFROST = BlockBase("permafrost", "Permafrost", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops()}
+            .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true}
     val GLACIAL_STONE = BlockBase("glacial_stone", "Glacial stone", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(2F, 10F)}
     val GLACIAL_COBBLESTONE = BlockBase("glacial_cobblestone", "Glacial cobblestone", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(1.8F, 8F)}
     val GLACIAL_MAGIC_STONE = BlockBase("glacial_magic_stone", "Glacial magic stone", Glacia_ItemGroup.BREWING, Material.ROCK) {hardnessAndResistance(2.3F, 12F)}
@@ -44,4 +48,6 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
             .apply {renderLayer = BlockRenderLayer.CUTOUT}
     val COMPACTED_ICE = BlockBase("compacted_ice", "Compacted ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(1F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
+    //TODO add plasma once the fluid system has been properly implemented
+    //val PLASMA = BlockFluidBase("plasma", "plasma", null, Material.LAVA, Glacia.Fluids.PLASMA) {lightValue(15)}
 }

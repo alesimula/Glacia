@@ -5,6 +5,7 @@ import com.greenapple.glacia.registry.register
 import com.greenapple.glacia.registry.registerBlockItems
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.potion.Effect
 import net.minecraftforge.event.RegistryEvent
@@ -34,6 +35,9 @@ object RegistryEvents {
         registerBlockItems(Glacia.Blocks)
         register(Glacia.Items)
     }
+
+    @JvmStatic @SubscribeEvent
+    fun onFluidsRegistry(event: RegistryEvent.Register<Fluid>) = event.registry.register(Glacia.Fluids)
 
     @JvmStatic @SubscribeEvent
     fun onBlocksRegistry(event: RegistryEvent.Register<Block>) = event.registry.register(Glacia.Blocks)
