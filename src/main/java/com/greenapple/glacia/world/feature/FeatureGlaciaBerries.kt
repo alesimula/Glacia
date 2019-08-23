@@ -20,7 +20,7 @@ import net.minecraft.world.gen.feature.PlainsFlowersFeature
 /**
  * @see PlainsFlowersFeature
  */
-class FeatureGlaciaFlora(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function, false) {
+class FeatureGlaciaBerries(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function, false) {
 
     init {
         setRegistryName(registryName)
@@ -43,6 +43,6 @@ class FeatureGlaciaFlora(registryName : String, function: Function<Dynamic<*>, o
     }
 
     fun getRandomFloraProvider(random: Random, pos: BlockPos): ()->BlockState {
-        return {Glacia.Blocks.ICE_FLOWER.defaultState}
+        return {Glacia.Blocks.GLACIAL_BERRY.defaultState.with(BlockPlantFacingBase.FACING, Direction.Plane.HORIZONTAL.random(random))}
     }
 }

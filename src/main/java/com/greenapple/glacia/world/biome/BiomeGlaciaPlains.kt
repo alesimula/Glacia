@@ -21,7 +21,7 @@ class BiomeGlaciaPlains : Biome {
         this.addStructure(Feature.STRONGHOLD, IFeatureConfig.NO_FEATURE_CONFIG)*/
         GlaciaBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
-        //TODO make one without lava
+        GlaciaBiomeFeatures.addBerries(this)
         GlaciaBiomeFeatures.addPlainsVegetation(this)
         GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
