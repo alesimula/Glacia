@@ -4,6 +4,8 @@ import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaDirt
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder
@@ -38,4 +40,6 @@ class BiomeGlaciaPlains : Biome {
         this.addSpawn(EntityClassification.CREATURE, Biome.SpawnListEntry(Glacia.Entity.PENGUIN, 5, 5, 8))
         this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(Glacia.Entity.GLACIAL_SEEKER, 100, 5, 8))
     }
+
+    override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false
 }

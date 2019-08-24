@@ -4,6 +4,8 @@ import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaDirt
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.Feature
@@ -37,4 +39,6 @@ class BiomeGlaciaForest : Biome {
         DefaultBiomeFeatures.addFreezeTopLayer(this)
         this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4))
     }
+
+    override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false
 }

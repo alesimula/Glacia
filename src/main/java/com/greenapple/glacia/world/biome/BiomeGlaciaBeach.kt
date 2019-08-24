@@ -1,6 +1,8 @@
 package com.greenapple.glacia.world.biome
 
 import com.greenapple.glacia.Glacia
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.feature.Feature
@@ -27,4 +29,6 @@ class BiomeGlaciaBeach(registryName : String) : Biome(Biome.Builder().surfaceBui
         GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
     }
+
+    override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false
 }
