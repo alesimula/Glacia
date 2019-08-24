@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.model.RendererModel
 import net.minecraft.client.renderer.model.ModelBox
 import net.minecraft.entity.passive.TameableEntity
 import net.minecraft.util.math.MathHelper
+import org.apache.logging.log4j.LogManager
 
 class ModelSaberToothedCat<T : TameableEntity> : EntityModel<T>() {
 
@@ -216,6 +217,14 @@ class ModelSaberToothedCat<T : TameableEntity> : EntityModel<T>() {
             this.leg_front_right_lower.rotateAngleX = -main.rotateAngleX
             this.leg_front_left_lower.rotateAngleX = -main.rotateAngleX
         } else {
+            main.rotateAngleX = 0f
+            head_bone.rotateAngleX = 0f
+            body.rotateAngleX = 0f
+            leg_hind_lower_right.rotateAngleX = 0f
+            leg_hind_lower_left.rotateAngleX = 0f
+            leg_front_right_lower.rotateAngleX = -0.0524f
+            leg_front_left_lower.rotateAngleX = -0.0524f
+
             this.leg_hind_right.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount
             this.leg_hind_left.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 1.4f * limbSwingAmount
             this.leg_front_right.rotateAngleX = MathHelper.cos(limbSwing * 0.6662f + Math.PI.toFloat()) * 1.4f * limbSwingAmount
