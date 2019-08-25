@@ -1,14 +1,12 @@
 package com.greenapple.glacia.entity.model
 
-import com.greenapple.glacia.entity.GlaciaMonsterAttributes
-import com.greenapple.glacia.entity.isEnum
+import com.greenapple.glacia.entity.isMale
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.client.renderer.entity.model.RendererModel
 import net.minecraft.entity.AgeableEntity
 
 import net.minecraft.util.math.MathHelper
 import org.lwjgl.opengl.GL11
-import kotlin.random.Random
 
 class ModelReindeer<E: AgeableEntity> : EntityModel<E>() {
 
@@ -262,7 +260,7 @@ class ModelReindeer<E: AgeableEntity> : EntityModel<E>() {
     override fun render(entity: E, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
         //EntityGlacialRainDeer entityraindeer = (EntityGlacialRainDeer)entity;
         //val randgender = Random.nextInt(2 - 0) + 0
-        (entity.getAttribute(GlaciaMonsterAttributes.GENDER) isEnum GlaciaMonsterAttributes.Gender.MALE).let {isMale -> shouldRenderChild (scale, 0.5f) {
+        shouldRenderChild (scale, 0.5f) {
             super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
             setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
             neck.render(scale)
@@ -271,7 +269,7 @@ class ModelReindeer<E: AgeableEntity> : EntityModel<E>() {
             nose.render(scale)
             ear1.render(scale)
             ear2.render(scale)
-            if (isMale) {
+            if (entity.isMale) {
                 bodyMale.render(scale)
                 if (!isChild) {
                     corn.render(scale)
@@ -292,7 +290,7 @@ class ModelReindeer<E: AgeableEntity> : EntityModel<E>() {
             leg2.render(scale)
             leg3.render(scale)
             leg4.render(scale)
-        }}
+        }
     }
 
     private fun setRotation(model: RendererModel, x: Float, y: Float, z: Float) {
