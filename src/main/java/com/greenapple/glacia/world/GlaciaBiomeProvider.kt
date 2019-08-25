@@ -23,12 +23,14 @@ class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvi
 
     private val seed = settings.worldInfo.seed.run {
         var seed = this
-        seed += 0x67726565 + (seed shl 12)
-        seed = seed xor 0x6e617070 xor (seed shr 19)
-        seed += 0x6c657275 + (seed shl 5)
-        seed = seed + 0x6c657321 xor (seed shl 9)
-        seed += 0x68696672 + (seed shl 3)
-        seed xor 0x69656e64 xor (seed shr 16)
+        seed = seed.inv() + (seed shl 21) // key = (key << 21) - key - 1;
+        seed = (seed + 0x67726565) xor seed.ushr(21)
+        seed += ((seed xor 0x6e617070) shl 4) + (seed shl 9) // key * 265
+        seed = (seed + 0x6c657275) xor seed.ushr(16)
+        seed += ((seed xor 0x6c657321) shl 1) + (seed shl 3) // key * 21
+        seed = (seed + 0x68696672) xor seed.ushr(24)
+        seed += ((seed xor 0x69656e64) shl 40)
+        seed
     }
 
     init {
