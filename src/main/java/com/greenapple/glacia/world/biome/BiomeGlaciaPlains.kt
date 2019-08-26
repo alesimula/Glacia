@@ -23,6 +23,7 @@ class BiomeGlaciaPlains : Biome {
         this.addStructure(Feature.STRONGHOLD, IFeatureConfig.NO_FEATURE_CONFIG)*/
         GlaciaBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
+        GlaciaBiomeFeatures.addIceTowers(this)
         GlaciaBiomeFeatures.addBerries(this)
         GlaciaBiomeFeatures.addPlainsVegetation(this)
         GlaciaBiomeFeatures.addLakes(this)

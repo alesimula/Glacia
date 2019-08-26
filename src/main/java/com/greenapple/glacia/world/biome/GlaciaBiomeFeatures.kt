@@ -47,6 +47,10 @@ object GlaciaBiomeFeatures {
         biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Glacia.Feature.BERRIES, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOISE_HEIGHTMAP_32, NoiseDependant(-0.8, 15, 4)))
     }
 
+    fun addIceTowers(biomeIn: Biome) {
+        biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Glacia.Feature.ICE_TOWER, IFeatureConfig.NO_FEATURE_CONFIG, Placement.COUNT_EXTRA_HEIGHTMAP, AtSurfaceWithExtraConfig(1, 0f, 0)))
+    }
+
     //func_222299_R
     fun addPlainsVegetation(biomeIn: Biome) {
         biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.RANDOM_SELECTOR, MultipleRandomFeatureConfig(arrayOf<Feature<*>>(Glacia.Feature.GLACIAL_TREE), arrayOf<IFeatureConfig>(IFeatureConfig.NO_FEATURE_CONFIG), floatArrayOf(0.33333334f), Glacia.Feature.GLACIAL_TREE, IFeatureConfig.NO_FEATURE_CONFIG), Placement.COUNT_EXTRA_HEIGHTMAP, AtSurfaceWithExtraConfig(0, 0.05f, 1)))
