@@ -24,9 +24,7 @@ class FeatureGlaciaIceTower(registryName: String, configIn: Function<Dynamic<*>,
     }
 
     companion object {
-        private val LOG = Glacia.Blocks.GLACIAL_TREE_LOG.defaultState
-        private val LEAF = Glacia.Blocks.GLACIAL_TREE_LEAVES.defaultState
-        private const val CHANCE = 0.5
+        private const val CHANCE = 1.0/3
         private val CHANGE_INV = (CHANCE.pow(-1))
         
         private val BLOCK_GLACIAL_DIRT = Glacia.Blocks.GLACIAL_DIRT
@@ -84,7 +82,7 @@ class FeatureGlaciaIceTower(registryName: String, configIn: Function<Dynamic<*>,
             world.setMagicIceAt(x + 3, y, z + 3)
             world.setMagicIceAt(x + 3, y + 1, z + 2)
             return true
-        } else if (randModel == 1 || !(world.getBlock(x + 4, y - 1, z) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 1) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 2) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 3) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 3, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 2, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 1, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x, y - 1, z + 4) === BLOCK_GLACIAL_DIRT)) {
+        } else if (randModel == 1 || (randModel == 2 && !(world.getBlock(x + 4, y - 1, z) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 1) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 2) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 3) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 4, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 3, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 2, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x + 1, y - 1, z + 4) === BLOCK_GLACIAL_DIRT && world.getBlock(x, y - 1, z + 4) === BLOCK_GLACIAL_DIRT))) {
             world.setMagicIceAt(x, y, z)
             world.setMagicIceAt(x, y, z + 1)
             world.setMagicIceAt(x, y, z + 2)

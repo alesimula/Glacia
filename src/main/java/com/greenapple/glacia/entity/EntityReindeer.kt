@@ -5,27 +5,49 @@ import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.entity.AgeableEntity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.SharedMonsterAttributes
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance
+import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.CowEntity
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
+import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.datasync.DataSerializers
 import net.minecraft.network.datasync.EntityDataManager
 import net.minecraft.util.DamageSource
+import net.minecraft.util.IItemProvider
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import org.apache.logging.log4j.LogManager
 import kotlin.random.Random
 
-class EntityReindeer(type: EntityType<CowEntity>, world: World) : CowEntity(type, world) {
-    override fun getAmbientSound() = null
-    override fun getHurtSound(damageSource: DamageSource) = null
-    override fun getDeathSound() = null
+class EntityReindeer(type: EntityType<CowEntity>, world: World) : AnimalEntity(type, world) {
+
     override fun isBreedingItem(stack: ItemStack) = stack.item === Glacia.Items.GLACIAL_BERRY
+
+    override fun registerGoals() {
+        this.goalSelector.addGoal(0, SwimGoal(this))
+        this.goalSelector.addGoal(1, PanicGoal(this, 2.0))
+        this.goalSelector.addGoal(2, BreedGoal(this, 1.0))
+        this.goalSelector.addGoal(3, TemptGoal(this, 1.25, Ingredient.fromItems(Glacia.Items.GLACIAL_BERRY), false))
+        this.goalSelector.addGoal(4, FollowParentGoal(this, 1.25))
+        this.goalSelector.addGoal(5, WaterAvoidingRandomWalkingGoal(this, 1.0))
+        this.goalSelector.addGoal(6, LookAtGoal(this, PlayerEntity::class.java, 6.0f))
+        this.goalSelector.addGoal(7, LookRandomlyGoal(this))
+    }
+
     override fun registerData() {
         super.registerData()
         this.dataManager.register(IS_MALE, Random.nextBoolean())
+    }
+
+    override fun registerAttributes() {
+        super.registerAttributes()
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).baseValue = 10.0
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.20000000298023224
     }
 
     override fun createChild(p_90011_1_: AgeableEntity) = type.create(world) as? EntityReindeer
@@ -38,14 +60,6 @@ class EntityReindeer(type: EntityType<CowEntity>, world: World) : CowEntity(type
     override fun readAdditional(compound: CompoundNBT) {
         super.readAdditional(compound)
         isMale = compound.getBoolean("is_male")
-    }
-
-    override fun playStepSound(pos: BlockPos, blockIn: BlockState) {
-        if (!blockIn.material.isLiquid) {
-            val blockstate = this.world.getBlockState(pos.up())
-            val soundtype = if (blockstate.block === Blocks.SNOW) blockstate.soundType else blockIn.getSoundType(world, pos, this)
-            this.playSound(soundtype.stepSound, soundtype.getVolume() * 0.15f, soundtype.getPitch())
-        }
     }
 
     override fun canMateWith(other: AnimalEntity) = isMale xor other.isMale

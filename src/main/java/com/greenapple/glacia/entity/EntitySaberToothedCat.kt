@@ -38,7 +38,7 @@ class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: W
         this.goalSelector.addGoal(8, WaterAvoidingRandomWalkingGoal(this, 1.0))
         //this.goalSelector.addGoal(9, BegGoal(this, 8.0f))
         this.goalSelector.addGoal(10, LookAtGoal(this, PlayerEntity::class.java, 8.0f))
-        this.goalSelector.addGoal(10, LookRandomlyGoal(this))
+        this.goalSelector.addGoal(11, LookRandomlyGoal(this))
         this.targetSelector.addGoal(1, OwnerHurtByTargetGoal(this))
         this.targetSelector.addGoal(2, OwnerHurtTargetGoal(this))
         this.targetSelector.addGoal(3, HurtByTargetGoal(this).setCallsForHelp())
@@ -202,7 +202,7 @@ class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: W
 
     override fun registerAttributes() {
         super.registerAttributes()
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.5
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).baseValue = 0.3
         if (this.isTamed) {
             this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).baseValue = 30.0
         } else {
