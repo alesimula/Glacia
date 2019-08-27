@@ -6,6 +6,7 @@ import com.greenapple.glacia.world.GlaciaTeleporter
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
+import net.minecraft.block.NetherPortalBlock
 import net.minecraft.block.material.Material
 import net.minecraft.block.pattern.BlockPattern
 import net.minecraft.world.dimension.DimensionType
@@ -83,6 +84,17 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
             doesNotBlockMovement()
             this@init?.invoke(this)
         }
+    }
+
+    private fun isPortal(world: IWorld, pos: BlockPos): Size? = Size(world, pos, Direction.Axis.X).takeIf {it.isValid && it.portalBlockCount == 0}
+            ?: Size(world, pos, Direction.Axis.Z).takeIf {it.isValid && it.portalBlockCount == 0}
+
+    fun trySpawnPortal(worldIn: IWorld, pos: BlockPos): Boolean {
+        isPortal(worldIn, pos)?.takeIf {!net.minecraftforge.event.ForgeEventFactory.onTrySpawnPortal(worldIn, pos, it.netherPortalSize)}?.run {
+            placePortalBlocks()
+            true
+        }
+        return false
     }
 
     private fun changeDim(player: ServerPlayerEntity, pos: BlockPos, destination: DimensionType) {
@@ -277,7 +289,7 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
         (world as? ServerWorld)?.glaciaTeleporter?.tick(world.gameTime)
     }
 
-    inner class Size(private val world: IWorld, pos: BlockPos, private val axis: Direction.Axis) {
+    inner class Size(private val world: IWorld, private val pos: BlockPos, private val axis: Direction.Axis) {
         val rightDir: Direction
         val leftDir: Direction
         var portalBlockCount = 0; private set
@@ -317,18 +329,18 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
 
         }
 
-        private fun getDistanceUntilEdge(p_180120_1_: BlockPos, p_180120_2_: Direction): Int {
+        private fun getDistanceUntilEdge(pos: BlockPos, direction: Direction): Int {
             var i = 0
             while (i < 22) {
-                val pos = p_180120_1_.offset(p_180120_2_, i)
-                if (!this.isValidBlockType(this.world.getBlockState(pos)) || this.world.getBlockState(pos.down()).block !== Blocks.OBSIDIAN) {
+                val offset = pos.offset(direction, i)
+                if (!this.isValidBlockType(this.world.getBlockState(offset)) || this.world.getBlockState(offset.down()).block !== Glacia.Blocks.GLACIAL_MAGIC_STONE) {
                     break
                 }
                 ++i
             }
 
-            val block = this.world.getBlockState(p_180120_1_.offset(p_180120_2_, i)).block
-            return if (block === Blocks.OBSIDIAN) i else 0
+            val block = this.world.getBlockState(pos.offset(direction, i)).block
+            return if (block === Glacia.Blocks.GLACIAL_MAGIC_STONE) i else 0
         }
 
         private fun calculatePortalHeight(): Int {
@@ -342,18 +354,18 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
                     }
 
                     var block = state.block
-                    if (block === Blocks.NETHER_PORTAL) {
+                    if (block === this@BlockGlaciaPortal) {
                         ++this.portalBlockCount
                     }
 
                     if (i == 0) {
                         block = this.world.getBlockState(pos.offset(this.leftDir)).block
-                        if (block !== Blocks.OBSIDIAN) {
+                        if (block !== Glacia.Blocks.GLACIAL_MAGIC_STONE) {
                             break@rootLoop
                         }
                     } else if (i == this.width - 1) {
                         block = this.world.getBlockState(pos.offset(this.rightDir)).block
-                        if (block !== Blocks.OBSIDIAN) {
+                        if (block !== Glacia.Blocks.GLACIAL_MAGIC_STONE) {
                             break@rootLoop
                         }
                     }
@@ -362,7 +374,7 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
             }
 
             for (j in 0 until this.width) {
-                if (this.world.getBlockState(this.bottomLeft!!.offset(this.rightDir, j).up(this.height)).block !== Blocks.OBSIDIAN) {
+                if (this.world.getBlockState(this.bottomLeft!!.offset(this.rightDir, j).up(this.height)).block !== Glacia.Blocks.GLACIAL_MAGIC_STONE) {
                     this.height = 0
                     break
                 }
@@ -380,7 +392,7 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
 
         private fun isValidBlockType(state: BlockState): Boolean {
             val block = state.block
-            return state.isAir || block === Blocks.FIRE || block === this@BlockGlaciaPortal
+            return state.isAir || block === Glacia.Blocks.GLACIAL_FIRE || block === this@BlockGlaciaPortal
         }
 
         fun placePortalBlocks() {
@@ -388,7 +400,7 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
                 val blockpos = this.bottomLeft!!.offset(this.rightDir, i)
 
                 for (j in 0 until this.height) {
-                    this.world.setBlockState(blockpos.up(j), Blocks.NETHER_PORTAL.defaultState.with(AXIS, this.axis), 18)
+                    this.world.setBlockState(blockpos.up(j), this@BlockGlaciaPortal.defaultState.with(AXIS, this.axis), 18)
                 }
             }
         }
@@ -396,6 +408,8 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
         private fun isValidBlockCount(): Boolean {
             return this.portalBlockCount >= this.width * this.height
         }
+
+        val netherPortalSize; get() = NetherPortalBlock.Size(world, pos, axis)
 
         fun isValidPortalPlacement(): Boolean {
             return this.isValid && this.isValidBlockCount()
