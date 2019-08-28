@@ -1,7 +1,5 @@
 package com.greenapple.glacia.entity
 
-import com.google.common.cache.Cache
-import com.google.common.cache.CacheBuilder
 import com.greenapple.glacia.delegate.LazyWithReceiver
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -16,7 +14,7 @@ import kotlin.reflect.KProperty
 
 // <editor-fold defaultstate="collapsed" desc="Delegation methods">
 //val dataManagerCache : Cache<UUID, EntityDataManager> = CacheBuilder.newBuilder().weakKeys().weakValues().build()
-val dataManagerCache : MutableMap<UUID, WeakReference<EntityDataManager>> = Collections.synchronizedMap(WeakHashMap<UUID, WeakReference<EntityDataManager>>())
+private val dataManagerCache : MutableMap<UUID, WeakReference<EntityDataManager>> = Collections.synchronizedMap(WeakHashMap<UUID, WeakReference<EntityDataManager>>())
 private class EntityDataDelegate<This: Entity, Return> (serializer: IDataSerializer<Return>, private val defaultProvider: This.()->Return) {
     val Class<This>.dataParameter : DataParameter<Return> by LazyWithReceiver(false) {EntityDataManager.createKey(this, serializer)}
     val This.cachedDataManager : EntityDataManager; get() = dataManagerCache.putIfAbsent(uniqueID, WeakReference(dataManager))?.get() ?: dataManager
