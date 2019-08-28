@@ -1,28 +1,17 @@
 package com.greenapple.glacia.entity
 
 import com.greenapple.glacia.Glacia
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
 import net.minecraft.entity.AgeableEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SharedMonsterAttributes
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance
 import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.CowEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
-import net.minecraft.network.datasync.DataSerializers
-import net.minecraft.network.datasync.EntityDataManager
-import net.minecraft.util.DamageSource
-import net.minecraft.util.IItemProvider
-import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import org.apache.logging.log4j.LogManager
-import kotlin.random.Random
 
 class EntityReindeer(type: EntityType<CowEntity>, world: World) : AnimalEntity(type, world) {
 
@@ -41,7 +30,6 @@ class EntityReindeer(type: EntityType<CowEntity>, world: World) : AnimalEntity(t
 
     override fun registerData() {
         super.registerData()
-        this.dataManager.register(IS_MALE, Random.nextBoolean())
     }
 
     override fun registerAttributes() {
@@ -62,5 +50,5 @@ class EntityReindeer(type: EntityType<CowEntity>, world: World) : AnimalEntity(t
         isMale = compound.getBoolean("is_male")
     }
 
-    override fun canMateWith(other: AnimalEntity) = isMale xor other.isMale
+    override fun canMateWith(other: AnimalEntity) = runCatching {isMale xor (other as EntityReindeer).isMale}.getOrElse {false}
 }

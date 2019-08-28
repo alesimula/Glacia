@@ -3,12 +3,12 @@ package com.greenapple.glacia.entity.model
 import com.greenapple.glacia.entity.isMale
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.client.renderer.entity.model.RendererModel
-import net.minecraft.entity.AgeableEntity
+import net.minecraft.entity.LivingEntity
 
 import net.minecraft.util.math.MathHelper
 import org.lwjgl.opengl.GL11
 
-class ModelReindeer<E: AgeableEntity> : EntityModel<E>() {
+class ModelReindeer<E: LivingEntity> : EntityModel<E>() {
 
     init {
         textureWidth = 46

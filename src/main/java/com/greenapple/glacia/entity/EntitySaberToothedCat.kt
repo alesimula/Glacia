@@ -50,7 +50,7 @@ class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: W
     }
 
     companion object {
-        private val COLLAR_COLOR by lazy {EntityDataManager.createKey(WolfEntity::class.java, DataSerializers.VARINT)}
+        val COLLAR_COLOR by lazy {EntityDataManager.createKey(WolfEntity::class.java, DataSerializers.VARINT)}
     }
 
     override fun createChild(ageable: AgeableEntity) = EntitySaberToothedCat(entityType, world)
