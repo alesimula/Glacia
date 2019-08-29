@@ -16,12 +16,13 @@ class EntityGlacialTurtle(type: EntityType<CowEntity>, world: World) : AnimalEnt
 
     companion object {
         val LivingEntity.isValidTarget get() = when {
-            (this is PlayerEntity) -> runCatching{armorInventoryList.forEachIndexed {index, itemStack -> itemStack.apply {when(index) {
-                0 -> if (item !== Glacia.Items.TURTLE_PAWS) throw Exception()
-                1 -> if (item !== Glacia.Items.TURTLE_LIMBS) throw Exception()
-                2 -> if (item !== Glacia.Items.TURTLE_SHELL) throw Exception()
-                3 -> if (item !== Glacia.Items.TURTLE_HEAD) throw Exception()
-            }}}}.getOrNull()?.run {false} ?: true
+            (this is PlayerEntity) -> armorInventoryList.foldIndexed(false) {index, last, itemStack -> itemStack.run {when(index) {
+                0 -> (item !== Glacia.Items.TURTLE_PAWS) || last
+                1 -> (item !== Glacia.Items.TURTLE_LIMBS) || last
+                2 -> (item !== Glacia.Items.TURTLE_SHELL) || last
+                3 -> (item !== Glacia.Items.TURTLE_HEAD) || last
+                else -> last
+            }}}
             else -> false
         }
     }
