@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "greenapple_glacia:glacial_ice"
+    }
+  ],
+  "result": {
+    "item": "greenapple_glacia:glacial_ice_powder",
+    "count": 64
+  }
+}

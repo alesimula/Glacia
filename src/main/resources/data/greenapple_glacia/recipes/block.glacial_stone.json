@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "greenapple_glacia:block.glacial_cobblestone"
+  },
+  "result": "greenapple_glacia:block.glacial_stone",
+  "experience": 0.50,
+  "cookingtime": 210
+}

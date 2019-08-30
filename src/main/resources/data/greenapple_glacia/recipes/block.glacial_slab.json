@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:block.glacial_planks"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:block.glacial_slab",
+    "count": 6
+  }
+}

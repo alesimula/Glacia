@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    " W ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:block.ice_bricks_slab"
+    },
+    "W": {
+      "item": "greenapple_glacia:block.compacted_ice"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:block.ice_column",
+    "count": 4
+  }
+}

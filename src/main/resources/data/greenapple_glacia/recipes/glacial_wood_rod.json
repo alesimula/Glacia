@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sticks",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:block.glacial_planks"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:glacial_wood_rod",
+    "count": 4
+  }
+}

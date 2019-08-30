@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "greenapple_glacia:block/ice_bricks",
+    "top": "greenapple_glacia:block/ice_bricks",
+    "side": "greenapple_glacia:block/ice_bricks"
+  }
+}

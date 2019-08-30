@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "greenapple_glacia:saber_toothed_cat_meat"
+  },
+  "result": "greenapple_glacia:saber_toothed_cat_meat_cooked",
+  "experience": 0.80,
+  "cookingtime": 200
+}

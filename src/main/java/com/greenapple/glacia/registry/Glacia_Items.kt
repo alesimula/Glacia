@@ -40,6 +40,7 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     // Materials
     val GLACIAL_CRYSTAL = ItemBase("glacial_crystal", "Glacial Crystal", Glacia.ItemGroup.MATERIALS)
     val GLACIAL_ICE = ItemBase("glacial_ice", "Glacial Ice", Glacia.ItemGroup.MATERIALS)
+    val GLACIAL_ICE_POWDER = ItemBase("glacial_ice_powder", "Glacial Ice Powder", Glacia.ItemGroup.MATERIALS)
     val CRYSTAL_ROD = ItemBase("crystal_rod", "Crystal Rod", Glacia.ItemGroup.MATERIALS)
     val ICE_ROD = ItemBase("ice_rod", "Ice Rod", Glacia.ItemGroup.MATERIALS)
     val MAGIC_STONE_SHARD = ItemBase("magic_stone_shard", "Magic Stone Shard", Glacia.ItemGroup.MATERIALS)

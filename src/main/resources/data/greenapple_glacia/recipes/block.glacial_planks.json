@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "greenapple_glacia:block.glacial_tree_log"
+    }
+  ],
+  "result": {
+    "item": "greenapple_glacia:block.glacial_planks",
+    "count": 4
+  }
+}
