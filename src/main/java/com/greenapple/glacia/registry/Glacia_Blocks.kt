@@ -2,12 +2,9 @@ package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.*
-import com.greenapple.glacia.world.feature.FeatureGlacialTree
 import net.minecraft.block.Block
-import net.minecraft.block.FlowingFluidBlock
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
-import net.minecraft.fluid.Fluids
 import net.minecraft.potion.Effects
 import net.minecraft.util.BlockRenderLayer
 
@@ -31,15 +28,14 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_DOOR = BlockDoorBase("glacial_door", "Glacial door", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
     val GLACIAL_FENCE = BlockFenceBase("glacial_fence", "Glacial fence", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
     val GLACIAL_FENCE_GATE = BlockFenceGateBase("glacial_fence_gate", "Glacial fence gate", Glacia_ItemGroup.DECORATIONS, GLACIAL_PLANKS)
-    val GLACIAL_CRYSTAL_ORE = BlockBase("glacial_crystal_ore", "Glacial crystal ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(3.5F, 7F)}
-    val GLACIAL_ICE_ORE = BlockBase("glacial_ice_ore", "Glacial ice ore", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(4F, 8F)}
+    val GLACIAL_CRYSTAL_ORE = BlockOreBase("glacial_crystal_ore", "Glacial crystal ore", Glacia.Items.GLACIAL_CRYSTAL) {hardnessAndResistance(3.5F, 7F)}
+    val GLACIAL_ICE_ORE = BlockOreBase("glacial_ice_ore", "Glacial ice ore", Glacia.Items.GLACIAL_ICE) {hardnessAndResistance(4F, 8F)}
     val GLACIAL_SAPLING = BlockSaplingBase("glacial_sapling", "Glacial sapling", Glacia_ItemGroup.DECORATIONS) {Glacia.Feature.GLACIAL_TREE}
     val ICE_FLOWER = BlockFlowerBase("ice_flower", "Ice flower", Glacia_ItemGroup.DECORATIONS, Effects.SLOWNESS, 4)
     val SNOWY_SAND = BlockFallingBase("snowy_sand", "Snowy sand", Glacia_ItemGroup.BLOCKS, Material.SAND) {hardnessAndResistance(0.5F).sound(SoundType.SAND)}
     val GLACIAL_BERRY = BlockPlantFacingBase("glacial_berry", "Glacial berry", Glacia_ItemGroup.DECORATIONS, Material.ORGANIC, 8.0, 14.0) {doesNotBlockMovement().hardnessAndResistance(0F).sound(SoundType.PLANT)}
-    val CATALYST_CRYSTAL = BlockGrowingBase("catalyst_crystal", "Catalyst crystal", Glacia_ItemGroup.DECORATIONS, Material.ROCK, 13.0, 9.6) {doesNotBlockMovement().hardnessAndResistance(3.0F).lightValue(14).variableOpacity().sound(SoundType.GLASS)}
+    val CATALYST_CRYSTAL = BlockGrowingOreBase("catalyst_crystal", "Catalyst crystal", Glacia.Items.BLUESTONE, true, 13.0, 9.6) {doesNotBlockMovement().hardnessAndResistance(3.0F).lightValue(14).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; isTranslucent = true}
-            .validGroundBlocks {material === Material.ROCK}
     val MAGIC_ICE = BlockBase("magic_ice", "Magic ice", Glacia_ItemGroup.BLOCKS, Material.ICE) {hardnessAndResistance(0.8F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS)}
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
     val ICE_COLUMN = BlockColumnBase("ice_column", "Ice column", Glacia_ItemGroup.DECORATIONS, Material.ROCK) {hardnessAndResistance(1.2F, 3F).slipperiness(0.98F).sound(SoundType.GLASS).variableOpacity()}

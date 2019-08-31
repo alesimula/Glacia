@@ -1,15 +1,12 @@
 package com.greenapple.glacia.block
 
-import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.BlockItemBase
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
-import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.DyeColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
-import net.minecraft.state.BooleanProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
@@ -20,7 +17,7 @@ import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
 import net.minecraftforge.registries.IForgeRegistry
 
-open class BlockGrowingBase private constructor(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, properties: Properties, val width: Double=16.0, val height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockBase {
+open class BlockGrowingBase private constructor(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, properties: Properties, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BushBlock(properties.apply {initializer?.invoke(this)}), IBlockBase {
 
     constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, materialColor: MaterialColor =material.color, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, Properties.create(material, materialColor), width, height, initializer)
     constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, dyeColor: DyeColor, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, Properties.create(material, dyeColor), width, height, initializer)
