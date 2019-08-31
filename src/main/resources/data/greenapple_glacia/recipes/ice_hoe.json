@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XX",
+    " #",
+    " #"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:ice_rod"
+    },
+    "X": {
+      "item": "greenapple_glacia:glacial_ice"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:ice_hoe"
+  }
+}

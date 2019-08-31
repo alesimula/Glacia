@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:ice_sword"
+    },
+    "X": {
+      "item": "greenapple_glacia:glacial_ice"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:ice_bastard_sword"
+  }
+}
