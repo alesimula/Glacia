@@ -9,13 +9,12 @@ import net.minecraft.block.Blocks
 import net.minecraft.fluid.Fluids
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.GenerationStage
-import net.minecraft.world.gen.carver.WorldCarver
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.placement.*
 import java.util.function.Predicate
 
 private val fillerBlockTypeConstructor by ReflectEnumConstructor<OreFeatureConfig.FillerBlockType>()
-fun fillerBlockType(name: String, shouldReplace: BlockState.()->Boolean) = fillerBlockTypeConstructor(name.toUpperCase(), name, Predicate(shouldReplace))
+fun fillerBlockType(name: String, shouldReplace: BlockState.()->Boolean) = fillerBlockTypeConstructor(name, Predicate(shouldReplace))
 
 object GlaciaBiomeFeatures {
     val FILLER_GLACIAL_STONE = fillerBlockType("glacial_stone") {block === Glacia.Blocks.GLACIAL_STONE}

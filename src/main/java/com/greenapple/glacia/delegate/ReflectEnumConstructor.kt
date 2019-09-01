@@ -15,9 +15,11 @@ open class ReflectEnumConstructor<This: Enum<*>> (thisRef: KClass<This>, vararg 
             (constructorAccessorKt ?: constructorAccessorRetriever(this)) as ConstructorAccessor
         }
     }}
-    inner class EnumConstructor : (String, Array<out Any?>) -> This {
+    @Suppress("VAL_REASSIGNMENT_VIA_BACKING_FIELD_ERROR")
+    private val nextId = 0; get() = field++
+    inner class EnumConstructor : (Array<out Any?>) -> This {
         @Suppress("UNCHECKED_CAST")
-        override fun invoke(enumName: String, vararg args: Any?): This = constructorAccessor.newInstance(arrayOf(enumName, -1, *args)) as This
+        override fun invoke(vararg args: Any?): This = constructorAccessor.newInstance(arrayOf("${this::class.qualifiedName}_$nextId", -1, *args)) as This
     }
     private val constructor = EnumConstructor()
 
