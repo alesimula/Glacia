@@ -62,6 +62,7 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val ICE_AXE = ItemAxeBase("ice_axe", "Ice Axe", ItemTier.DIAMOND, 5.5F, -3F)
     val ICE_SHOVEL = ItemShovelBase("ice_shovel", "Ice Shovel", ItemTier.DIAMOND, 2F, -3F)
     val ICE_HOE = ItemHoeBase("ice_hoe", "Ice Hoe", ItemTier.DIAMOND, 0.3F)
+    val GLACIAL_LIGHTER = ItemGlacialLighter("glacial_lighter", "Glacial Lighter")
     // Combat
     val GLACIAL_WOOD_SWORD = ItemSwordBase("glacial_wood_sword", "Glacial Wood Sword", ItemTier.WOOD, 3, -2.3F)
     val CRYSTAl_SWORD = ItemSwordBase("crystal_sword", "Crystal Sword", ItemTier.IRON, 3, -2.3F)
@@ -83,12 +84,11 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val TURTLE_PAWS = ItemArmorBase("turtle_paws", "Turtle Paws", ArmorMaterial.TURTLE, EquipmentSlotType.FEET)
     val MYSTERIOUS_CHESTPLATE = ItemArmorBase("mysterious_chestplate", "Mysterious Chestplate", ArmorMaterial.MYSTERIOUS, EquipmentSlotType.CHEST)
     // Brewing
-    val GLACIAL_LIGHTER = ItemGlacialLighter("glacial_lighter", "Glacial Lighter")
     val QUADIUM_PEARL = ItemBase("quadium_pearl", "Quadium Pearl", Glacia.ItemGroup.BREWING)
     val QUADIUM_BULB = ItemBase("quadium_bulb", "Quadium Bulb", Glacia.ItemGroup.BREWING)
     val QUADIUM_BULB_BROKEN = ItemBase("quadium_bulb_broken", "Broken Quadium Bulb", Glacia.ItemGroup.BREWING)
     val RETURN_RUNE = ItemBase("return_rune", "Return To Overworld", Glacia.ItemGroup.BREWING)
-    val POTION_MORPH_SNOWMAN = ItemBase("potion_morph_snowman", "Morph Snowman", Glacia.ItemGroup.BREWING)
+    //*TODO val POTION_MORPH_SNOWMAN = ItemBase("potion_morph_snowman", "Morph Snowman", Glacia.ItemGroup.BREWING)
     // Bluestone
     val BLUESTONE = ItemBase("bluestone", "Bluestone", Glacia.ItemGroup.BLUESTONE)
 }

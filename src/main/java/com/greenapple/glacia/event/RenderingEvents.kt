@@ -18,13 +18,11 @@ class RenderingEvents {
     private val TEXTURE_SNOWMAN = ResourceLocation(Glacia.MODID, "textures/entity/player_snowman.png")
 
     private fun PlayerRenderer.onRenderPlayer(player: PlayerEntity) {
-        if (!player.isInWater) player.getActivePotionEffect(Glacia.Effects.MORPH_SNOWMAN)?.let {effect ->
+        if (!player.isInWater) player.getActivePotionEffect(Glacia.Effects.MORPH_SNOWMAN)?.also {effect ->
             effect.durationKt = 72011
             morph(player, MODEL_SNOWMAN, TEXTURE_SNOWMAN)
-        } ?: apply {
-            player.addPotionEffect(EffectInstance(Glacia.Effects.MORPH_SNOWMAN, 72011))
         }
-        else morph(player)
+        else if (morph(player)) player.removePotionEffect(Glacia.Effects.MORPH_SNOWMAN)
     }
 
     @SubscribeEvent

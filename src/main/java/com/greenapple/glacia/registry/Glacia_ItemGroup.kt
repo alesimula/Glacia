@@ -18,7 +18,7 @@ class Glacia_ItemGroup private constructor(private val name: String, private val
         @JvmStatic val FOOD : ItemGroup = Glacia_ItemGroup("food", "Food") {Glacia.Items.SABER_TOOTHED_CAT_MEAT}
         @JvmStatic val TOOLS : ItemGroup = Glacia_ItemGroup("tools", "Tools") {Glacia.Items.CRYSTAl_AXE}
         @JvmStatic val COMBAT : ItemGroup = Glacia_ItemGroup("combat", "Combat") {Glacia.Items.CRYSTAl_SWORD}
-        @JvmStatic val BREWING : ItemGroup = Glacia_ItemGroup("brewing", "Brewing") {Glacia.Items.POTION_MORPH_SNOWMAN}
+        @JvmStatic val BREWING : ItemGroup = Glacia_ItemGroup("brewing", "Brewing") {Glacia.Items.RETURN_RUNE}
         @JvmStatic val MATERIALS : ItemGroup = Glacia_ItemGroup("materials", "Materials") {Glacia.Items.GLACIAL_ICE}
     }
 

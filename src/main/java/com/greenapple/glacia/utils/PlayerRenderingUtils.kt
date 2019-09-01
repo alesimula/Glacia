@@ -36,6 +36,7 @@ private val MODEL_ARMOR_EMPTY = object : BipedModel<AbstractClientPlayerEntity>(
 /**
  * Morphs a player with given model and texture
  * Not passing model and texture will morph the player to its original form
+ * @return true if the model changed, false otherwise
  */
 fun PlayerRenderer.morph(player: PlayerEntity, model: PlayerModel<AbstractClientPlayerEntity>?=null, texture: ResourceLocation?=null) = (model?:MODEL_PLAYER_DEFAULT).let { newModel ->
     MODEL_PLAYER_DEFAULT
@@ -58,5 +59,7 @@ fun PlayerRenderer.morph(player: PlayerEntity, model: PlayerModel<AbstractClient
             }
         }}
         entityModelKt = newModel
+        true
     }
+    else false
 }
