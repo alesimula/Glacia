@@ -37,7 +37,11 @@ class BiomeGlaciaForest : Biome {
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
-        this.addSpawn(EntityClassification.MONSTER, Biome.SpawnListEntry(EntityType.SLIME, 100, 4, 4))
+        this.addSpawn(EntityClassification.MONSTER, SpawnListEntry(EntityType.SLIME, 100, 4, 4))
+        this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.SABER_TOOTHED_CAT, 12, 4, 4))
+        this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.REINDEER, 30, 5, 8))
+        this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.GLACIAL_SEEKER, 10, 5, 8))
+        this.addSpawn(EntityClassification.MONSTER, SpawnListEntry(Glacia.Entity.GLACIAL_SEEKER, 100, 5, 8))
     }
 
     override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false

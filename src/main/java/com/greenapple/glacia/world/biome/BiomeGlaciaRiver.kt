@@ -2,6 +2,8 @@ package com.greenapple.glacia.world.biome
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaDirt
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.GenerationStage
@@ -30,4 +32,6 @@ class BiomeGlaciaRiver(registryName : String) : Biome(Biome.Builder().surfaceBui
         this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.SEAGRASS, SeaGrassConfig(48, 0.4), Placement.TOP_SOLID_HEIGHTMAP, IPlacementConfig.NO_PLACEMENT_CONFIG))
         DefaultBiomeFeatures.addFreezeTopLayer(this)
     }
+
+    override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false
 }

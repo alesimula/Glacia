@@ -5,6 +5,7 @@ import com.greenapple.glacia.block.BlockGlaciaDirt
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IWorldReader
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.GenerationStage
@@ -44,5 +45,9 @@ class BiomeGlaciaOcean : Biome {
         DefaultBiomeFeatures.func_222320_ai(this)
         DefaultBiomeFeatures.func_222287_ah(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
+
+        this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(EntityType.POLAR_BEAR, 15, 1, 2))
     }
+
+    override fun doesSnowGenerate(world: IWorldReader, pos: BlockPos) = false
 }

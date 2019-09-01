@@ -3,7 +3,6 @@ package com.greenapple.glacia.entity
 import com.greenapple.glacia.Glacia
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.monster.ZombieEntity
-import net.minecraft.inventory.EquipmentSlotType
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.datasync.DataSerializers
@@ -22,6 +21,10 @@ class EntityGlacialSeeker(type: EntityType<ZombieEntity>, world: World) : Zombie
     init {
         isVariantMysterious
     }
+
+    override fun getAmbientSound() = null
+    override fun getHurtSound(damageSourceIn: DamageSource) = null
+    override fun getDeathSound() = null
 
     override fun writeAdditional(compound: CompoundNBT) {
         super.writeAdditional(compound)

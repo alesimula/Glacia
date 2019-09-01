@@ -30,7 +30,7 @@ open class BlockBase private constructor (registryName: String, override val unl
     override var blockItem: BlockItemBase?=null
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
-    private val noDrops = lootTable === LootTables.EMPTY
+    protected val noDrops = lootTable === LootTables.EMPTY
     private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
     var isTranslucent = false
     var seeThroughGroup = false

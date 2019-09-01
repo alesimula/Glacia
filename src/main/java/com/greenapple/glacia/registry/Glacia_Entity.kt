@@ -31,7 +31,7 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
     }}
-    private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(zombieArms: Boolean, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), scale) {
+    private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(zombieArms: Boolean, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), 0F) {
         init {
             this.addLayer(BipedArmorLayer(this, ModelBipedBase(0.5f, true), ModelBipedBase(1F, zombieArms)))
         }
@@ -54,10 +54,10 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
         SABER_TOOTHED_CAT.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
         SABER_TOOTHED_CAT.registerRenderer(ModelSaberToothedCat(), 0.5F)
         REINDEER.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
-        REINDEER.registerRenderer(ModelReindeer(), 0.5f)
+        REINDEER.registerRenderer(ModelReindeer(), 0.4f)
         PENGUIN.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
         PENGUIN.registerRenderer(ModelPenguin(), 0.35f)
         GLACIAL_SEEKER.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::func_223325_c)
-        GLACIAL_SEEKER.registerRendererBiped(true, 1F)
+        GLACIAL_SEEKER.registerRendererBiped(true)
     }
 }

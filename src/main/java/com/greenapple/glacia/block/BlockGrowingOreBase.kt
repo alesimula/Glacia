@@ -13,7 +13,7 @@ import net.minecraft.world.storage.loot.*
 /**
  * Don't forget to add the block to the 'fences' tag group
  */
-class BlockGrowingOreBase(registryName: String, unlocalizedName: String, itemGroup: ItemGroup?, private val droppedItem: Item, private val minPickaxeTier: ItemTier = ItemTier.WOOD, private val dropWithSilkTouch: Boolean=true, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BlockGrowingBase(registryName, unlocalizedName, itemGroup, Material.ROCK, width, height, initializer) {
+open class BlockGrowingOreBase(registryName: String, unlocalizedName: String, itemGroup: ItemGroup?, private val droppedItem: Item, private val minPickaxeTier: ItemTier = ItemTier.WOOD, private val dropWithSilkTouch: Boolean=true, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : BlockGrowingBase(registryName, unlocalizedName, itemGroup, Material.ROCK, width, height, initializer) {
 
     constructor(registryName: String, unlocalizedName: String, droppedItem: Item, minPickaxeTier: ItemTier = ItemTier.WOOD, dropWithSilkTouch: Boolean=true, width: Double=16.0, height: Double=16.0, initializer: (Properties.()->Unit)?=null) : this(registryName, unlocalizedName, Glacia.ItemGroup.DECORATIONS, droppedItem, minPickaxeTier, dropWithSilkTouch, width, height, initializer)
 

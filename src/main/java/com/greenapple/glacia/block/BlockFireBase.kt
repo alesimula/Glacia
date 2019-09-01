@@ -17,7 +17,7 @@ import net.minecraftforge.registries.IForgeRegistry
 /**
  * Don't forget to add the block to the 'fences' tag group
  */
-class BlockFireBase(registryName: String, override val unlocalizedName: String) : FireBlock(Properties.create(Material.FIRE, MaterialColor.TNT).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0F).sound(SoundType.CLOTH).noDrops()), IBlockBase {
+class BlockFireBase(registryName: String, override val unlocalizedName: String) : FireBlock(Properties.create(Material.FIRE, MaterialColor.TNT).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0F).lightValue(15).sound(SoundType.CLOTH).noDrops()), IBlockBase {
 
     init {
         setRegistryName(registryName)
