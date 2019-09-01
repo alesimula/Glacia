@@ -2,6 +2,7 @@
 package com.greenapple.glacia
 
 import com.greenapple.glacia.delegate.SingletonReceiver
+import com.greenapple.glacia.event.PlayerEvents
 import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
@@ -66,6 +67,7 @@ class Glacia {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this)
         MinecraftForge.EVENT_BUS.register(RenderingEvents())
+        MinecraftForge.EVENT_BUS.register(PlayerEvents())
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

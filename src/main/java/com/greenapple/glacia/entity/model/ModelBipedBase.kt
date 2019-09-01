@@ -7,10 +7,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class ModelBipedBase<T : MobEntity>(p_i48914_1_: Float, p_i48914_2_: Float, p_i48914_3_: Int, p_i48914_4_: Int, private val zombieArms: Boolean=true) : BipedModel<T>(p_i48914_1_, p_i48914_2_, p_i48914_3_, p_i48914_4_) {
-
-    @JvmOverloads
-    constructor(modelSize: Float = 0f, zombieArms: Boolean=true, p_i1168_2_: Boolean = false) : this(modelSize, 0.0f, 64, if (p_i1168_2_) 32 else 64, zombieArms)
+open class ModelBipedBase<T : MobEntity>(modelSize: Float=0F, private val zombieArms: Boolean=true) : BipedModel<T>(modelSize) {
 
     override fun setRotationAngles(entityIn: T, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float) {
         super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor)

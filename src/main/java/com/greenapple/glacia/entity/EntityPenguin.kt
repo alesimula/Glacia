@@ -1,5 +1,6 @@
 package com.greenapple.glacia.entity
 
+import com.greenapple.glacia.Glacia
 import net.minecraft.entity.AgeableEntity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SharedMonsterAttributes
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.item.crafting.Ingredient
+import net.minecraft.util.DamageSource
 import net.minecraft.world.World
 
 class EntityPenguin(type: EntityType<CowEntity>, world: World) : AnimalEntity(type, world) {
@@ -27,6 +29,11 @@ class EntityPenguin(type: EntityType<CowEntity>, world: World) : AnimalEntity(ty
         this.goalSelector.addGoal(5, WaterAvoidingRandomWalkingGoal(this, 1.0))
         this.goalSelector.addGoal(6, LookAtGoal(this, PlayerEntity::class.java, 6.0f))
         this.goalSelector.addGoal(7, LookRandomlyGoal(this))
+    }
+
+    override fun spawnDrops(damageSource: DamageSource) {
+        entityDropItem(ItemStack(Glacia.Items.PENGUIN_FEATHERS))
+        super.spawnDrops(damageSource)
     }
 
     override fun registerAttributes() {

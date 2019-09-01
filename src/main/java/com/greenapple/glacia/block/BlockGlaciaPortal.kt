@@ -3,10 +3,7 @@ package com.greenapple.glacia.block
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.delegate.LazyWithReceiver
 import com.greenapple.glacia.world.GlaciaTeleporter
-import net.minecraft.block.Block
-import net.minecraft.block.BlockState
-import net.minecraft.block.Blocks
-import net.minecraft.block.NetherPortalBlock
+import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.pattern.BlockPattern
 import net.minecraft.world.dimension.DimensionType
@@ -34,7 +31,21 @@ import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.fml.hooks.BasicEventHooks
 
-open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: ItemGroup?, initializer: (Properties.() -> Unit)? = null) : BlockBase(registryName, name, itemGroup, Material.PORTAL, initializer.init) {
+open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(registryName, name, null, Material.PORTAL, initializer) {
+
+    companion object {
+        val AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
+        private val X_AABB : VoxelShape = makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0)
+        private val Z_AABB : VoxelShape = makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0)
+
+        val initializer : Properties.() -> Unit = {
+            hardnessAndResistance(-1.0F)
+            sound(SoundType.GLASS)
+            lightValue(11)
+            noDrops()
+            doesNotBlockMovement()
+        }
+    }
 
     init {
         this.defaultState = stateContainer.baseState.with(AXIS, Direction.Axis.X)
@@ -75,18 +86,7 @@ open class BlockGlaciaPortal(registryName: String, name: String, itemGroup: Item
         return if (!flag && facingState.block !== this && !Size(worldIn, currentPos, axis2).isValidPortalPlacement()) Blocks.AIR.defaultState else super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos)
     }
 
-    companion object {
-        val AXIS: EnumProperty<Direction.Axis> = BlockStateProperties.HORIZONTAL_AXIS
-        private val X_AABB : VoxelShape = makeCuboidShape(0.0, 0.0, 6.0, 16.0, 16.0, 10.0)
-        private val Z_AABB : VoxelShape = makeCuboidShape(6.0, 0.0, 0.0, 10.0, 16.0, 16.0)
-
-        val (Properties.()->Unit)?.init : Properties.() -> Unit; get() = {
-            doesNotBlockMovement()
-            this@init?.invoke(this)
-        }
-    }
-
-    private fun isPortal(world: IWorld, pos: BlockPos): Size? = Size(world, pos, Direction.Axis.X).takeIf {it.isValid && it.portalBlockCount == 0}
+    fun isPortal(world: IWorld, pos: BlockPos): Size? = Size(world, pos, Direction.Axis.X).takeIf {it.isValid && it.portalBlockCount == 0}
             ?: Size(world, pos, Direction.Axis.Z).takeIf {it.isValid && it.portalBlockCount == 0}
 
     fun trySpawnPortal(worldIn: IWorld, pos: BlockPos): Boolean {

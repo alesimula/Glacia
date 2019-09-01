@@ -1,0 +1,7 @@
+{
+    "parent": "block/fire_side",
+    "textures": {
+        "particle": "greenapple_glacia:block/glacial_fire_1",
+        "fire": "greenapple_glacia:block/glacial_fire_1"
+    }
+}

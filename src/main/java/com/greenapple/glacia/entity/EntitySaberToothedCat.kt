@@ -71,6 +71,11 @@ class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: W
         return false
     }
 
+    override fun spawnDrops(damageSource: DamageSource) {
+        entityDropItem(ItemStack(Glacia.Items.SABER_TOOTHED_CAT_MEAT))
+        super.spawnDrops(damageSource)
+    }
+
     /**
      * Determines whether this wolf is angry or not.
      */

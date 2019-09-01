@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.entity.layers.BipedArmorLayer
 import net.minecraft.client.renderer.entity.model.EntityModel
+import net.minecraft.client.renderer.entity.model.PlayerModel
 import net.minecraft.entity.*
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType
 import net.minecraft.entity.monster.MonsterEntity
@@ -32,7 +33,7 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     }}
     private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(zombieArms: Boolean, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), scale) {
         init {
-            this.addLayer(BipedArmorLayer(this, ModelBipedBase(0.5f, true), ModelBipedBase(0F, zombieArms)))
+            this.addLayer(BipedArmorLayer(this, ModelBipedBase(0.5f, true), ModelBipedBase(1F, zombieArms)))
         }
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
@@ -45,7 +46,7 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     val SABER_TOOTHED_CAT = entityType("saber_toothed_cat", EntityClassification.CREATURE) {world -> EntitySaberToothedCat(type, world)}
     val REINDEER = entityType("reindeer", EntityClassification.CREATURE) {world ->  EntityReindeer(type, world)}
     val PENGUIN = entityType("penguin", EntityClassification.CREATURE) {world ->  EntityPenguin(type, world)}
-    val GLACIAL_SEEKER = entityType("glacial_seeker", EntityClassification.MONSTER) {world ->  EntityGlacialSeeker(type, world)}
+    val GLACIAL_SEEKER = entityType("glacial_seeker", EntityClassification.MONSTER) {world -> EntityGlacialSeeker(type, world) }
 
     fun registerProperties() {
         GLACIAL_TURTLE.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)

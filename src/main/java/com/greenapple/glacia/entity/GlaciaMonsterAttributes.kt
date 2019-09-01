@@ -16,6 +16,7 @@ object GlaciaMonsterAttributes {
 
     enum class Gender {MALE, FEMALE}
 
+    //TODO this is unused, delete class if it stays so
     val GENDER = EnumAttribute("${Glacia.MODID}.gender", Gender.MALE)
 }
 

@@ -24,7 +24,7 @@ apply plugin: 'kotlin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
+version = '14.4.1b'
 group = 'com.greenapple.glacia'
 archivesBaseName = 'Glacia'
 

@@ -18,7 +18,7 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val GLACIAL_STONE = BlockBase("glacial_stone", "Glacial stone", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(2F, 10F)}
     val GLACIAL_COBBLESTONE = BlockBase("glacial_cobblestone", "Glacial cobblestone", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(1.8F, 8F)}
     val GLACIAL_MAGIC_STONE = BlockBase("glacial_magic_stone", "Glacial magic stone", Glacia_ItemGroup.BREWING, Material.ROCK) {hardnessAndResistance(2.3F, 12F)}
-    val GLACIA_PORTAL = BlockGlaciaPortal("glacia_portal", "Glacia portal", Glacia_ItemGroup.BREWING) {hardnessAndResistance(2.3F, 12F)}
+    val GLACIA_PORTAL = BlockGlaciaPortal("glacia_portal", "Glacia portal")
     val GLACIAL_FIRE = BlockFireBase("glacial_fire", "Glacial fire")
     val GLACIAL_TREE_LOG = BlockRotatedBase("glacial_tree_log", "Glacial tree log", Glacia_ItemGroup.BLOCKS, Material.WOOD) {hardnessAndResistance(2F).sound(SoundType.WOOD)}
     val GLACIAL_TREE_LEAVES = BlockBase("glacial_tree_leaves", "Glacial tree leaves", Glacia_ItemGroup.DECORATIONS, Material.LEAVES) {hardnessAndResistance(0.2F).sound(SoundType.PLANT)}

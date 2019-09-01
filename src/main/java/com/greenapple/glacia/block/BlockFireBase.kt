@@ -8,6 +8,7 @@ import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.world.storage.loot.LootContext
@@ -22,11 +23,12 @@ class BlockFireBase(registryName: String, override val unlocalizedName: String) 
         setRegistryName(registryName)
     }
 
-    override val itemGroup = Glacia.ItemGroup.DECORATIONS
+    override val itemGroup = null
     override var blockItem: BlockItemBase?=null
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
-    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.let {item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
+    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = arrayListOf()
+    override fun isBurning(state: BlockState?, world: IBlockReader?, pos: BlockPos?) = true
 
 
     /**

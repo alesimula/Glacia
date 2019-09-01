@@ -13,6 +13,7 @@ import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.storage.loot.LootContext
+import net.minecraft.world.storage.loot.LootTables
 import net.minecraftforge.registries.IForgeRegistry
 
 open class BlockBase private constructor (registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, properties: Properties, initializer: (Properties.()->Unit)?=null) : Block(properties.apply {initializer?.invoke(this)}), IBlockBase {
@@ -21,6 +22,7 @@ open class BlockBase private constructor (registryName: String, override val unl
     constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, dyeColor: DyeColor, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, Properties.create(material, dyeColor), initializer)
     constructor(registryName: String, name: String, itemGroup: ItemGroup?, material: Material, initializer: (Properties.()->Unit)?=null) : this(registryName, name, itemGroup, material, material.color, initializer)
 
+
     init {
         setRegistryName(registryName)
     }
@@ -28,6 +30,7 @@ open class BlockBase private constructor (registryName: String, override val unl
     override var blockItem: BlockItemBase?=null
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
+    private val noDrops = lootTable === LootTables.EMPTY
     private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
     var isTranslucent = false
     var seeThroughGroup = false
@@ -35,7 +38,7 @@ open class BlockBase private constructor (registryName: String, override val unl
     fun setRenderLayer(renderLayer: BlockRenderLayer) {customRenderLayer = renderLayer}
     override fun getRenderLayer(): BlockRenderLayer = customRenderLayer
 
-    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.let {item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
+    override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.takeIf {!noDrops}?.let {item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
 
     /**
      * First function in AbstractGlassBlock

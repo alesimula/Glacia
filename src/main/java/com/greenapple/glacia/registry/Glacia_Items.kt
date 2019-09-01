@@ -83,7 +83,7 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val TURTLE_PAWS = ItemArmorBase("turtle_paws", "Turtle Paws", ArmorMaterial.TURTLE, EquipmentSlotType.FEET)
     val MYSTERIOUS_CHESTPLATE = ItemArmorBase("mysterious_chestplate", "Mysterious Chestplate", ArmorMaterial.MYSTERIOUS, EquipmentSlotType.CHEST)
     // Brewing
-    val GLACIAL_LIGHTER = ItemBase("glacial_lighter", "Glacial Lighter", Glacia.ItemGroup.BREWING)
+    val GLACIAL_LIGHTER = ItemGlacialLighter("glacial_lighter", "Glacial Lighter")
     val QUADIUM_PEARL = ItemBase("quadium_pearl", "Quadium Pearl", Glacia.ItemGroup.BREWING)
     val QUADIUM_BULB = ItemBase("quadium_bulb", "Quadium Bulb", Glacia.ItemGroup.BREWING)
     val QUADIUM_BULB_BROKEN = ItemBase("quadium_bulb_broken", "Broken Quadium Bulb", Glacia.ItemGroup.BREWING)

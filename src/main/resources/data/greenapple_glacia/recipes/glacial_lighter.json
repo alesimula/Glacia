@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "greenapple_glacia:magic_stone_shard"
+    }
+  ],
+  "result": {
+    "item": "greenapple_glacia:glacial_lighter"
+  }
+}
