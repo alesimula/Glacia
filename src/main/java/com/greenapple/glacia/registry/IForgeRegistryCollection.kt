@@ -2,9 +2,11 @@ package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.block.IBlockBase
 import net.minecraft.block.Block
+import net.minecraft.fluid.Fluid
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
+import net.minecraftforge.client.event.TextureStitchEvent
 import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
 
@@ -27,3 +29,6 @@ private fun IForgeRegistry<Item>.getBlockItems(registryCollection: IForgeRegistr
 
 fun IForgeRegistry<Item>.registerBlockItems(registryCollection: IForgeRegistryCollection<Block>, defaultGroup: ItemGroup?=null)
         = this.registerAll(*this.getBlockItems(registryCollection, defaultGroup))
+
+fun TextureStitchEvent.Pre.registerFluidTextures(registryCollection: IForgeRegistryCollection<Fluid>)
+        = registryCollection.toRegistryEntryArray().forEach {it.attributes.run {overlayTexture?.run {addSprite(this)}; stillTexture?.run {addSprite(this)}; flowingTexture?.run {addSprite(this)}}}

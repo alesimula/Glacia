@@ -49,6 +49,5 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
     val ICE_BRICKS_SLAB = BlockSlabBase("ice_bricks_slab", "Ice Bricks Slab", Glacia_ItemGroup.BLOCKS, ICE_BRICKS)
             .apply {renderLayer = BlockRenderLayer.TRANSLUCENT; seeThroughGroup = true; isTranslucent = true}
-    //TODO add plasma once the fluid system has been properly implemented
-    //val PLASMA = BlockFluidBase("plasma", "plasma", null, Material.LAVA, Glacia.Fluids.PLASMA) {lightValue(15)}
+    val PLASMA = BlockFluidBase("plasma", "Plasma", null, Material.LAVA, Glacia.Fluids.PLASMA) {lightValue(15).noDrops()}
 }

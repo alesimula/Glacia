@@ -1,6 +1,7 @@
 package com.greenapple.glacia.utils
 
 import com.greenapple.glacia.delegate.LazyWithReceiver
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.eventbus.api.IEventBus
@@ -13,6 +14,9 @@ inline fun <E: Event>IEventBus.addListenerKt(crossinline method : (E)->Any) = ad
 private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry : ForgeRegistry<T> by LazyWithReceiver {RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>}
 val <T: ForgeRegistryEntry<T>> T.registry; get() = this.registryType.registry
 val <T: ForgeRegistryEntry<T>> T.id; get() = this.registry.getID(this)
+
+operator fun ResourceLocation.plus(extra: String) = ResourceLocation(namespace, "${path}_$extra")
+operator fun ResourceLocation.rem(extra: String) = ResourceLocation(namespace, "$extra/$path")
 
 val TranslationTextComponent?.modKey by lazy {"§5§r§e§e§n§a§7§7§l§e§r"}
 
