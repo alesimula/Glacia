@@ -23,7 +23,7 @@ import java.util.*
 
 //TODO add plasma once the fluid system has been properly implemented
 object Glacia_Fluids : IForgeRegistryCollection<Fluid> {
-    class FluidLavaBase(private val registryNameStr: String, private val flowing: Boolean, bucketItemProvider: ()->BucketItem?={null}, private val otherFluidProvider: ()->Fluid) : LavaFluid() {
+    class FluidLavaBase(registryNameStr: String, private val flowing: Boolean, bucketItemProvider: ()->BucketItem?={null}, private val otherFluidProvider: ()->Fluid) : LavaFluid() {
         init {
             setRegistryName(registryNameStr)
         }
@@ -64,8 +64,8 @@ object Glacia_Fluids : IForgeRegistryCollection<Fluid> {
         override fun isEquivalentTo(fluid: Fluid?) = fluid === stillFluid || fluid === flowingFluid
         override fun isSource(state: IFluidState) = !flowing
         override fun getLevel(state: IFluidState) : Int = if (flowing) state.get(FlowingFluid.LEVEL_1_8) else 8
-        override fun createAttributes(p_createAttributes_1_: Fluid) : FluidAttributes {
-            return FluidAttributes.builder((stillFluid as? FluidLavaBase)?.registryNameStr ?: stillFluid.registryName?.path ?: registryNameStr, resourceStill, resourceFlowing).build()
+        override fun createAttributes(): FluidAttributes {
+            return FluidAttributes.builder(resourceStill, resourceFlowing).build(this)
         }
 
         override fun getBlockState(state: IFluidState): BlockState {

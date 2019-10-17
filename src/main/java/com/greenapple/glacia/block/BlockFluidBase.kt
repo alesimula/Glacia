@@ -15,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry
 /**
  * Don't forget to add the block to the 'fences' tag group
  */
-class BlockFluidBase(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, material: Material, fluid: FlowingFluid, initializer: (Properties.()->Unit)?=null) : FlowingFluidBlock(fluid, Properties.create(material).doesNotBlockMovement().tickRandomly().hardnessAndResistance(100.0F).noDrops().apply {initializer?.invoke(this)}), IBlockBase {
+class BlockFluidBase(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, material: Material, fluid: FlowingFluid, initializer: (Properties.()->Unit)?=null) : FlowingFluidBlock({fluid}, Properties.create(material).doesNotBlockMovement().tickRandomly().hardnessAndResistance(100.0F).noDrops().apply {initializer?.invoke(this)}), IBlockBase {
 
     init {
         setRegistryName(registryName)
