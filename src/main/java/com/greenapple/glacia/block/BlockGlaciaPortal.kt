@@ -2,7 +2,9 @@ package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.utils.changeDim
 import com.greenapple.glacia.world.GlaciaTeleporter
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.pattern.BlockPattern
@@ -97,188 +99,12 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
         return false
     }
 
-    private fun changeDim(player: ServerPlayerEntity, pos: BlockPos, destination: DimensionType) {
-        if (!ForgeHooks.onTravelToDimension(player, destination)) return
-        val origin = player.dimension
-
-        val serverWorld = player.server.getWorld(origin)
-        player.dimension = destination
-        val serverWorld1 = player.server.getWorld(destination)
-        val worldInfo = player.world.worldInfo
-        player.connection.sendPacket(SRespawnPacket(destination, worldInfo.generator, player.interactionManager.gameType))
-        player.connection.sendPacket(SServerDifficultyPacket(worldInfo.difficulty, worldInfo.isDifficultyLocked))
-        val playerList = player.server.playerList
-        playerList.updatePermissionLevel(player)
-        serverWorld.removeEntity(player, true)
-        player.revive()
-
-        val pitch = player.rotationPitch
-        val yaw = player.rotationYaw
-
-        val moveFactor = serverWorld.getDimension().movementFactor / serverWorld1.getDimension().movementFactor
-
-        player.setLocationAndAngles(pos.x * moveFactor + .5, pos.y + .5, pos.z * moveFactor + .5, yaw, pitch)
-        serverWorld.profiler.endSection()
-        serverWorld.profiler.startSection("placing")
-        player.setLocationAndAngles(pos.x * moveFactor + .5, pos.y + .5, pos.z * moveFactor + .5, yaw, pitch)
-
-        if (!serverWorld1.glaciaTeleporter.func_222268_a(player, player.rotationYaw)) {
-            serverWorld1.glaciaTeleporter.makePortal(player)
-            serverWorld1.glaciaTeleporter.func_222268_a(player, player.rotationYaw)
-        }
-
-        serverWorld.profiler.endSection()
-        player.setWorld(serverWorld1)
-        serverWorld1.func_217447_b(player)
-        //player.connection.setPlayerLocation(pos.x * moveFactor + .5, pos.y + .5, pos.z * moveFactor + .5, yaw, pitch)
-
-        player.interactionManager.setWorld(serverWorld1)
-        player.connection.sendPacket(SPlayerAbilitiesPacket(player.abilities))
-        playerList.sendWorldInfo(player, serverWorld1)
-        playerList.sendInventory(player)
-
-        for(potionEffect in player.activePotionEffects)
-            player.connection.sendPacket(SPlayEntityEffectPacket(player.entityId, potionEffect))
-
-        player.connection.sendPacket(SPlaySoundEventPacket(1032, BlockPos.ZERO, 0, false))
-        /* TODO access transformer
-        player.lastExperience = -1
-        player.lastHealth = -1F
-        player.lastFoodLevel = -1*/
-        BasicEventHooks.firePlayerChangedDimensionEvent(player, origin, destination)
-    }
-
-    /*override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entity: Entity) = (entity as? ServerPlayerEntity)?.let {playerIn ->
-        if (!worldIn.isRemote && !playerIn.isInvulnerableDimensionChange) worldIn.server?.let {server ->
-            val glacia = Glacia.DIMENSION.dimensionType
-
-            //FROM OVERWORLD TO GLACIA DIM
-            if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) {
-                val otherWorld = server.getWorld(glacia)
-                otherWorld.getBlockState(pos)
-                var otherWorldPos = otherWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
-                var foundBlock = false
-                val mutableBlockPos = BlockPos.MutableBlockPos(0, 0, 0)
-
-                for (y in 0..255) {
-                    for (x in pos.x - 6 until pos.x + 6) {
-                        for (z in pos.z - 6 until pos.z + 6) {
-                            mutableBlockPos.setPos(x, y, z)
-                            if (otherWorld.getBlockState(mutableBlockPos).block === this) {
-                                otherWorldPos = BlockPos(x, y + 1, z)
-                                foundBlock = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (foundBlock) {
-                    changeDim(playerIn as ServerPlayerEntity, otherWorldPos, glacia)
-                }
-                if (!foundBlock) {
-                    if (!otherWorld.glaciaTeleporter.func_222268_a(playerIn, playerIn.rotationYaw)) {
-                        otherWorld.glaciaTeleporter.makePortal(playerIn)
-                        otherWorld.glaciaTeleporter.func_222268_a(playerIn, playerIn.rotationYaw)
-                    }
-                    changeDim(playerIn as ServerPlayerEntity, otherWorldPos, glacia)
-                }
-            }
-
-            //FROM GLACIA DIM TO OVERWORLD
-            if (worldIn.getDimension().type === glacia) {
-                val overWorld = server.getWorld(DimensionType.OVERWORLD)
-                overWorld.getBlockState(pos)
-                var overWorldPos = overWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
-                var foundBlock = false
-                val mutableBlockPos = BlockPos.MutableBlockPos(0, 0, 0)
-
-                for (y in 0..255) {
-                    for (x in pos.x - 6 until pos.x + 6) {
-                        for (z in pos.z - 6 until pos.z + 6) {
-                            mutableBlockPos.setPos(x, y, z)
-                            if (overWorld.getBlockState(mutableBlockPos).block === this) {
-                                overWorldPos = BlockPos(x, y + 1, z)
-                                foundBlock = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (foundBlock) {
-                    changeDim(playerIn as ServerPlayerEntity, overWorldPos, DimensionType.OVERWORLD)
-                }
-                if (!foundBlock) {
-                    overWorld.setBlockState(overWorldPos.down(), this.defaultState)
-                    changeDim(playerIn as ServerPlayerEntity, overWorldPos, DimensionType.OVERWORLD)
-                }
-            }
-        }
-    } ?: Unit*/
-
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, playerIn: PlayerEntity, hand: Hand, rts: BlockRayTraceResult): Boolean {
         if (!worldIn.isRemote) worldIn.server?.let {server ->
-            val glacia = Glacia.DIMENSION.dimensionType
-
-            //FROM OVERWORLD TO GLACIA DIM
-            if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) {
-                val otherWorld = server.getWorld(glacia)
-                otherWorld.getBlockState(pos)
-                var otherWorldPos = otherWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
-                var foundBlock = false
-                val mutableBlockPos = BlockPos.MutableBlockPos(0, 0, 0)
-
-                for (y in 0..255) {
-                    for (x in pos.x - 6 until pos.x + 6) {
-                        for (z in pos.z - 6 until pos.z + 6) {
-                            mutableBlockPos.setPos(x, y, z)
-                            if (otherWorld.getBlockState(mutableBlockPos).block === this) {
-                                otherWorldPos = BlockPos(x, y + 1, z)
-                                foundBlock = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (foundBlock) {
-                    changeDim(playerIn as ServerPlayerEntity, otherWorldPos, glacia)
-                }
-                if (!foundBlock) {
-                    /*if (!otherWorld.glaciaTeleporter.func_222268_a(playerIn, playerIn.rotationYaw)) {
-                        otherWorld.glaciaTeleporter.makePortal(playerIn)
-                        otherWorld.glaciaTeleporter.func_222268_a(playerIn, playerIn.rotationYaw)
-                    }*/
-                    changeDim(playerIn as ServerPlayerEntity, otherWorldPos, glacia)
-                }
-            }
-
-            //FROM GLACIA DIM TO OVERWORLD
-            if (worldIn.getDimension().type === glacia) {
-                val overWorld = server.getWorld(DimensionType.OVERWORLD)
-                overWorld.getBlockState(pos)
-                var overWorldPos = overWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
-                var foundBlock = false
-                val mutableBlockPos = BlockPos.MutableBlockPos(0, 0, 0)
-
-                for (y in 0..255) {
-                    for (x in pos.x - 6 until pos.x + 6) {
-                        for (z in pos.z - 6 until pos.z + 6) {
-                            mutableBlockPos.setPos(x, y, z)
-                            if (overWorld.getBlockState(mutableBlockPos).block === this) {
-                                overWorldPos = BlockPos(x, y + 1, z)
-                                foundBlock = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if (foundBlock) {
-                    changeDim(playerIn as ServerPlayerEntity, overWorldPos, DimensionType.OVERWORLD)
-                }
-                if (!foundBlock) {
-                    //overWorld.setBlockState(overWorldPos.down(), this.defaultState)
-                    changeDim(playerIn as ServerPlayerEntity, overWorldPos, DimensionType.OVERWORLD)
-                }
-            }
+            val dimension =  if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) Glacia.DIMENSION.dimensionType else DimensionType.OVERWORLD
+            val newWorld = server.getWorld(dimension)
+            val newPos = newWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
+            (playerIn as ServerPlayerEntity).changeDim(newPos, dimension) {glaciaTeleporter}
             return true
         }
         return false
