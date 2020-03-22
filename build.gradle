@@ -106,7 +106,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.56'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.2.3'
 
     //implementation "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

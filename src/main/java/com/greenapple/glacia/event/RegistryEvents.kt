@@ -60,6 +60,6 @@ object RegistryEvents {
     @JvmStatic @SubscribeEvent
     fun onPotionEffectRegistry(event: RegistryEvent.Register<Effect>) = event.registry.register(Glacia.Effects)
 
-    @JvmStatic @SubscribeEvent
-    fun onPotionEffectRegistry(event: TextureStitchEvent.Pre) = event.registerFluidTextures(Glacia.Fluids)
+    /*@JvmStatic @SubscribeEvent
+    fun onFluidTextureRegistry(event: TextureStitchEvent.Pre) = event.registerFluidTextures(Glacia.Fluids)*/
 }

@@ -37,7 +37,7 @@ class PlayerEvents {
 
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     fun onWorldTickEvent(event: TickEvent.WorldTickEvent) = (event.world as? ServerWorld)?.takeIf {event.phase !== TickEvent.Phase.END}?.entities?.forEach {entity ->
-        if (entity.isInFluid(Glacia.Blocks.PLASMA)) entity.attackEntityFrom(DamageSource.LAVA, 1.0F)
+        if (entity?.isInFluid(Glacia.Blocks.PLASMA) == true) entity.attackEntityFrom(DamageSource.LAVA, 1.0F)
     }
 
     fun Entity.isInFluid(block: Block): Boolean {

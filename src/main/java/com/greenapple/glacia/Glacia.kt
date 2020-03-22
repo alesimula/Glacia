@@ -31,11 +31,10 @@ import java.util.stream.Collectors
 class Glacia {
 
     class ModDimensionBase(modId: String, name: String, factory: DimensionType.(World)->Dimension) : ModDimension() {
-        private val javaFactory = BiFunction {world: World, type: DimensionType -> type.getOrInit; factory(type, world)}
+        private val javaFactory = BiFunction {world: World, type: DimensionType -> dimensionType = type; factory(type, world)}
         override fun getFactory() = javaFactory
         init {setRegistryName(modId, name)}
-        private val DimensionType?.getOrInit : DimensionType by SingletonReceiver {this}
-        val dimensionType; get() = (null as DimensionType?).getOrInit
+        lateinit var dimensionType : DimensionType private set
     }
 
     companion object {
