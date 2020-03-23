@@ -13,8 +13,6 @@ import net.minecraftforge.fluids.FluidAttributes
 import net.minecraftforge.fluids.ForgeFlowingFluid
 import net.minecraftforge.registries.GameData
 
-
-//TODO add plasma once the fluid system has been properly implemented
 object Glacia_Fluids : IForgeRegistryCollection<Fluid> {
     class FluidBase constructor(registryNameStr: String, private val properties: Properties, private val flowing: Boolean=false) : ForgeFlowingFluid(properties) {
         @Suppress("FunctionName")
