@@ -1,0 +1,28 @@
+{
+  "parent": "greenapple_glacia:glacia/root",
+  "display": {
+    "icon": {
+      "item": "greenapple_glacia:turtle_shell"
+    },
+    "title": {
+      "translate": "advancements.greenapple_glacia.turtle_disguise.title"
+    },
+    "description": {
+      "translate": "advancements.greenapple_glacia.turtle_disguise.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "undercover_turtle": {
+      "trigger": "greenapple_glacia:turtle_disguise"
+    }
+  },
+  "requirements": [
+    [
+      "undercover_turtle"
+    ]
+  ]
+}

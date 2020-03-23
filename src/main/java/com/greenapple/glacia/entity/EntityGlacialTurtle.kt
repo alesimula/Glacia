@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.goal.*
 import net.minecraft.entity.passive.AnimalEntity
 import net.minecraft.entity.passive.CowEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.util.DamageSource
@@ -23,9 +24,9 @@ class EntityGlacialTurtle(type: EntityType<CowEntity>, world: World) : AnimalEnt
                 0 -> (item !== Glacia.Items.TURTLE_PAWS) || last
                 1 -> (item !== Glacia.Items.TURTLE_LIMBS) || last
                 2 -> (item !== Glacia.Items.TURTLE_SHELL) || last
-                3 -> (item !== Glacia.Items.TURTLE_HEAD) || last
+                3 -> ((item !== Glacia.Items.TURTLE_HEAD) || last)
                 else -> last
-            }}}
+            }}}.also {isTarget-> if (!isTarget && this is ServerPlayerEntity) Glacia.Triggers.TURTLE_DISGUISE.trigger(this)}
             else -> false
         }
     }
