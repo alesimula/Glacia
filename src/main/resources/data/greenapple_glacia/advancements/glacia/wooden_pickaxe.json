@@ -1,0 +1,35 @@
+{
+  "parent": "greenapple_glacia:glacia/root",
+  "display": {
+    "icon": {
+      "item": "greenapple_glacia:glacial_wood_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.greenapple_glacia.wooden_pickaxe.title"
+    },
+    "description": {
+      "translate": "advancements.greenapple_glacia.wooden_pickaxe.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_glacial_wood_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "greenapple_glacia:glacial_wood_pickaxe"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glacial_wood_pickaxe"
+    ]
+  ]
+}

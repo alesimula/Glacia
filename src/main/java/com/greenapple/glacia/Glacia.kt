@@ -51,6 +51,7 @@ class Glacia {
         @JvmStatic val Feature; get() = Glacia_Feature
         @JvmStatic val WorldCarver; get() = Glacia_WorldCarver
         @JvmStatic val Effects; get() = Glacia_Effects
+        @JvmStatic val Triggers; get() = Glacia_Triggers
     }
 
     init {

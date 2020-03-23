@@ -1,15 +1,12 @@
 package com.greenapple.glacia.event
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.registry.register
-import com.greenapple.glacia.registry.registerBlockItems
-import com.greenapple.glacia.registry.registerFluidTextures
+import com.greenapple.glacia.registry.*
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
 import net.minecraft.potion.Effect
-import net.minecraft.util.ResourceLocation
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
@@ -19,7 +16,6 @@ import net.minecraftforge.common.ModDimension
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.carver.WorldCarver
 import net.minecraft.world.gen.feature.Feature
-import net.minecraftforge.client.event.TextureStitchEvent
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object RegistryEvents {
@@ -59,6 +55,9 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onPotionEffectRegistry(event: RegistryEvent.Register<Effect>) = event.registry.register(Glacia.Effects)
+
+    @JvmStatic @SubscribeEvent
+    fun onCriteriaTriggerRegistry(event: RegistryEvent.Register<Effect>) = Glacia.Triggers.registerAll()
 
     /*@JvmStatic @SubscribeEvent
     fun onFluidTextureRegistry(event: TextureStitchEvent.Pre) = event.registerFluidTextures(Glacia.Fluids)*/

@@ -4,10 +4,10 @@
       "item": "greenapple_glacia:block.glacial_dirt.snowy"
     },
     "title": {
-      "translate": "advancements.husbandry.root.title"
+      "translate": "advancements.greenapple_glacia.root.title"
     },
     "description": {
-      "translate": "advancements.husbandry.root.description"
+      "translate": "advancements.greenapple_glacia.root.description"
     },
     "frame": "task",
     "show_toast": false,
