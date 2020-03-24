@@ -1,0 +1,33 @@
+{
+  "parent": "greenapple_glacia:glacia/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:beef"
+    },
+    "title": {
+      "translate": "advancements.greenapple_glacia.sabertooth_tamer.title"
+    },
+    "description": {
+      "translate": "advancements.greenapple_glacia.sabertooth_tamer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "tame_sabertoothed_cat": {
+      "trigger": "minecraft:tame_animal",
+      "conditions": {
+        "entity": {
+          "type": "greenapple_glacia:saber_toothed_cat"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "tame_sabertoothed_cat"
+    ]
+  ]
+}

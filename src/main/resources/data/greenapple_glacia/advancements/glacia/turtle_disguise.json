@@ -1,5 +1,5 @@
 {
-  "parent": "greenapple_glacia:glacia/root",
+  "parent": "greenapple_glacia:glacia/sabertooth_tamer",
   "display": {
     "icon": {
       "item": "greenapple_glacia:turtle_shell"
