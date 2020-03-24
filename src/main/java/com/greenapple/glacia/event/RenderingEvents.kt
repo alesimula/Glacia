@@ -1,17 +1,23 @@
 package com.greenapple.glacia.event
 
 import com.greenapple.glacia.Glacia
+import com.greenapple.glacia.advancement.GuiGlaciaAdvancementScreen
 import com.greenapple.glacia.entity.model.ModelPlayerSnowMan
-import com.greenapple.glacia.utils.durationKt
-import com.greenapple.glacia.utils.morph
+import com.greenapple.glacia.utils.*
+import net.minecraft.advancements.Advancement
+import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.advancements.AdvancementsScreen
 import net.minecraft.client.renderer.entity.PlayerRenderer
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.potion.EffectInstance
 import net.minecraft.util.ResourceLocation
+import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.client.event.RenderHandEvent
 import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.registries.GameData
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.LogManager
 
 class RenderingEvents {
     private val MODEL_SNOWMAN = ModelPlayerSnowMan(0)
@@ -34,5 +40,18 @@ class RenderingEvents {
     fun onRenderPlayerFirstPerson(event: RenderHandEvent) = Minecraft.getInstance().apply {
         val renderer = renderManager.getRenderer(player) as PlayerRenderer
         renderer.onRenderPlayer(player)
+    }
+
+    val glaciaAdvancement = Advancement(GameData.checkPrefix("glacia/root", false), null, null, AdvancementRewards.EMPTY, mapOf(), arrayOf())
+
+    @SubscribeEvent
+    fun onRenderGui(event: GuiScreenEvent) = (event.gui as? AdvancementsScreen)?.apply {
+        val glaciaTabGui = tabsKt[glaciaAdvancement]
+        if (glaciaTabGui != null && selectedTabKt == glaciaTabGui && this !is GuiGlaciaAdvancementScreen) {
+            Minecraft.getInstance().displayGuiScreen(GuiGlaciaAdvancementScreen(glaciaTabGui.screen.clientAdvancementManagerKt))
+        }
+        else if (glaciaTabGui != null && selectedTabKt != glaciaTabGui && this is GuiGlaciaAdvancementScreen) {
+            Minecraft.getInstance().displayGuiScreen(AdvancementsScreen(glaciaTabGui.screen.clientAdvancementManagerKt))
+        }
     }
 }

@@ -13,7 +13,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png"
+    "background": "greenapple_glacia:textures/block/glacial_stone.png"
   },
   "criteria": {
     "entered_glacia": {
