@@ -14,10 +14,12 @@ import net.minecraft.state.StateContainer
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
+import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
 import net.minecraft.world.IWorldReader
-import net.minecraft.world.World
 import net.minecraft.world.lighting.LightEngine
+import net.minecraft.world.server.ServerWorld
+import net.minecraftforge.common.IPlantable
 import java.util.*
 
 open class BlockGlaciaDirt : BlockBase {
@@ -38,6 +40,13 @@ open class BlockGlaciaDirt : BlockBase {
         defaultState = stateContainer.baseState.with(SNOWY, false)
     }
     val stateSnowy = defaultState.with(SNOWY, true)
+
+    override fun canSustainPlant(state: BlockState, world: IBlockReader, pos: BlockPos, facing: Direction, plantable: IPlantable): Boolean {
+        val plant: BlockState = plantable.getPlant(world, pos.offset(facing))
+        val canSustainVanillaPlant = super.canSustainPlant(state, world, pos, facing, plantable)
+        val canSustainGlaciaPlant = plant.block === Glacia.Blocks.GLACIAL_SAPLING
+        return canSustainVanillaPlant || canSustainGlaciaPlant
+    }
 
     override fun canBeReplacedByLogs(state: BlockState?, world: IWorldReader?, pos: BlockPos?) = true
 
@@ -71,7 +80,7 @@ open class BlockGlaciaDirt : BlockBase {
         else state
     }
 
-    override fun randomTick(state: BlockState, world: World, pos: BlockPos, random: Random) {
+    override fun randomTick(state: BlockState, world: ServerWorld, pos: BlockPos, random: Random) {
         //TODO isRemote is bugged, must find a way to workaround
         //if (!world.isRemote) {
         if (state.get(SNOWY)) {

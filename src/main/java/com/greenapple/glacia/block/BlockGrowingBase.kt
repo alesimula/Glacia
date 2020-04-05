@@ -8,7 +8,6 @@ import net.minecraft.item.DyeColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.state.StateContainer
-import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.BlockPos
@@ -35,12 +34,8 @@ open class BlockGrowingBase private constructor(registryName: String, override v
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
     private val shape = (width/2).let {halfDim -> Block.makeCuboidShape(8-halfDim, 0.0, 8-halfDim, 8+halfDim, height, 8+halfDim)}
-    private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
     var validGroundBlockStates: BlockState.()->Boolean = {true}
     var isTranslucent = false
-
-    fun setRenderLayer(renderLayer: BlockRenderLayer) {customRenderLayer = renderLayer}
-    override fun getRenderLayer(): BlockRenderLayer = customRenderLayer
 
     override fun getShape(state: BlockState, worldIn: IBlockReader, pos: BlockPos, context: ISelectionContext): VoxelShape {
         val vec3d = state.getOffset(worldIn, pos)
@@ -52,7 +47,7 @@ open class BlockGrowingBase private constructor(registryName: String, override v
     }
 
     /** See DoorBlock.isValidPosition **/
-    override fun isValidGround(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean = state.func_224755_d(worldIn, pos, Direction.UP) && validGroundBlockStates.invoke(state)
+    override fun isValidGround(state: BlockState, worldIn: IBlockReader, pos: BlockPos): Boolean = state.isSolidSide(worldIn, pos, Direction.UP) && validGroundBlockStates.invoke(state)
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(FACING)
@@ -61,7 +56,7 @@ open class BlockGrowingBase private constructor(registryName: String, override v
     /**
      * Cast no shadows
      */
-    override fun func_220080_a(state: BlockState, world: IBlockReader, pos: BlockPos): Float = if (isTranslucent) 1.0f else super.func_220080_a(state, world, pos)
+    override fun getAmbientOcclusionLightValue(state: BlockState, world: IBlockReader, pos: BlockPos): Float = if (isTranslucent) 1.0f else super.getAmbientOcclusionLightValue(state, world, pos)
 
     /*override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
         val notVanilla = (context.world.getBlockState(context.pos.down()).block === Glacia.Blocks.GLACIAL_DIRT)

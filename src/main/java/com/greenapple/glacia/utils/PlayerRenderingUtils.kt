@@ -3,6 +3,8 @@ package com.greenapple.glacia.utils
 import com.greenapple.glacia.delegate.ReflectField
 import com.greenapple.glacia.delegate.SingletonReceiver
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
+import com.mojang.blaze3d.matrix.MatrixStack
+import com.mojang.blaze3d.vertex.IVertexBuilder
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity
 import net.minecraft.client.network.play.NetworkPlayerInfo
 import net.minecraft.client.renderer.entity.LivingRenderer
@@ -27,10 +29,10 @@ private var NetworkPlayerInfo.playerTexturesLoadedKt : Boolean by ReflectField("
 private fun <T: Entity, M: EntityModel<T>> LayerRenderer<*, *>.autoCast() = this as LayerRenderer<T, M>
 private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT : BipedArmorLayer<*,*,*> by SingletonReceiver {this}
 private val PlayerRenderer.MODEL_PLAYER_DEFAULT : PlayerModel<AbstractClientPlayerEntity> by SingletonReceiver {entityModel}
-private val MODEL_ARMOR_EMPTY = object : BipedModel<AbstractClientPlayerEntity>() {
-    override fun setRotationAngles(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float) {}
-    override fun render(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {}
-    override fun postRenderArm(scale: Float, side: HandSide) {}
+private val MODEL_ARMOR_EMPTY = object : BipedModel<AbstractClientPlayerEntity>(1f) {
+    override fun setRotationAngles(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float) {}
+    override fun render(stack: MatrixStack, vertexBuilder: IVertexBuilder, p_225598_3_: Int, p_225598_4_: Int, p_225598_5_: Float, p_225598_6_: Float, p_225598_7_: Float, p_225598_8_: Float) {}
+    //override fun postRenderArm(scale: Float, side: HandSide) {}
 }
 
 /**

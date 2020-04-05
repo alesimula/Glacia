@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.eventbus.api.Event
 import net.minecraftforge.eventbus.api.IEventBus
+import net.minecraftforge.fml.loading.FMLEnvironment
 import net.minecraftforge.registries.ForgeRegistry
 import net.minecraftforge.registries.ForgeRegistryEntry
 import net.minecraftforge.registries.RegistryManager
@@ -19,6 +20,11 @@ operator fun ResourceLocation.plus(extra: String) = ResourceLocation(namespace, 
 operator fun ResourceLocation.rem(extra: String) = ResourceLocation(namespace, "$extra/$path")
 
 val TranslationTextComponent?.modKey by lazy {"§5§r§e§e§n§a§7§7§l§e§r"}
+
+inline fun <R> runClient(block: () -> R): R? = if (FMLEnvironment.dist.isClient) block() else null
+inline fun <R> runServer(block: () -> R): R? = if (FMLEnvironment.dist.isDedicatedServer) block() else null
+inline fun <T, R> T.runClient(block: T.() -> R): R? = if (FMLEnvironment.dist.isClient) block() else null
+inline fun <T, R> T.runServer(block: T.() -> R): R? = if (FMLEnvironment.dist.isDedicatedServer) block() else null
 
 //val ModLifecycleEvent.container : ModContainer by ReflectField("container")
 //val ModContainer.modInfo : IModInfo by ReflectField("modInfo")

@@ -10,7 +10,6 @@ import net.minecraft.item.DyeColor
 import net.minecraft.item.ItemGroup
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.StateContainer
-import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.IStringSerializable
 import net.minecraft.util.math.BlockPos
@@ -67,7 +66,7 @@ open class BlockColumnBase : BlockBase {
         val blockpos = pos.down()
         val blockstate = world.getBlockState(blockpos)
         /** See DoorBlock.isValidPosition **/
-        return blockstate.func_224755_d(world, blockpos, Direction.UP)
+        return blockstate.isSolidSide(world, blockpos, Direction.UP)
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
@@ -91,7 +90,7 @@ open class BlockColumnBase : BlockBase {
      * Determines whether adjacent faces with the "cullface" property should be rendered
      */
     override fun isSideInvisible(state: BlockState, adjacentBlockState: BlockState, side: Direction)
-            = renderLayer !== BlockRenderLayer.SOLID && seeThroughGroup && adjacentBlockState.block === this && state.get(PLACEMENT) == adjacentBlockState.get(PLACEMENT)
+            = !this.isSolid(state) && seeThroughGroup && adjacentBlockState.block === this && state.get(PLACEMENT) == adjacentBlockState.get(PLACEMENT)
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
         builder.add(PLACEMENT)

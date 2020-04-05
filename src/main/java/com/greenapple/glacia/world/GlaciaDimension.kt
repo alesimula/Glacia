@@ -1,33 +1,37 @@
 package com.greenapple.glacia.world
 
 import com.greenapple.glacia.Glacia
-import net.minecraft.block.Blocks
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldType
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.ChunkPos
+import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.Vec3d
+import net.minecraft.world.World
+import net.minecraft.world.biome.Biome
+import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.biome.provider.BiomeProviderType
+import net.minecraft.world.biome.provider.IBiomeProviderSettings
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings
-import net.minecraft.world.dimension.Dimension;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import java.util.function.Supplier
-import net.minecraft.world.biome.provider.SingleBiomeProviderSettings
+import net.minecraft.world.dimension.Dimension
+import net.minecraft.world.dimension.DimensionType
 import net.minecraft.world.gen.*
 import net.minecraft.world.storage.WorldInfo
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
+import java.lang.reflect.Constructor
+import java.util.function.Supplier
 import kotlin.math.cos
 
 
-class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type) {
+class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type, 0.0F) {
 
     companion object {
-        private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
+        //TODO remove when BiomeProviderType constructor is changed to public
+        var biomeProviderTyperConstructor: Constructor<BiomeProviderType<*, *>> = BiomeProviderType::class.java.getDeclaredConstructor(java.util.function.Function::class.java, java.util.function.Function::class.java).apply {isAccessible=true}
+        fun<C: IBiomeProviderSettings,T: BiomeProvider> biomeProviderType(settingsInit: (WorldInfo)->C, biomeProviderInit: (C)->T) = biomeProviderTyperConstructor.newInstance(java.util.function.Function(biomeProviderInit), java.util.function.Function(settingsInit)) as BiomeProviderType<C,T>
+
+        //private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
         private val generatorType = ChunkGeneratorType(IChunkGeneratorFactory {world, provider, settings -> GlaciaChunkGenerator(world, provider, settings)}, false, Supplier {OverworldGenSettings()})
-        private val biomeProviderType = BiomeProviderType(java.util.function.Function<OverworldBiomeProviderSettings, GlaciaBiomeProvider> {settings: OverworldBiomeProviderSettings-> GlaciaBiomeProvider(settings)}, Supplier {OverworldBiomeProviderSettings() })
+        private val biomeProviderType = biomeProviderType({OverworldBiomeProviderSettings(it)}) {GlaciaBiomeProvider(it)}
     }
 
     private fun<C : GenerationSettings> C.glaciaSettings() = this.apply {
@@ -40,7 +44,8 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
 
     override fun createChunkGenerator(): ChunkGenerator<*> {
         //TODO biome provider (Thanks YAMDA)
-        return generatorType.create(this.world, biomeProviderType.create(biomeProviderType.createSettings().setWorldInfo(world.worldInfo.init).setGeneratorSettings(OverworldGenSettings())), generatorType.createSettings().glaciaSettings())
+        //func_226840_a_ -> createSettings().setWorldInfo
+        return generatorType.create(this.world, biomeProviderType.create(biomeProviderType.func_226840_a_(world.worldInfo.init).setGeneratorSettings(OverworldGenSettings())), generatorType.createSettings().glaciaSettings())
 
         /*val endgenerationsettings = ChunkGeneratorType.FLOATING_ISLANDS.createSettings()
         endgenerationsettings.defaultBlock = Blocks.END_STONE.defaultState
@@ -49,10 +54,15 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         return ChunkGeneratorType.FLOATING_ISLANDS.create(this.world, BiomeProviderType.THE_END.create(BiomeProviderType.THE_END.createSettings().setSeed(this.world.seed)), endgenerationsettings)*/
     }
 
-    override fun getSkyColor(cameraPos: BlockPos?, partialTicks: Float) = super.getSkyColor(cameraPos, partialTicks).run {
+    //TODO per-biome skycolor
+    /**
+     * @see Biome.calculateSkyColor()
+     * @see Biome.getSkyColor()
+     */
+    /*override fun getSkyColor(cameraPos: BlockPos?, partialTicks: Float) = super.getSkyColor(cameraPos, partialTicks).run {
         Vec3d(x*0.55, y*0.15, z*0.7)
         //return SKY_RENDERER.customSkyColor
-    }
+    }*/
 
     override fun calcSunriseSunsetColors(celestialAngle: Float, partialTicks: Float): FloatArray? = super.calcSunriseSunsetColors(celestialAngle, partialTicks)?.apply {
         this[0] *= 0.55F
@@ -73,9 +83,10 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         return Vec3d(f1.toDouble()*0.55, f2.toDouble()*0.15, f3.toDouble()*0.7)
     }
 
-    override fun getSkyRenderer(): net.minecraftforge.client.IRenderHandler {
+    //TODO use sky renderer
+    /*override fun getSkyRenderer(): net.minecraftforge.client.IRenderHandler {
         return SKY_RENDERER
-    }
+    }*/
 
     override fun findSpawn(chunkPos: ChunkPos, checkValid: Boolean): BlockPos? {
         return null

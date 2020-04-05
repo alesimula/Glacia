@@ -26,8 +26,8 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     private inline fun <reified E: Entity> entityType(registryName: String, classification: EntityClassification, crossinline provider: EntityType<*>.(world: World)->E) : EntityType<E> = EntityType.Builder.create({ type: EntityType<E>, world -> provider(type, world)}, classification).build(registryName).apply {setRegistryName(registryName)}
     private inline fun <reified E: MobEntity> EntityType<E>.registerSpawn(placementType: PlacementType, heithMapType: Heightmap.Type, noinline spawnPlacementPredicate: (EntityType<E>.(world: IWorld, spawnReason: SpawnReason, blockPos: BlockPos, random: Random)->Boolean)?=null)
             = EntitySpawnPlacementRegistry.register(this, placementType, heithMapType, EntitySpawnPlacementRegistry.IPlacementPredicate(spawnPlacementPredicate ?: {world, _, pos, _ -> world.getBlockState(pos.down()).run {this == Glacia.Blocks.GLACIAL_DIRT.stateSnowy || block == Blocks.GRASS_BLOCK} && world.getLightSubtracted(pos, 0) > 8;}))
-    private inline fun <reified E: Entity> EntityType<E>.registerRenderer(crossinline renderer: EntityRendererManager.()->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(E::class.java) {manager -> renderer(manager)}
-    private inline fun <reified E: MobEntity> EntityType<E>.registerRenderer(model: EntityModel<E>, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : MobRenderer<E, EntityModel<E>>(this, model, scale) {
+    private fun <E: Entity> EntityType<E>.registerRenderer(renderer: EntityRendererManager.()->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(this) {manager -> renderer(manager)}
+    private fun <E: MobEntity> EntityType<E>.registerRenderer(model: EntityModel<E>, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : MobRenderer<E, EntityModel<E>>(this, model, scale) {
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
     }}
@@ -57,7 +57,7 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
         REINDEER.registerRenderer(ModelReindeer(), 0.4f)
         PENGUIN.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES)
         PENGUIN.registerRenderer(ModelPenguin(), 0.35f)
-        GLACIAL_SEEKER.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::func_223325_c)
+        GLACIAL_SEEKER.registerSpawn(PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight)
         GLACIAL_SEEKER.registerRendererBiped(true)
     }
 }

@@ -1,8 +1,10 @@
 package com.greenapple.glacia.block
 
 import com.greenapple.glacia.item.BlockItemBase
+import com.greenapple.glacia.registry.renderType
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup

@@ -60,7 +60,7 @@ class BlockPlantFacingBase private constructor(registryName: String, override va
     /**
      * Cast no shadows
      */
-    override fun func_220080_a(state: BlockState, world: IBlockReader, pos: BlockPos): Float = 1.0F
+    override fun getAmbientOcclusionLightValue(state: BlockState, world: IBlockReader, pos: BlockPos): Float = 1.0F
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
         val notVanilla = (context.world.getBlockState(context.pos.down()).block === Glacia.Blocks.GLACIAL_DIRT)

@@ -4,7 +4,6 @@ import com.google.common.collect.Maps
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaPortal
 import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap
-import kotlin.collections.Map.Entry
 import net.minecraft.block.Blocks
 import net.minecraft.block.pattern.BlockPattern
 import net.minecraft.entity.Entity
@@ -18,34 +17,35 @@ import net.minecraft.world.server.TicketType
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.util.Supplier
 
+//TODO rewrite this class
 class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaPortal) : Teleporter(world) {
     private val LOGGER = LogManager.getLogger()
     private val destinationCoordinateCacheKt: MutableMap<ColumnPos, PortalPosition> = Maps.newHashMapWithExpectedSize(4096)
     private val field_222275_f = Object2LongOpenHashMap<ColumnPos>()
 
-    override fun func_222268_a(p_222268_1_: Entity, p_222268_2_: Float): Boolean {
-        val lvt_3_1_ = p_222268_1_.lastPortalVec
-        val lvt_4_1_ = p_222268_1_.teleportDirection
-        val lvt_5_1_ = this.func_222272_a(BlockPos(p_222268_1_), p_222268_1_.motion, lvt_4_1_, lvt_3_1_.x, lvt_3_1_.y, p_222268_1_ is PlayerEntity)
-        if (lvt_5_1_ == null) {
+    override fun placeInPortal(entity: Entity, p_222268_2_: Float): Boolean {
+        val vec3d = entity.lastPortalVec
+        val direction = entity.teleportDirection
+        val portalInfo = this.placeInExistingPortal(BlockPos(entity), entity.motion, direction, vec3d.x, vec3d.y, entity is PlayerEntity)
+        if (portalInfo == null) {
             return false
         } else {
-            val lvt_6_1_ = lvt_5_1_.field_222505_a
-            val lvt_7_1_ = lvt_5_1_.field_222506_b
-            p_222268_1_.motion = lvt_7_1_
-            p_222268_1_.rotationYaw = p_222268_2_ + lvt_5_1_.field_222507_c.toFloat()
-            if (p_222268_1_ is ServerPlayerEntity) {
-                p_222268_1_.connection.setPlayerLocation(lvt_6_1_.x, lvt_6_1_.y, lvt_6_1_.z, p_222268_1_.rotationYaw, p_222268_1_.rotationPitch)
-                p_222268_1_.connection.captureCurrentPosition()
+            val position = portalInfo.pos
+            val motion = portalInfo.motion
+            entity.motion = motion
+            entity.rotationYaw = p_222268_2_ + portalInfo.rotation.toFloat()
+            if (entity is ServerPlayerEntity) {
+                entity.connection.setPlayerLocation(position.x, position.y, position.z, entity.rotationYaw, entity.rotationPitch)
+                entity.connection.captureCurrentPosition()
             } else {
-                p_222268_1_.setLocationAndAngles(lvt_6_1_.x, lvt_6_1_.y, lvt_6_1_.z, p_222268_1_.rotationYaw, p_222268_1_.rotationPitch)
+                entity.setLocationAndAngles(position.x, position.y, position.z, entity.rotationYaw, entity.rotationPitch)
             }
 
             return true
         }
     }
 
-    override fun func_222272_a(p_222272_1_: BlockPos, p_222272_2_: Vec3d, p_222272_3_: Direction, p_222272_4_: Double, p_222272_6_: Double, p_222272_8_: Boolean): BlockPattern.PortalInfo? {
+    override fun placeInExistingPortal(p_222272_1_: BlockPos, p_222272_2_: Vec3d, p_222272_3_: Direction, p_222272_4_: Double, p_222272_6_: Double, p_222272_8_: Boolean): BlockPattern.PortalInfo? {
         var lvt_10_1_ = true
         var lvt_11_1_: BlockPos? = null
         val lvt_12_1_ = ColumnPos(p_222272_1_)
@@ -98,11 +98,12 @@ class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaP
                     var10002[0] = Supplier {var10005.type}
                     var10002[1] = Supplier {lvt_12_1_}
                     var10000.debug("Adding nether portal ticket for {}:{}", *var10002)
-                    this.world.chunkProvider.func_217228_a(TicketType.PORTAL, ChunkPos(lvt_11_1_), 3, lvt_12_1_)
+                    val pos = BlockPos(lvt_12_1_.x, 0, lvt_12_1_.z)
+                    this.world.chunkProvider.registerTicket(TicketType.PORTAL, ChunkPos(lvt_11_1_), 3, pos)
                 }
 
                 val lvt_14_3_ = portalBlock.createPatternHelper(this.world, lvt_11_1_)
-                return lvt_14_3_.func_222504_a(p_222272_3_, lvt_11_1_, p_222272_6_, p_222272_2_, p_222272_4_)
+                return lvt_14_3_.getPortalInfo(p_222272_3_, lvt_11_1_, p_222272_6_, p_222272_2_, p_222272_4_)
             }
         }
     }
@@ -117,7 +118,7 @@ class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaP
         var lvt_10_1_ = lvt_7_1_
         var lvt_11_1_ = 0
         val lvt_12_1_ = this.random.nextInt(4)
-        val lvt_13_1_ = BlockPos.MutableBlockPos()
+        val lvt_13_1_ = BlockPos.Mutable()
 
         var lvt_14_2_: Int
         var lvt_15_2_: Double
@@ -319,7 +320,8 @@ class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaP
         return true
     }
 
-    override fun tick(p_85189_1_: Long) {
+    //TODO remove
+    /*override*/ fun tick(p_85189_1_: Long) {
         if (p_85189_1_ % 100L == 0L) {
             this.func_222270_b(p_85189_1_)
             this.func_222269_c(p_85189_1_)
@@ -342,7 +344,7 @@ class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaP
         val lvt_5_1_ = this.destinationCoordinateCacheKt.entries.iterator()
 
         while (lvt_5_1_.hasNext()) {
-            val lvt_6_1_ = lvt_5_1_.next() as Entry<*, *>
+            val lvt_6_1_ = lvt_5_1_.next() as Map.Entry<*, *>
             val lvt_7_1_ = lvt_6_1_.value as PortalPosition
             if (lvt_7_1_.lastUpdateTime < lvt_3_1_) {
                 val lvt_8_1_ = lvt_6_1_.key as ColumnPos?
@@ -352,7 +354,10 @@ class GlaciaTeleporter(world: ServerWorld, private val portalBlock: BlockGlaciaP
                 var10002[0] = Supplier {var10005.type}
                 var10002[1] = Supplier {lvt_8_1_}
                 var10000.debug("Removing nether portal ticket for {}:{}", *var10002)
-                this.world.chunkProvider.func_217222_b(TicketType.PORTAL, ChunkPos(lvt_7_1_.field_222267_a), 3, lvt_8_1_)
+                if (lvt_8_1_!= null) {
+                    val pos = BlockPos(lvt_8_1_.x, 0, lvt_8_1_.z)
+                    this.world.chunkProvider.releaseTicket(TicketType.PORTAL, ChunkPos(lvt_7_1_.field_222267_a), 3, pos)
+                }
                 lvt_5_1_.remove()
             }
         }

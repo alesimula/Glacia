@@ -1,6 +1,6 @@
 package com.greenapple.glacia.world.feature
 
-import com.greenapple.glacia.Glacia
+/*import com.greenapple.glacia.Glacia
 import com.mojang.datafixers.Dynamic
 import net.minecraft.block.Block
 import java.util.Random
@@ -12,14 +12,15 @@ import net.minecraft.world.IWorld
 import net.minecraft.world.gen.IWorldGenerationBaseReader
 import net.minecraft.world.gen.IWorldGenerationReader
 import net.minecraft.world.gen.feature.AbstractTreeFeature
-import net.minecraft.world.gen.feature.BirchTreeFeature
 import net.minecraft.world.gen.feature.NoFeatureConfig
-import kotlin.math.abs
+import kotlin.math.abs*/
 
+//TODO refactor or remove
 /**
  * @see BirchTreeFeature
+ * [not anymore got removed]
  */
-class FeatureGlacialTree(registryName: String, configIn: Function<Dynamic<*>, out NoFeatureConfig>, doBlockNotifyIn: Boolean, private val useExtraRandomHeight: Boolean) : AbstractTreeFeature<NoFeatureConfig>(configIn, doBlockNotifyIn) {
+/*class FeatureGlacialTree(registryName: String, configIn: Function<Dynamic<*>, out NoFeatureConfig>, doBlockNotifyIn: Boolean, private val useExtraRandomHeight: Boolean) : AbstractTreeFeature<NoFeatureConfig>(configIn, doBlockNotifyIn) {
 
     init {
         setRegistryName(registryName)
@@ -125,4 +126,4 @@ class FeatureGlacialTree(registryName: String, configIn: Function<Dynamic<*>, ou
             return false
         }
     }
-}
+}*/

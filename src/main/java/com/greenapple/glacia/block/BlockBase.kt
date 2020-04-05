@@ -4,11 +4,11 @@ import com.greenapple.glacia.item.BlockItemBase
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.item.DyeColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
-import net.minecraft.util.BlockRenderLayer
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
@@ -31,22 +31,22 @@ open class BlockBase private constructor (registryName: String, override val unl
     override var itemVariantProvider: (BlockItemBase.(IForgeRegistry<Item>) -> BlockItemBase)? = null
 
     protected val noDrops = lootTable === LootTables.EMPTY
-    private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
+    //private var customRenderLayer : BlockRenderLayer = super.getRenderLayer()
     var isTranslucent = false
     var seeThroughGroup = false
 
-    fun setRenderLayer(renderLayer: BlockRenderLayer) {customRenderLayer = renderLayer}
-    override fun getRenderLayer(): BlockRenderLayer = customRenderLayer
+    /*fun setRenderLayer(renderLayer: BlockRenderLayer) {customRenderLayer = renderLayer}
+    override fun getRenderLayer(): BlockRenderLayer = customRenderLayer*/
 
     override fun getDrops(state: BlockState, builder: LootContext.Builder): MutableList<ItemStack>? = blockItem?.takeIf {!noDrops}?.let {item-> arrayListOf(ItemStack(item))} ?: super.getDrops(state, builder)
 
     /**
      * First function in AbstractGlassBlock
      */
-    override fun func_220080_a(state: BlockState, world: IBlockReader, pos: BlockPos): Float = if (isTranslucent) 1.0f else super.func_220080_a(state, world, pos)
+    override fun getAmbientOcclusionLightValue(state: BlockState, world: IBlockReader, pos: BlockPos): Float = if (isTranslucent) 1.0f else super.getAmbientOcclusionLightValue(state, world, pos)
     override fun propagatesSkylightDown(state: BlockState, reader: IBlockReader, pos: BlockPos) = isTranslucent
     override fun isNormalCube(state: BlockState, worldIn: IBlockReader, pos: BlockPos) = !isTranslucent
 
     override fun isSideInvisible(state: BlockState, adjacentBlockState: BlockState, side: Direction)
-            = if (renderLayer !== BlockRenderLayer.SOLID && seeThroughGroup && adjacentBlockState.block === this) true else super.isSideInvisible(state, adjacentBlockState, side)
+            = if (!state.isSolid && seeThroughGroup && adjacentBlockState.block === this) true else super.isSideInvisible(state, adjacentBlockState, side)
 }

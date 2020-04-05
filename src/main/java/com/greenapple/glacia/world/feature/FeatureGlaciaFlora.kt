@@ -1,26 +1,22 @@
 package com.greenapple.glacia.world.feature
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.block.BlockPlantFacingBase
 import com.mojang.datafixers.Dynamic
 import java.util.Random
 import java.util.function.Function
 import net.minecraft.block.BlockState
-import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
-import net.minecraft.world.IWorldWriter
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.GenerationSettings
 import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.FlowersFeature
 import net.minecraft.world.gen.feature.NoFeatureConfig
-import net.minecraft.world.gen.feature.PlainsFlowersFeature
 
 /**
  * @see PlainsFlowersFeature
+ * [not anymore got removed]
  */
-class FeatureGlaciaFlora(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function, false) {
+class FeatureGlaciaFlora(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function) {
 
     init {
         setRegistryName(registryName)

@@ -33,7 +33,7 @@ class EntitySaberToothedCat(val entityType: EntityType<TameableEntity>, world: W
         //this.goalSelector.addGoal(3, WolfEntity.AvoidEntityGoal(this, LlamaEntity::class.java, 24.0f, 1.5, 1.5))
         this.goalSelector.addGoal(4, LeapAtTargetGoal(this, 0.4f))
         this.goalSelector.addGoal(5, MeleeAttackGoal(this, 1.0, true))
-        this.goalSelector.addGoal(6, FollowOwnerGoal(this, 1.0, 10.0f, 2.0f))
+        this.goalSelector.addGoal(6, FollowOwnerGoal(this, 1.0, 10.0f, 2.0f, false))
         this.goalSelector.addGoal(7, BreedGoal(this, 1.0))
         this.goalSelector.addGoal(8, WaterAvoidingRandomWalkingGoal(this, 1.0))
         //this.goalSelector.addGoal(9, BegGoal(this, 8.0f))

@@ -1,11 +1,8 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "placement": {
-      "single": {"model": "greenapple_glacia:block/granite_column"},
-      "top": {"model": "greenapple_glacia:block/granite_column_top"},
-      "bottom": {"model": "greenapple_glacia:block/granite_column_bottom"},
-      "center": {"model": "greenapple_glacia:block/granite_column_body"}
-    }
+    "placement=single": {"model": "greenapple_glacia:block/granite_column"},
+    "placement=top": {"model": "greenapple_glacia:block/granite_column_top"},
+    "placement=bottom": {"model": "greenapple_glacia:block/granite_column_bottom"},
+    "placement=center": {"model": "greenapple_glacia:block/granite_column_body"}
   }
 }

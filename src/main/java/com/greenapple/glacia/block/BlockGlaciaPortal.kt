@@ -2,24 +2,23 @@ package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.registry.renderType
 import com.greenapple.glacia.utils.changeDim
 import com.greenapple.glacia.world.GlaciaTeleporter
-import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.pattern.BlockPattern
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.gen.Heightmap
 import net.minecraft.util.Hand
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItemUseContext
-import net.minecraft.item.ItemGroup
-import net.minecraft.network.play.server.*
 import net.minecraft.state.EnumProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.util.BlockRenderLayer
+import net.minecraft.util.ActionResultType
 import net.minecraft.util.Direction
 import net.minecraft.util.Rotation
 import net.minecraft.util.math.*
@@ -27,11 +26,8 @@ import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorld
-import net.minecraft.world.Teleporter
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
-import net.minecraftforge.common.ForgeHooks
-import net.minecraftforge.fml.hooks.BasicEventHooks
 
 open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(registryName, name, null, Material.PORTAL, initializer) {
 
@@ -44,6 +40,7 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
             hardnessAndResistance(-1.0F)
             sound(SoundType.GLASS)
             lightValue(11)
+            notSolid()
             noDrops()
             doesNotBlockMovement()
         }
@@ -51,9 +48,10 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
 
     init {
         this.defaultState = stateContainer.baseState.with(AXIS, Direction.Axis.X)
-        renderLayer = BlockRenderLayer.TRANSLUCENT
+        //renderLayer = BlockRenderLayer.TRANSLUCENT
         seeThroughGroup = true
         isTranslucent = true
+        renderType = RenderType.getTranslucent()
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
@@ -99,18 +97,20 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
         return false
     }
 
-    override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, playerIn: PlayerEntity, hand: Hand, rts: BlockRayTraceResult): Boolean {
+    //TODO test ActionResultType
+    override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, playerIn: PlayerEntity, hand: Hand, rts: BlockRayTraceResult): ActionResultType {
         if (!worldIn.isRemote) worldIn.server?.let {server ->
             val dimension =  if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) Glacia.DIMENSION.dimensionType else DimensionType.OVERWORLD
             val newWorld = server.getWorld(dimension)
             val newPos = newWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
             (playerIn as ServerPlayerEntity).changeDim(newPos, dimension) {glaciaTeleporter}
-            return true
+            return ActionResultType.PASS
         }
-        return false
+        return ActionResultType.CONSUME
     }
 
-    override fun tick(state: BlockState, world: World, pos: BlockPos, random: java.util.Random) {
+    //TODO rewrite GlaciaTeleporter, get rid of the tick function
+    override fun tick(state: BlockState, world: ServerWorld, pos: BlockPos, random: java.util.Random) {
         super.tick(state, world, pos, random)
         (world as? ServerWorld)?.glaciaTeleporter?.tick(world.gameTime)
     }
@@ -283,5 +283,5 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
         }
     }
 
-    private val ServerWorld.glaciaTeleporter : Teleporter by LazyWithReceiver(false) {GlaciaTeleporter(this, this@BlockGlaciaPortal)}
+    private val ServerWorld.glaciaTeleporter : GlaciaTeleporter by LazyWithReceiver(false) {GlaciaTeleporter(this, this@BlockGlaciaPortal)}
 }

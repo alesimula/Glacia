@@ -1,15 +1,12 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "facing" : {
-      "north" : {"y": 0},
-      "south" : {"y": 180},
-      "west" : {"y": 270},
-      "east" : {"y": 90}
-    },
-    "overworld" : {
-      "true" : {"model": "greenapple_glacia:block/glacial_berry_overworld"},
-      "false" : {"model": "greenapple_glacia:block/glacial_berry"}
-    }
+    "facing=north,overworld=false": { "model": "greenapple_glacia:block/glacial_berry" },
+    "facing=south,overworld=false": { "model": "greenapple_glacia:block/glacial_berry", "y": 180 },
+    "facing=west,overworld=false":  { "model": "greenapple_glacia:block/glacial_berry", "y": 270 },
+    "facing=east,overworld=false":  { "model": "greenapple_glacia:block/glacial_berry", "y": 90 },
+    "facing=north,overworld=true": { "model": "greenapple_glacia:block/glacial_berry_overworld" },
+    "facing=south,overworld=true": { "model": "greenapple_glacia:block/glacial_berry_overworld", "y": 180 },
+    "facing=west,overworld=true":  { "model": "greenapple_glacia:block/glacial_berry_overworld", "y": 270 },
+    "facing=east,overworld=true":  { "model": "greenapple_glacia:block/glacial_berry_overworld", "y": 90 }
   }
 }

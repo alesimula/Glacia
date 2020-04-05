@@ -42,8 +42,8 @@ fun Block.generateOreDrops(state: BlockState, builder: LootContext.Builder, drop
     val lootContext = builder.withParameter(LootParameters.BLOCK_STATE, state).build(LootParameterSets.BLOCK)
     val firstCondition = if (dropWithSilkTouch) CONDITION_SILKTOUCH else CONDITION_FALSE
 
-    val lootEntryFortune = ItemLootEntry.builder(droppedItem).acceptFunction(ApplyBonus.func_215869_a(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.func_215863_b())
-    val lootEntryTouchOrFortune = ItemLootEntry.builder(this).acceptCondition(firstCondition).func_216080_a(lootEntryFortune)
+    val lootEntryFortune = ItemLootEntry.builder(droppedItem).acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE)).acceptFunction(ExplosionDecay.builder())
+    val lootEntryTouchOrFortune = ItemLootEntry.builder(this).acceptCondition(firstCondition).alternatively(lootEntryFortune)
     val lootPool = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(lootEntryTouchOrFortune)
     val lootTable = LootTable.Builder().addLootPool(lootPool).build()
     return lootTable.generate(lootContext)

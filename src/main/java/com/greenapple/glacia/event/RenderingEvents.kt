@@ -33,14 +33,14 @@ class RenderingEvents {
 
     @SubscribeEvent
     fun onRenderPlayerThirdPerson(event: RenderPlayerEvent.Pre) {
-        event.renderer.onRenderPlayer(event.entityPlayer)
+        event.renderer.onRenderPlayer(event.player)
     }
 
     @SubscribeEvent
-    fun onRenderPlayerFirstPerson(event: RenderHandEvent) = Minecraft.getInstance().apply {
+    fun onRenderPlayerFirstPerson(event: RenderHandEvent) = Minecraft.getInstance().apply {player?.let {player->
         val renderer = renderManager.getRenderer(player) as PlayerRenderer
         renderer.onRenderPlayer(player)
-    }
+    }}
 
     val glaciaAdvancement = Advancement(GameData.checkPrefix("glacia/root", false), null, null, AdvancementRewards.EMPTY, mapOf(), arrayOf())
 

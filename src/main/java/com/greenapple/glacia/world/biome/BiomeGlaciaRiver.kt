@@ -29,7 +29,7 @@ class BiomeGlaciaRiver(registryName : String) : Biome(Biome.Builder().surfaceBui
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
         GlaciaBiomeFeatures.addSprings(this)
-        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.SEAGRASS, SeaGrassConfig(48, 0.4), Placement.TOP_SOLID_HEIGHTMAP, IPlacementConfig.NO_PLACEMENT_CONFIG))
+        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SEAGRASS.withConfiguration(SeaGrassConfig(48, 0.4)).withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)))
         DefaultBiomeFeatures.addFreezeTopLayer(this)
     }
 

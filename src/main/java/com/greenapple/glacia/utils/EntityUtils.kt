@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.Teleporter
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.world.server.ServerWorld
+import net.minecraft.world.storage.WorldInfo
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.fml.hooks.BasicEventHooks
 
@@ -19,8 +20,9 @@ fun ServerPlayerEntity.changeDim(pos: BlockPos, destination: DimensionType, tele
     val serverWorld = server.getWorld(origin)
     dimension = destination
     val serverWorld1 = server.getWorld(destination)
+    val worldinfo: WorldInfo = serverWorld1.worldInfo
     val worldInfo = world.worldInfo
-    connection.sendPacket(SRespawnPacket(destination, worldInfo.generator, interactionManager.gameType))
+    connection.sendPacket(SRespawnPacket(destination, WorldInfo.byHashing(worldinfo.seed), worldInfo.generator, interactionManager.gameType))
     connection.sendPacket(SServerDifficultyPacket(worldInfo.difficulty, worldInfo.isDifficultyLocked))
     val playerList = server.playerList
     playerList.updatePermissionLevel(this)
@@ -38,9 +40,9 @@ fun ServerPlayerEntity.changeDim(pos: BlockPos, destination: DimensionType, tele
     setLocationAndAngles(pos.x * moveFactor + .5, pos.y + .5, pos.z * moveFactor + .5, yaw, pitch)
 
     teleporterProvider(serverWorld1).let {teleporter ->
-        if (!teleporter.func_222268_a(this, rotationYaw)) {
+        if (!teleporter.placeInPortal(this, rotationYaw)) {
             teleporter.makePortal(this)
-            teleporter.func_222268_a(this, rotationYaw)
+            teleporter.placeInPortal(this, rotationYaw)
         }
     }
 

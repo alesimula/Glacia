@@ -24,9 +24,9 @@ class BiomeGlaciaOcean : Biome {
             .precipitation(RainType.SNOW).category(Category.OCEAN).depth(-1f).scale(0.1f).temperature(0F).downfall(0.5f).waterColor(4159204).waterFogColor(329011).parent(null as String?)) {
         setRegistryName(registryName)
 
-        this.addStructure(Feature.MINESHAFT, MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL))
-        this.addStructure(Feature.SHIPWRECK, ShipwreckConfig(false))
-        this.addStructure(Feature.OCEAN_RUIN, OceanRuinConfig(OceanRuinStructure.Type.COLD, 0.3f, 0.9f))
+        this.addStructure(Feature.MINESHAFT.withConfiguration(MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL)))
+        this.addStructure(Feature.SHIPWRECK.withConfiguration(ShipwreckConfig(false)))
+        this.addStructure(Feature.OCEAN_RUIN.withConfiguration(OceanRuinConfig(OceanRuinStructure.Type.COLD, 0.3f, 0.9f)))
         //TODO ocean carvers
         GlaciaBiomeFeatures.addCarvers(this)
         DefaultBiomeFeatures.addStructures(this)
@@ -35,15 +35,15 @@ class BiomeGlaciaOcean : Biome {
         DefaultBiomeFeatures.addStoneVariants(this)
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
-        DefaultBiomeFeatures.func_222296_u(this)
+        DefaultBiomeFeatures.addScatteredOakTrees(this)
         DefaultBiomeFeatures.addDefaultFlowers(this)
-        DefaultBiomeFeatures.func_222348_W(this)
+        DefaultBiomeFeatures.addSparseGrass(this)
         DefaultBiomeFeatures.addMushrooms(this)
         DefaultBiomeFeatures.addReedsAndPumpkins(this)
         GlaciaBiomeFeatures.addSprings(this)
-        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, createDecoratedFeature(Feature.SEAGRASS, SeaGrassConfig(48, 0.3), Placement.TOP_SOLID_HEIGHTMAP, IPlacementConfig.NO_PLACEMENT_CONFIG))
+        this.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.SEAGRASS.withConfiguration(SeaGrassConfig(48, 0.3)).withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)))
         DefaultBiomeFeatures.func_222320_ai(this)
-        DefaultBiomeFeatures.func_222287_ah(this)
+        DefaultBiomeFeatures.addExtraKelp(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
 
         this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(EntityType.POLAR_BEAR, 15, 1, 2))

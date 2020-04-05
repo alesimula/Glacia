@@ -3,29 +3,27 @@ package com.greenapple.glacia.entity.model;
 
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Items;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lwjgl.opengl.GL11;
-import net.minecraft.entity.Entity;
 
 @OnlyIn(Dist.CLIENT)
 public class ModelPlayerSnowMan extends PlayerModel<AbstractClientPlayerEntity>
 {
-	//public RendererModel bipedBody;
-    public RendererModel bipedBottomBody;
-    //public RendererModel bipedBody;
-    //public RendererModel bipedHead;
-    //public RendererModel bipedHeadwear;
+	//public ModelRenderer bipedBody;
+    public ModelRenderer bipedBottomBody;
+    //public ModelRenderer bipedBody;
+    //public ModelRenderer bipedHead;
+    //public ModelRenderer bipedHeadwear;
     
-    //public RendererModel bipedRightArm;
-    //public RendererModel bipedLeftArm;
+    //public ModelRenderer bipedRightArm;
+    //public ModelRenderer bipedLeftArm;
     
     //public int heldItemLeft;
     //public int heldItemRight;
@@ -42,79 +40,79 @@ public class ModelPlayerSnowMan extends PlayerModel<AbstractClientPlayerEntity>
         float f1 = 0.0F;
         
         /* TODO this
-        this.bipedCloak = new RendererModel(this, 0, 0);
+        this.bipedCloak = new ModelRenderer(this, 0, 0);
         this.bipedCloak.addBox(-5.0F, 3.9F, 3.0F, 10, 16, 1, par1);
-        this.bipedEars = new RendererModel(this, 0, 0);
+        this.bipedEars = new ModelRenderer(this, 0, 0);
         this.bipedEars.isHidden = true;*/
-        this.bipedHeadwear = new RendererModel(this, 0, 0);
-        this.bipedHeadwear.isHidden = true;
+        this.bipedHeadwear = new ModelRenderer(this, 0, 0);
+        this.bipedHeadwear.showModel = false;
 
-        this.bipedLeftLegwear.isHidden = true;
-        this.bipedRightLegwear.isHidden = true;
-        this.bipedLeftArmwear.isHidden = true;
-        this.bipedRightArmwear.isHidden = true;
-        this.bipedBodyWear.isHidden = true;
+        this.bipedLeftLegwear.showModel = false;
+        this.bipedRightLegwear.showModel = false;
+        this.bipedLeftArmwear.showModel = false;
+        this.bipedRightArmwear.showModel = false;
+        this.bipedBodyWear.showModel = false;
         
         //this.bipedHead.setRotationPoint(0.0F, -3.0F, 0.0F);
         if (playerArmorChest == 0)
         {
-        this.bipedHead = (new RendererModel(this, 0, 0)).setTextureSize(64, 64);
+        this.bipedHead = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
         this.bipedHead.addBox(-4.0F, -5.7F, -4.0F, 8, 8, 8, f1 - 0.5F);
         this.bipedHead.setRotationPoint(0.0F, 0.0F + f, 0.0F);
-        this.bipedRightArm = new RendererModel(this, 56, 0);
+        this.bipedRightArm = new ModelRenderer(this, 56, 0);
         this.bipedRightArm.addBox(-2.0F, 0.0F, -1.0F, 2, 12, 2, - 0.5F);
         this.bipedRightArm.setRotationPoint(-14.5F, 5.0F, 0.0F);
-        this.bipedLeftArm = new RendererModel(this, 56, 0);
+        this.bipedLeftArm = new ModelRenderer(this, 56, 0);
         this.bipedLeftArm.addBox(-2.0F, 0.0F, -1.0F, 2, 12, 2, - 0.5F);
         this.bipedLeftArm.setRotationPoint(-14.5F, 4.2F, 0.0F);
-        this.bipedBody = (new RendererModel(this, 0, 16)).setTextureSize(64, 64);
+        this.bipedBody = (new ModelRenderer(this, 0, 16)).setTextureSize(64, 64);
         this.bipedBody.addBox(-5.0F, - 11.0F, -5.0F, 10, 10, 10, f1 - 0.2F);
         this.bipedBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-        this.bipedBottomBody = (new RendererModel(this, 0, 36)).setTextureSize(64, 64);
+        this.bipedBottomBody = (new ModelRenderer(this, 0, 36)).setTextureSize(64, 64);
         this.bipedBottomBody.addBox(-6.0F, - 1.4F, -6.0F, 12, 12, 12, f1 - 0.2F);
         this.bipedBottomBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-        this.bipedRightLeg = new RendererModel(this, 56, 0);
-        this.bipedLeftLeg = new RendererModel(this, 56, 0);
-        this.bipedRightLeg.isHidden = true;
-        this.bipedLeftLeg.isHidden = true;
+        this.bipedRightLeg = new ModelRenderer(this, 56, 0);
+        this.bipedLeftLeg = new ModelRenderer(this, 56, 0);
+        this.bipedRightLeg.showModel = false;
+        this.bipedLeftLeg.showModel = false;
         }
         else if (playerArmorChest == 1)
         {
-        	this.bipedHead = (new RendererModel(this, 0, 0)).setTextureSize(64, 32);
+        	this.bipedHead = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 32);
             this.bipedHead.setRotationPoint(0.0F, 0.0F + f, 0.0F);
             this.bipedHead.addBox(-4.0F, -7.2F, -4.0F, 8, 8, 8, f1);
-            this.bipedHeadwear = (new RendererModel(this, 0, 0)).setTextureSize(64, 64);
+            this.bipedHeadwear = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
             this.bipedHeadwear.setRotationPoint(0.0F, 0.0F + f, 0.0F);
-            this.bipedRightArm = new RendererModel(this, 56, 0);
+            this.bipedRightArm = new ModelRenderer(this, 56, 0);
             this.bipedRightArm.setRotationPoint(-14.5F, 5.0F, 0.0F);
-            this.bipedLeftArm = new RendererModel(this, 56, 0);
+            this.bipedLeftArm = new ModelRenderer(this, 56, 0);
             this.bipedLeftArm.setRotationPoint(-14.5F, 4.2F, 0.0F);
-            this.bipedBody = (new RendererModel(this, 16, 16)).setTextureSize(64, 32);
+            this.bipedBody = (new ModelRenderer(this, 16, 16)).setTextureSize(64, 32);
             //this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, par1);
             this.bipedBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-            this.bipedBottomBody = (new RendererModel(this, 0, 36)).setTextureSize(64, 64);
+            this.bipedBottomBody = (new ModelRenderer(this, 0, 36)).setTextureSize(64, 64);
             this.bipedBottomBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-            this.bipedRightLeg = new RendererModel(this, 56, 0);
-            this.bipedLeftLeg = new RendererModel(this, 56, 0);
+            this.bipedRightLeg = new ModelRenderer(this, 56, 0);
+            this.bipedLeftLeg = new ModelRenderer(this, 56, 0);
         }
         else if (playerArmorChest == 2)
         {
-        	this.bipedHead = (new RendererModel(this, 0, 0)).setTextureSize(64, 32);
+        	this.bipedHead = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 32);
             this.bipedHead.setRotationPoint(0.0F, 0.0F + f, 0.0F);
             this.bipedHead.addBox(-4.0F, -7.2F, -4.0F, 8, 8, 8, f1);
-            this.bipedHeadwear = (new RendererModel(this, 0, 0)).setTextureSize(64, 64);
+            this.bipedHeadwear = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
             this.bipedHeadwear.setRotationPoint(0.0F, 0.0F + f, 0.0F);
-            this.bipedRightArm = new RendererModel(this, 56, 0);
+            this.bipedRightArm = new ModelRenderer(this, 56, 0);
             this.bipedRightArm.setRotationPoint(-14.5F, 5.0F, 0.0F);
-            this.bipedLeftArm = new RendererModel(this, 56, 0);
+            this.bipedLeftArm = new ModelRenderer(this, 56, 0);
             this.bipedLeftArm.setRotationPoint(-14.5F, 4.2F, 0.0F);
-            this.bipedBody = (new RendererModel(this, 16, 16)).setTextureSize(64, 32);
+            this.bipedBody = (new ModelRenderer(this, 16, 16)).setTextureSize(64, 32);
             //this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8, 12, 4, par1);
             this.bipedBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-            this.bipedBottomBody = (new RendererModel(this, 0, 36)).setTextureSize(64, 64);
+            this.bipedBottomBody = (new ModelRenderer(this, 0, 36)).setTextureSize(64, 64);
             this.bipedBottomBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-            this.bipedRightLeg = new RendererModel(this, 56, 0);
-            this.bipedLeftLeg = new RendererModel(this, 56, 0);
+            this.bipedRightLeg = new ModelRenderer(this, 56, 0);
+            this.bipedLeftLeg = new ModelRenderer(this, 56, 0);
         }
     }
     
@@ -125,19 +123,19 @@ public class ModelPlayerSnowMan extends PlayerModel<AbstractClientPlayerEntity>
     	super(0.0F, 0.0F, 64, 32);
     	float f = 4.0F;
         float f1 = 0.0F;
-        this.bipedHead = (new RendererModel(this, 0, 0)).setTextureSize(64, 64);
+        this.bipedHead = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 64);
         this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, f1 - 0.5F);
         this.bipedHead.setRotationPoint(0.0F, 0.0F + f, 0.0F);
-        this.bipedRightArm = (new RendererModel(this, 32, 0)).setTextureSize(64, 64);
+        this.bipedRightArm = (new ModelRenderer(this, 32, 0)).setTextureSize(64, 64);
         this.bipedRightArm.addBox(-1.0F, 0.0F, -1.0F, 12, 2, 2, f1 - 0.5F);
         this.bipedRightArm.setRotationPoint(-8.5F, 6.0F, 0.0F);
-        this.bipedLeftArm = (new RendererModel(this, 32, 0)).setTextureSize(64, 64);
+        this.bipedLeftArm = (new ModelRenderer(this, 32, 0)).setTextureSize(64, 64);
         this.bipedLeftArm.addBox(-1.0F, 0.0F, -1.0F, 12, 2, 2, f1 - 0.5F);
         this.bipedLeftArm.setRotationPoint(0.0F, 0.0F + f + 9.0F - 7.0F, 0.0F);
-        this.bipedBody = (new RendererModel(this, 0, 16)).setTextureSize(64, 64);
+        this.bipedBody = (new ModelRenderer(this, 0, 16)).setTextureSize(64, 64);
         this.bipedBody.addBox(-5.0F, -10.0F, -5.0F, 10, 10, 10, f1 - 0.5F);
         this.bipedBody.setRotationPoint(0.0F, 0.0F + f + 9.0F, 0.0F);
-        this.bipedBottomBody = (new RendererModel(this, 0, 36)).setTextureSize(64, 64);
+        this.bipedBottomBody = (new ModelRenderer(this, 0, 36)).setTextureSize(64, 64);
         this.bipedBottomBody.addBox(-6.0F, -12.0F, -6.0F, 12, 12, 12, f1 - 0.5F);
         this.bipedBottomBody.setRotationPoint(0.0F, 0.0F + f + 20.0F, 0.0F);
     }*/
@@ -147,9 +145,10 @@ public class ModelPlayerSnowMan extends PlayerModel<AbstractClientPlayerEntity>
      * and legs, where par1 represents the time(so that arms and legs swing back and forth) and par2 represents how
      * "far" arms and legs can swing at most.
      */
-    public void setRotationAngles(AbstractClientPlayerEntity entity, float par1, float par2, float par3, float par4, float par5, float par6)
+    @Override
+    public void setRotationAngles(AbstractClientPlayerEntity entity, float par1, float par2, float par3, float par4, float par5)
     {
-        super.setRotationAngles(entity, par1, par2, par3, par4, par5, par6);
+        super.setRotationAngles(entity, par1, par2, par3, par4, par5);
         this.bipedHead.rotateAngleY = par4 / (180F / (float)Math.PI);
         this.bipedHead.rotateAngleX = par5 / (180F / (float)Math.PI);
         this.bipedBody.rotateAngleY = par4 / (180F / (float)Math.PI) * 0.25F;
@@ -272,16 +271,17 @@ public class ModelPlayerSnowMan extends PlayerModel<AbstractClientPlayerEntity>
     /**
      * Sets the models various rotation angles then renders the model.
      */
-    public void render(AbstractClientPlayerEntity par1Entity, float par2, float par3, float par4, float par5, float par6, float par7)
+    @Override
+    public void render(MatrixStack stack, IVertexBuilder vertexBuilder, int par2, int par3, float par4, float par5, float par6, float par7)
     {
     	float f1 = 0.625F;
     	//GL11.glTranslatef(0.0F, 0.05F, 0.0F);
         //GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
         //GL11.glScalef(f1, -f1, -f1);
     	GL11.glPushMatrix();
-    	super.render(par1Entity, par2, par3, par4, par5, par6, par7);
+    	super.render(stack, vertexBuilder, par2, par3, par4, par5, par6, par7);
         //this.setRotationAngles(par2, par3, par4, par5, par6, par7, par1Entity);
-        this.bipedBottomBody.render(par7);
+        this.bipedBottomBody.render(stack, vertexBuilder, par2, par3, par4, par5, par6, par7);
         // TODO this.bipedEars.render(par7);
         GL11.glPopMatrix();
         if (!this.isArmor)

@@ -7,6 +7,7 @@ import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
 import com.greenapple.glacia.event.RenderingEvents
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
@@ -31,10 +32,10 @@ import java.util.stream.Collectors
 class Glacia {
 
     class ModDimensionBase(modId: String, name: String, factory: DimensionType.(World)->Dimension) : ModDimension() {
-        private val javaFactory = BiFunction {world: World, type: DimensionType -> dimensionType = type; factory(type, world)}
+        private val javaFactory = BiFunction {world: World, type: DimensionType -> factory(type, world)}
         override fun getFactory() = javaFactory
         init {setRegistryName(modId, name)}
-        lateinit var dimensionType : DimensionType private set
+        val dimensionType by lazy {DimensionType.byName(registryName!!)!!}
     }
 
     companion object {

@@ -45,7 +45,7 @@ object GlaciaLayerUtils {
         return layer
     }
 
-    private fun <T : IArea, C : IExtendedNoiseRandom<T>> buildOverworldProcedure(worldTypeIn: WorldType, settings: OverworldGenSettings, contextFactory: LongFunction<C>): ImmutableList<IAreaFactory<T>> {
+    private fun <T : IArea, C : IExtendedNoiseRandom<T>> buildOverworldProcedure(worldTypeIn: WorldType, settings: OverworldGenSettings, contextFactory: LongFunction<C>): IAreaFactory<T> {
         var iareafactory = IslandLayer.INSTANCE.apply(contextFactory.apply(1L))
         iareafactory = ZoomLayer.FUZZY.apply(contextFactory.apply(2000L), iareafactory)
         iareafactory = AddIslandLayer.INSTANCE.apply(contextFactory.apply(1L), iareafactory)
@@ -105,15 +105,21 @@ object GlaciaLayerUtils {
         lvt_8_1_ = SmoothLayer.INSTANCE.apply(contextFactory.apply(1000L), lvt_8_1_)
         lvt_8_1_ = LayerGlaciaRiver.MIX.apply(contextFactory.apply(100L), lvt_8_1_, lvt_7_1_)
         lvt_8_1_ = MixOceansLayer.INSTANCE.apply(contextFactory.apply(100L), lvt_8_1_, iareafactory1)
-        val iareafactory5 = VoroniZoomLayer.INSTANCE.apply(contextFactory.apply(10L), lvt_8_1_)
-        return ImmutableList.of(lvt_8_1_, iareafactory5, lvt_8_1_)
+        //val iareafactory5 = VoroniZoomLayer.INSTANCE.apply(contextFactory.apply(10L), lvt_8_1_)
+        //return ImmutableList.of(lvt_8_1_, iareafactory5, lvt_8_1_)
+        return lvt_8_1_
     }
 
-    fun buildOverworldProcedure(seed: Long, typeIn: WorldType, settings: OverworldGenSettings): Array<Layer> {
+    fun buildOverworldProcedure(p_227474_0_: Long, p_227474_2_: WorldType, p_227474_3_: OverworldGenSettings): Layer {
+        val iareafactory = buildOverworldProcedure(p_227474_2_, p_227474_3_, LongFunction { p_227473_2_: Long -> LazyAreaLayerContext(25, p_227474_0_, p_227473_2_) })
+        return Layer(iareafactory)
+    }
+
+    /*fun buildOverworldProcedure(seed: Long, typeIn: WorldType, settings: OverworldGenSettings): Array<Layer> {
         val immutablelist = buildOverworldProcedure(typeIn, settings, LongFunction{ p_215737_2_ -> LazyAreaLayerContext(25, seed, p_215737_2_) })
         val layer = Layer(immutablelist[0])
         val layer1 = Layer(immutablelist[1])
         val layer2 = Layer(immutablelist[2])
         return arrayOf(layer, layer1, layer2)
-    }
+    }*/
 }

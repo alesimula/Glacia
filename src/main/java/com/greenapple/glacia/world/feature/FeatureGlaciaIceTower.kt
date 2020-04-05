@@ -8,7 +8,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.GenerationSettings
-import net.minecraft.world.gen.feature.BirchTreeFeature
 import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.NoFeatureConfig
 import kotlin.math.pow
@@ -16,8 +15,9 @@ import kotlin.math.pow
 
 /**
  * @see BirchTreeFeature
+ * [not anymore got removed]
  */
-class FeatureGlaciaIceTower(registryName: String, configIn: Function<Dynamic<*>, out NoFeatureConfig>, doBlockNotifyIn: Boolean) : Feature<NoFeatureConfig>(configIn, doBlockNotifyIn) {
+class FeatureGlaciaIceTower(registryName: String, configIn: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(configIn) {
 
     init {
         setRegistryName(registryName)

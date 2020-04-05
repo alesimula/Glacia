@@ -9,8 +9,8 @@ import net.minecraftforge.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 open class ModelBipedBase<T : MobEntity>(modelSize: Float=0F, private val zombieArms: Boolean=true) : BipedModel<T>(modelSize) {
 
-    override fun setRotationAngles(entityIn: T, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scaleFactor: Float) {
-        super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor)
+    override fun setRotationAngles(entityIn: T, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float) {
+        super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch)
         if (zombieArms) {
             val flag = entityIn.isAggressive
             val f = MathHelper.sin(this.swingProgress * Math.PI.toFloat())

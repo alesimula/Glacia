@@ -50,14 +50,14 @@ class PlayerEvents {
         val j1 = MathHelper.ceil(axisAlignedBB.maxZ)
 
         if (world.isAreaLoaded(i, k, i1, j, l, j1)) {
-            BlockPos.PooledMutableBlockPos.retain().use {mutableBlockPos ->
+            BlockPos.PooledMutable.retain().use {mutableBlockPos ->
                 for (l1 in i until j) {
                     for (i2 in k until l) {
                         for (j2 in i1 until j1) {
                             mutableBlockPos.setPos(l1, i2, j2)
                             val fluidState = this.world.getFluidState(mutableBlockPos)
                             if (fluidState.blockState.block === block) {
-                                val d1 = (i2.toFloat() + fluidState.func_215679_a(this.world, mutableBlockPos)).toDouble()
+                                val d1 = (i2.toFloat() + fluidState.getActualHeight(this.world, mutableBlockPos)).toDouble()
                                 if (d1 >= axisAlignedBB.minY) {
                                     return true
                                 }

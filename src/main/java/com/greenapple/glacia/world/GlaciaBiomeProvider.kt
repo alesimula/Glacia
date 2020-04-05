@@ -1,27 +1,26 @@
 package com.greenapple.glacia.world
 
-import com.google.common.collect.Sets
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.world.layer.GlaciaLayerUtils
+import com.greenapple.glacia.world.layer.LayerGlaciaBiome
 import net.minecraft.block.BlockState
-import net.minecraft.util.math.BlockPos
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.biome.provider.OverworldBiomeProviderSettings
 import net.minecraft.world.gen.feature.structure.Structure
-import net.minecraft.world.gen.layer.*
-import java.util.Collections
-import java.util.Random
+import net.minecraft.world.gen.layer.Layer
+import net.minecraft.world.gen.layer.LayerUtil
 
 /**
  * Look at OverworldBiomeProvider if any function name changes
  */
-class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvider() {
-
+//TODO fix maybe when functions get names
+class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvider(LayerGlaciaBiome.BIOMES.mapTo(mutableSetOf()) {it.biome}) {
     private var genBiomes : Layer
-    private val biomeFactoryLayer: Layer
+    //private val biomeFactoryLayer: Layer
 
-    private val seed = settings.worldInfo.seed.run {
+    //this function will probably get renamed to getSeed()
+    private val seed = settings.func_226850_a_().run {
         var seed = this
         seed = seed.inv() + (seed shl 21)
         seed = (seed + 0x67726565) xor seed.ushr(21)
@@ -34,9 +33,10 @@ class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvi
     }
 
     init {
-        val layers = GlaciaLayerUtils.buildOverworldProcedure(seed, settings.worldInfo.generator, settings.generatorSettings)
+        /*val layers = GlaciaLayerUtils.buildOverworldProcedure(seed, settings.worldInfo.generator, settings.generatorSettings)
         genBiomes = layers[0]
-        biomeFactoryLayer = layers[1]
+        biomeFactoryLayer = layers[1]*/
+        genBiomes = GlaciaLayerUtils.buildOverworldProcedure(seed, settings.func_226851_b_(), settings.generatorSettings)
     }
 
     companion object {
@@ -52,7 +52,11 @@ class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvi
         return BIOMES_TO_SPAWN_IN
     }
 
-    override fun getBiomesInSquare(centerX: Int, centerZ: Int, sideLength: Int): Set<Biome> {
+    override fun getNoiseBiome(p0: Int, p1: Int, p2: Int): Biome {
+        return genBiomes.func_215738_a(p0, p2)
+    }
+
+    /*override fun getBiomesInSquare(centerX: Int, centerZ: Int, sideLength: Int): Set<Biome> {
         val i = centerX - sideLength shr 2
         val j = centerZ - sideLength shr 2
         val k = centerX + sideLength shr 2
@@ -103,7 +107,7 @@ class GlaciaBiomeProvider(settings: OverworldBiomeProviderSettings) : BiomeProvi
         }
 
         return blockpos
-    }
+    }*/
 
     override fun hasStructure(structureIn: Structure<*>): Boolean {
         return (this.hasStructureCache).computeIfAbsent(structureIn) {structure ->

@@ -9,7 +9,9 @@ import net.minecraft.world.WorldType
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.biome.provider.BiomeProvider
 import net.minecraft.world.chunk.IChunk
-import net.minecraft.world.gen.*
+import net.minecraft.world.gen.NoiseChunkGenerator
+import net.minecraft.world.gen.OctavesNoiseGenerator
+import net.minecraft.world.gen.OverworldGenSettings
 import net.minecraft.world.gen.feature.IFeatureConfig
 import net.minecraft.world.gen.feature.structure.Structure
 import java.util.*
@@ -28,19 +30,20 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
         })
     }
 
-    private val depthNoise: OctavesNoiseGenerator = OctavesNoiseGenerator(this.randomSeed.apply {skip(2620)}, 16)
+    private val depthNoise: OctavesNoiseGenerator = OctavesNoiseGenerator(this.randomSeed.apply {skip(2620)}, 16, 0)
     private val isAmplified = world.worldInfo.generator === WorldType.AMPLIFIED
-
-    override fun func_222549_a(p_222549_1_: Int, p_222549_2_: Int): DoubleArray {
+    
+    override fun getBiomeNoiseColumn(noiseX: Int, noiseZ: Int): DoubleArray {
         val adouble = DoubleArray(2)
         var f = 0.0f
         var f1 = 0.0f
         var f2 = 0.0f
-        val f3 = this.biomeProvider.func_222366_b(p_222549_1_, p_222549_2_).depth
+        val seaLevel = this.seaLevel
+        val f3 = this.biomeProvider.getNoiseBiome(noiseX, seaLevel, noiseZ).depth
 
         for (j in -2..2) {
             for (k in -2..2) {
-                val biome = this.biomeProvider.func_222366_b(p_222549_1_ + j, p_222549_2_ + k)
+                val biome = this.biomeProvider.getNoiseBiome(noiseX + j, seaLevel, noiseZ + k)
                 var f4 = biome.depth
                 var f5 = biome.scale
                 if (this.isAmplified && f4 > 0.0f) {
@@ -63,7 +66,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
         f1 /= f2
         f = f * 0.9f + 0.1f
         f1 = (f1 * 4.0f - 1.0f) / 8.0f
-        adouble[0] = f1.toDouble() + this.func_222574_c(p_222549_1_, p_222549_2_)
+        adouble[0] = f1.toDouble() + this.getNoiseDepthAt(noiseX, noiseZ)
         adouble[1] = f.toDouble()
         return adouble
     }
@@ -77,12 +80,12 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
         return d1
     }
 
-    override fun func_222548_a(p_222548_1_: DoubleArray, p_222548_2_: Int, p_222548_3_: Int) {
-        this.func_222546_a(p_222548_1_, p_222548_2_, p_222548_3_, 684.412f.toDouble(), 684.412f.toDouble(), 8.555149841308594, 4.277574920654297, 3, -10)
+    override fun fillNoiseColumn(p_222548_1_: DoubleArray, p_222548_2_: Int, p_222548_3_: Int) {
+        this.calcNoiseColumn(p_222548_1_, p_222548_2_, p_222548_3_, 684.412f.toDouble(), 684.412f.toDouble(), 8.555149841308594, 4.277574920654297, 3, -10)
     }
 
-    private fun func_222574_c(p_222574_1_: Int, p_222574_2_: Int): Double {
-        var d0 = this.depthNoise.func_215462_a((p_222574_1_ * 200).toDouble(), 10.0, (p_222574_2_ * 200).toDouble(), 1.0, 0.0, true) / 8000.0
+    private fun getNoiseDepthAt(noiseX: Int, noiseZ: Int): Double {
+        var d0 = this.depthNoise.getValue((noiseX * 200).toDouble(), 10.0, (noiseZ * 200).toDouble(), 1.0, 0.0, true) / 8000.0
         if (d0 < 0.0) {
             d0 = -d0 * 0.3
         }
@@ -102,7 +105,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
     }
 
     override fun makeBedrock(chunkIn: IChunk, rand: Random) {
-        val blockPos_mutablePos = BlockPos.MutableBlockPos()
+        val mutableBlockPos = BlockPos.Mutable()
         val i = chunkIn.pos.xStart
         val j = chunkIn.pos.zStart
         val t = this.getSettings()
@@ -113,7 +116,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
             if (l > 0) {
                 for (i1 in l downTo l - 4) {
                     if (i1 >= l - rand.nextInt(5)) {
-                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, i1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
+                        chunkIn.setBlockState(mutableBlockPos.setPos(blockpos.x, i1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
                     }
                 }
             }
@@ -121,7 +124,7 @@ class GlaciaChunkGenerator(world: IWorld, biomeProvider: BiomeProvider, settings
             if (k < 256) {
                 for (j1 in k + 4 downTo k) {
                     if (j1 <= k + rand.nextInt(5)) {
-                        chunkIn.setBlockState(blockPos_mutablePos.setPos(blockpos.x, j1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
+                        chunkIn.setBlockState(mutableBlockPos.setPos(blockpos.x, j1, blockpos.z), Glacia.Blocks.PERMAFROST.defaultState, false)
                     }
                 }
             }

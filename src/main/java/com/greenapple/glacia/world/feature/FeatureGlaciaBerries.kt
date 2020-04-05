@@ -9,18 +9,16 @@ import net.minecraft.block.BlockState
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
-import net.minecraft.world.IWorldWriter
 import net.minecraft.world.gen.ChunkGenerator
 import net.minecraft.world.gen.GenerationSettings
 import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.feature.FlowersFeature
 import net.minecraft.world.gen.feature.NoFeatureConfig
-import net.minecraft.world.gen.feature.PlainsFlowersFeature
 
 /**
  * @see PlainsFlowersFeature
+ * [not anymore got removed]
  */
-class FeatureGlaciaBerries(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function, false) {
+class FeatureGlaciaBerries(registryName : String, function: Function<Dynamic<*>, out NoFeatureConfig>) : Feature<NoFeatureConfig>(function) {
 
     init {
         setRegistryName(registryName)

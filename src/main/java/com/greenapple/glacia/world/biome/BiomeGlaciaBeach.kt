@@ -17,7 +17,7 @@ class BiomeGlaciaBeach(registryName : String) : Biome(Biome.Builder().surfaceBui
         setRegistryName(registryName)
 
         //this.addStructure(Feature.MINESHAFT, MineshaftConfig(0.004, MineshaftStructure.Type.NORMAL))
-        this.addStructure(Feature.BURIED_TREASURE, BuriedTreasureConfig(0.01f))
+        this.addStructure(Feature.BURIED_TREASURE.withConfiguration(BuriedTreasureConfig(0.01f)))
         //this.addStructure(Feature.SHIPWRECK, ShipwreckConfig(true))
         GlaciaBiomeFeatures.addCarvers(this)
         //DefaultBiomeFeatures.addStructures(this)
