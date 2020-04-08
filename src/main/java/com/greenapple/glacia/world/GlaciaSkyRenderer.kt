@@ -3,17 +3,20 @@ package com.greenapple.glacia.world
 import java.util.Random
 
 import com.greenapple.glacia.Glacia
+import com.greenapple.glacia.renderer.GL11Utils
 import com.greenapple.glacia.renderer.TessellatorCompat
 import com.mojang.blaze3d.platform.GlStateManager
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GLAllocation
 import net.minecraft.client.renderer.RenderHelper
+import net.minecraft.client.renderer.Vector3f
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.math.BlockPos
 import net.minecraftforge.client.IRenderHandler
 import org.lwjgl.opengl.GL11
 import net.minecraft.client.world.ClientWorld
 import net.minecraft.util.math.MathHelper
+import net.minecraft.util.math.Vec3d
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
@@ -27,19 +30,19 @@ class GlaciaSkyRenderer : IRenderHandler {
         val sunTexture2 = ResourceLocation(Glacia.MODID, "environment/sun_blue.png")
     }
 
-    private var starGLCallList = GLAllocation.generateDisplayLists(3)
+    private var starGLCallList = GL11Utils.generateDisplayLists(3)
     private var glSkyList: Int = 0
     private var glSkyList2: Int = 0
 
     init {
         GlStateManager.pushMatrix()
-        GlStateManager.newList(this.starGLCallList, GL11.GL_COMPILE)
+        GL11Utils.newList(this.starGLCallList, GL11.GL_COMPILE)
         this.renderStars()
-        GlStateManager.endList()
+        GL11Utils.endList()
         GlStateManager.popMatrix()
         val tessellator = TessellatorCompat.instance
         this.glSkyList = this.starGLCallList + 1
-        GlStateManager.newList(this.glSkyList, GL11.GL_COMPILE)
+        GL11Utils.newList(this.glSkyList, GL11.GL_COMPILE)
         val byte2: Byte = 64
         val i = 256 / byte2 + 2
         var f = 16f
@@ -59,9 +62,9 @@ class GlaciaSkyRenderer : IRenderHandler {
             j += byte2.toInt()
         }
 
-        GlStateManager.endList()
+        GL11Utils.endList()
         this.glSkyList2 = this.starGLCallList + 2
-        GlStateManager.newList(this.glSkyList2, GL11.GL_COMPILE)
+        GL11Utils.newList(this.glSkyList2, GL11.GL_COMPILE)
         f = -16f
         tessellator.startDrawingQuads()
 
@@ -79,7 +82,11 @@ class GlaciaSkyRenderer : IRenderHandler {
         }
 
         tessellator.draw()
-        GlStateManager.endList()
+        GL11Utils.endList()
+    }
+
+    fun getSkyColor(world: ClientWorld, cameraPos: BlockPos?, partialTicks: Float) = world.getSkyColor(cameraPos, partialTicks).run {
+        Vec3d(x*0.55, y*0.15, z*0.7)
     }
 
     override fun render(ticks: Int, partialTicks: Float, world: ClientWorld, mc: Minecraft) = (world.dimension as? GlaciaDimension)?.let {dimension ->
@@ -88,21 +95,31 @@ class GlaciaSkyRenderer : IRenderHandler {
         var var12: Float
         val tessellator= TessellatorCompat.instance
 
+        GlStateManager.pushMatrix()
+
+        //Cheap fix for sky following the camera
+        val camera = mc.getRenderViewEntity()
+        val pitch = camera?.rotationPitch ?: 0F
+        val yaw = camera?.rotationYaw ?: 0F
+        GlStateManager.rotatef(pitch, 1.0f, 0.0f, 0.0f)
+        GlStateManager.rotatef(yaw+180, 0.0f, 1.0f, 0.0f)
+
+        GlStateManager.pushMatrix()
         GlStateManager.disableTexture()
 
         val renderViewPos = if (mc.renderViewEntity != null) mc.renderViewEntity!!.position else BlockPos(0, 0, 0)
-        val skyColor = world.getSkyColor(renderViewPos, partialTicks)
+        val skyColor = getSkyColor(world, mc.gameRenderer.activeRenderInfo.blockPos, partialTicks)
         val skyColorX = skyColor.x.toFloat()
         val skyColorY = skyColor.y.toFloat()
         val skyColorZ = skyColor.z.toFloat()
         var f4: Float
 
-        GlStateManager.color3f(skyColorX, skyColorY, skyColorZ)
+        GL11Utils.color3f(skyColorX, skyColorY, skyColorZ)
         val tessellator1 = TessellatorCompat.instance
         GlStateManager.depthMask(false)
         GlStateManager.enableFog()
-        GlStateManager.color3f(skyColorX, skyColorY, skyColorZ)
-        GlStateManager.callList(this.glSkyList)
+        GL11Utils.color3f(skyColorX, skyColorY, skyColorZ)
+        GL11Utils.callList(this.glSkyList)
         GlStateManager.disableFog()
         GlStateManager.disableAlphaTest()
         GlStateManager.enableBlend()
@@ -156,12 +173,11 @@ class GlaciaSkyRenderer : IRenderHandler {
             GlStateManager.shadeModel(GL11.GL_FLAT)
         }
 
-        val starBrightness = dimension.getStarBrightness(partialTicks)
+        val starBrightness = world.getStarBrightness(partialTicks)
 
         GlStateManager.enableBlend()
 
         GlStateManager.enableTexture()
-
 
         //Stars
         if (starBrightness > 0.0f) {
@@ -172,7 +188,7 @@ class GlaciaSkyRenderer : IRenderHandler {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
             GlStateManager.alphaFunc(GL11.GL_LEQUAL, 1F)
             GlStateManager.color4f(starBrightness, starBrightness, starBrightness, starBrightness)
-            GlStateManager.callList(this.starGLCallList)
+            GL11Utils.callList(this.starGLCallList)
             GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F)
             GlStateManager.disableAlphaTest()
             GlStateManager.enableTexture()
@@ -254,13 +270,13 @@ class GlaciaSkyRenderer : IRenderHandler {
         GlStateManager.enableAlphaTest()
         GlStateManager.enableFog()
         GlStateManager.disableTexture()
-        GlStateManager.color3f(0.0f, 0.0f, 0.0f)
-        val var25 = mc.player.position.y - world.horizon
+        GL11Utils.color3f(0.0f, 0.0f, 0.0f)
+        val var25 = (mc.player?.getEyePosition(partialTicks)?.y ?: 0.0) - world.horizonHeight
 
         if (var25 < 0.0) {
             GlStateManager.pushMatrix()
             GlStateManager.translatef(0.0f, 12.0f, 0.0f)
-            GlStateManager.callList(this.glSkyList2)
+            GL11Utils.callList(this.glSkyList2)
             GlStateManager.popMatrix()
             var10 = 1.0f
             var11 = -(var25 + 65.0).toFloat()
@@ -290,14 +306,16 @@ class GlaciaSkyRenderer : IRenderHandler {
             tessellator.draw()
         }
 
-        GlStateManager.color3f(70f / 256f, 70f / 256f, 70f / 256f)
+        GL11Utils.color3f(70f / 256f, 70f / 256f, 70f / 256f)
 
         GlStateManager.pushMatrix()
         GlStateManager.translatef(0.0f, -(var25 - 16.0).toFloat(), 0.0f)
-        GlStateManager.callList(this.glSkyList2)
+        GL11Utils.callList(this.glSkyList2)
         GlStateManager.popMatrix()
         GlStateManager.enableTexture()
         GlStateManager.depthMask(true)
+        GlStateManager.popMatrix()
+        GlStateManager.popMatrix()
     } ?: Unit
 
     private fun renderStars() {
@@ -351,7 +369,7 @@ class GlaciaSkyRenderer : IRenderHandler {
     }
 
     fun getSkyBrightness(par1: Float): Float {
-        val var2 = Minecraft.getInstance().world.getCelestialAngle(par1)
+        val var2 = Minecraft.getInstance().world?.getCelestialAngle(par1) ?: 0F
         var var3 = 1.0f - (MathHelper.sin(var2 * Math.PI.toFloat() * 2.0f) * 2.0f + 0.25f)
 
         if (var3 < 0.0f) {

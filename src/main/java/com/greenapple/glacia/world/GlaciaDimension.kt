@@ -29,7 +29,7 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         var biomeProviderTyperConstructor: Constructor<BiomeProviderType<*, *>> = BiomeProviderType::class.java.getDeclaredConstructor(java.util.function.Function::class.java, java.util.function.Function::class.java).apply {isAccessible=true}
         fun<C: IBiomeProviderSettings,T: BiomeProvider> biomeProviderType(settingsInit: (WorldInfo)->C, biomeProviderInit: (C)->T) = biomeProviderTyperConstructor.newInstance(java.util.function.Function(biomeProviderInit), java.util.function.Function(settingsInit)) as BiomeProviderType<C,T>
 
-        //private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
+        private val SKY_RENDERER by lazy {GlaciaSkyRenderer()}
         private val generatorType = ChunkGeneratorType(IChunkGeneratorFactory {world, provider, settings -> GlaciaChunkGenerator(world, provider, settings)}, false, Supplier {OverworldGenSettings()})
         private val biomeProviderType = biomeProviderType({OverworldBiomeProviderSettings(it)}) {GlaciaBiomeProvider(it)}
     }
@@ -83,10 +83,9 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         return Vec3d(f1.toDouble()*0.55, f2.toDouble()*0.15, f3.toDouble()*0.7)
     }
 
-    //TODO use sky renderer
-    /*override fun getSkyRenderer(): net.minecraftforge.client.IRenderHandler {
+    override fun getSkyRenderer(): net.minecraftforge.client.IRenderHandler {
         return SKY_RENDERER
-    }*/
+    }
 
     override fun findSpawn(chunkPos: ChunkPos, checkValid: Boolean): BlockPos? {
         return null
