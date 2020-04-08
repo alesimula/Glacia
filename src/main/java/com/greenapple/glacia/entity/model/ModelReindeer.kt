@@ -5,17 +5,26 @@ import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.vertex.IVertexBuilder
 import net.minecraft.client.renderer.entity.model.EntityModel
 import net.minecraft.client.renderer.model.ModelRenderer
+import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 
 import net.minecraft.util.math.MathHelper
 import org.lwjgl.opengl.GL11
 
-class ModelReindeer<E: LivingEntity> : EntityModel<E>() {
+class ModelReindeer<E: LivingEntity> : EntityModel<E>(), IModelExtra<E> {
+
+    override var entity: E? = null
 
     init {
         textureWidth = 46
         textureHeight = 51
     }
+
+    /*var _isMale : Boolean? = null
+    fun isMale(entity: E?=null) : Boolean {
+        if (entity!=null) _isMale = entity.isMale
+        return _isMale==true
+    }*/
 
     private val bodyMale: ModelRenderer = ModelRenderer(this, 0, 0)
     private val neck = ModelRenderer(this, 20, 20)
@@ -249,7 +258,7 @@ class ModelReindeer<E: LivingEntity> : EntityModel<E>() {
         setRotation(bodyFemale, 0f, 0f, 0f)
     }
 
-    private inline fun shouldRenderChild(scale: Float, childSizePt: Float, crossinline renderer: () -> Unit) {
+    /*private inline fun shouldRenderChild(scale: Float, childSizePt: Float, crossinline renderer: () -> Unit) {
         if (isChild) {
             GL11.glPushMatrix()
             GL11.glScalef(childSizePt, childSizePt, childSizePt)
@@ -257,44 +266,48 @@ class ModelReindeer<E: LivingEntity> : EntityModel<E>() {
         }
         renderer()
         if (isChild) GL11.glPopMatrix()
+    }*/
+
+    override fun setLivingAnimations(entity: E, limbSwing: Float, limbSwingAmount: Float, partialTick: Float) {
+        super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTick)
     }
 
     override fun render(stack: MatrixStack, vertexBuilder: IVertexBuilder, limbSwing: Int, limbSwingAmount: Int, ageInTicks: Float, netHeadYaw: Float, headPitch: Float, scale: Float) {
-        //EntityGlacialRainDeer entityraindeer = (EntityGlacialRainDeer)entity;
-        //val randgender = Random.nextInt(2 - 0) + 0
-        fun ModelRenderer.render() = this.render(stack, vertexBuilder, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
-        shouldRenderChild (scale, 0.5f) {
-            //super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
-            //setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
-            neck.render()
-            head.render()
-            head2.render()
-            nose.render()
-            ear1.render()
-            ear2.render()
-            //TODO entity.isMale
-            if (true) {
-                bodyMale.render()
-                if (!isChild) {
-                    corn.render()
-                    corn2.render()
-                    corn3.render()
-                    corn4.render()
-                }
-            }
-            else {
-                bodyFemale.render()
-                if (!isChild) {
-                    corn5.render()
-                    corn6.render()
-                }
-            }
-            tail.render()
-            leg1.render()
-            leg2.render()
-            leg3.render()
-            leg4.render()
+        if (isChild) {
+            stack.scale(0.5F, 0.5F, 0.5F)
+            stack.translate(0.0, 1.5, 0.0)
         }
+        val isMale = entity?.isMale ?: false
+        fun ModelRenderer.render() = this.render(stack, vertexBuilder, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
+        //super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
+        //setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale)
+        neck.render()
+        head.render()
+        head2.render()
+        nose.render()
+        ear1.render()
+        ear2.render()
+        if (isMale) {
+            bodyMale.render()
+            if (!isChild) {
+                corn.render()
+                corn2.render()
+                corn3.render()
+                corn4.render()
+            }
+        }
+        else {
+            bodyFemale.render()
+            if (!isChild) {
+                corn5.render()
+                corn6.render()
+            }
+        }
+        tail.render()
+        leg1.render()
+        leg2.render()
+        leg3.render()
+        leg4.render()
     }
 
     private fun setRotation(model: ModelRenderer, x: Float, y: Float, z: Float) {

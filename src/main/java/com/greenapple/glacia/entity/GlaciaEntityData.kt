@@ -15,6 +15,7 @@ import kotlin.reflect.KProperty
 
 // <editor-fold defaultstate="collapsed" desc="Delegation methods">
 //val dataManagerCache : Cache<UUID, EntityDataManager> = CacheBuilder.newBuilder().weakKeys().weakValues().build()
+
 private val dataManagerCache : MutableMap<UUID, WeakReference<EntityDataManager>> = Collections.synchronizedMap(WeakHashMap<UUID, WeakReference<EntityDataManager>>())
 interface IEntityDataDelegate<This: Entity, Return> {
     operator fun getValue(thisRef:This, property: KProperty<*>) : Return
@@ -24,9 +25,10 @@ private class EntityDataDelegate<This: Entity, Return> (serializer: IDataSeriali
     private val KClass<out This>.dataParameter : DataParameter<Return> by LazyWithReceiver(false) {EntityDataManager.createKey(this.java, serializer)}
     private val This.cachedDataManager : EntityDataManager; get() = dataManagerCache.putIfAbsent(uniqueID, WeakReference(dataManager))?.get() ?: dataManager
     private val This.dataParameter; get() = this::class.dataParameter
+    private fun This.getOrSet(value: Return) = cachedDataManager.runCatching {get(dataParameter) ?: value.also {if (it!=null) set(dataParameter, value)}}.getOrElse {cachedDataManager.set(dataParameter, value); value}
     private fun This.registerData(value: Return) = cachedDataManager.runCatching {dataManager.register(dataParameter, value); value}.getOrNull()
 
-    override operator fun getValue(thisRef:This, property: KProperty<*>) = thisRef.run {defaultProvider(this).let {default -> registerData(default)?.apply {sideEffect(this)} ?: runCatching{cachedDataManager.get(dataParameter) ?: default}.getOrElse {default}}}
+    override operator fun getValue(thisRef:This, property: KProperty<*>) = thisRef.run {defaultProvider(this).let {default -> registerData(default)?.apply {sideEffect(this)} ?: getOrSet(default)}}
     override operator fun setValue(thisRef:This, property: KProperty<*>, value: Return) = thisRef.run {registerData(value) ?: runCatching {cachedDataManager.set(dataParameter, value)}; sideEffect(value)}
 }
 

@@ -47,7 +47,7 @@ class EntityReindeer(type: EntityType<CowEntity>, world: World) : AnimalEntity(t
 
     override fun readAdditional(compound: CompoundNBT) {
         super.readAdditional(compound)
-        isMale = compound.getBoolean("is_male")
+        if (compound.contains("is_male")) isMale = compound.getBoolean("is_male")
     }
 
     override fun canMateWith(other: AnimalEntity) = runCatching {isMale xor (other as EntityReindeer).isMale}.getOrElse {false}

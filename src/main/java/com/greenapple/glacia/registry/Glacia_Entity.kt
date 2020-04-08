@@ -3,11 +3,12 @@ package com.greenapple.glacia.registry
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.entity.*
 import com.greenapple.glacia.entity.model.*
+import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.block.Blocks
+import net.minecraft.client.renderer.IRenderTypeBuffer
 import net.minecraft.client.renderer.entity.*
 import net.minecraft.client.renderer.entity.layers.BipedArmorLayer
 import net.minecraft.client.renderer.entity.model.EntityModel
-import net.minecraft.client.renderer.entity.model.PlayerModel
 import net.minecraft.entity.*
 import net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType
 import net.minecraft.entity.monster.MonsterEntity
@@ -17,6 +18,8 @@ import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import net.minecraft.world.gen.Heightmap
 import net.minecraftforge.fml.client.registry.RenderingRegistry
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.LogManager
 import java.util.*
 
 object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
@@ -30,6 +33,10 @@ object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     private fun <E: MobEntity> EntityType<E>.registerRenderer(model: EntityModel<E>, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : MobRenderer<E, EntityModel<E>>(this, model, scale) {
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")
         override fun getEntityTexture(entity: E) = TEXTURE
+        override fun render(entity: E, p_225623_2_: Float, p_225623_3_: Float, p_225623_4_: MatrixStack, p_225623_5_: IRenderTypeBuffer, p_225623_6_: Int) {
+            (entityModel as? IModelExtra<E>)?.entity = entity
+            super.render(entity, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_)
+        }
     }}
     private inline fun <reified E: MobEntity> EntityType<E>.registerRendererBiped(zombieArms: Boolean, texture: String?=this.registryName?.path) = registerRenderer {object : BipedRenderer<E, ModelBipedBase<E>>(this, ModelBipedBase(), 0F) {
         init {
