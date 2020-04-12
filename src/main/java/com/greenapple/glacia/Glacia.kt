@@ -7,6 +7,7 @@ import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
 import com.greenapple.glacia.event.RenderingEvents
+import com.greenapple.glacia.utils.runClient
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
@@ -72,11 +73,9 @@ class Glacia {
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT")
-        DistExecutor.runWhenOn(Dist.CLIENT) {Runnable{
+        runClient {
             Entity.registerProperties()
-        }}
+        }
         ///BiomeManager.addBiome(GlaciaLayerUtils.BIOME_TYPE_GLACIA, BiomeEntry(Glacia.Biomes.PLAINS, 3))
         //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
         /*(event.container.modInfo as ModInfo).apply {
@@ -90,27 +89,27 @@ class Glacia {
 
     private fun doClientStuff(event: FMLClientSetupEvent) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.minecraftSupplier.get().gameSettings)
+        //LOGGER.info("Got game settings {}", event.minecraftSupplier.get().gameSettings)
     }
 
     private fun enqueueIMC(event: InterModEnqueueEvent) {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("examplemod", "helloworld") {
+        /*InterModComms.sendTo("examplemod", "helloworld") {
             LOGGER.info("Hello world from the MDK")
             "Hello world"
-        }
+        }*/
     }
 
     private fun processIMC(event: InterModProcessEvent) {
         // some example code to receive and process InterModComms from other mods
         val eventList = event.imcStream.map { m -> m.getMessageSupplier<Any>().get() }.collect(Collectors.toList())
-        LOGGER.info("Got IMC {}", eventList)
+        //LOGGER.info("Got IMC {}", eventList)
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     fun onServerStarting(event: FMLServerStartingEvent) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting")
+        //LOGGER.info("HELLO from server starting")
     }
 }

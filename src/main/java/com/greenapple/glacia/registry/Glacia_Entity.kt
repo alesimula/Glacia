@@ -1,6 +1,7 @@
 package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
+import com.greenapple.glacia.block.BlockGlaciaDirt
 import com.greenapple.glacia.entity.*
 import com.greenapple.glacia.entity.model.*
 import com.mojang.blaze3d.matrix.MatrixStack
@@ -17,18 +18,17 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IWorld
 import net.minecraft.world.World
 import net.minecraft.world.gen.Heightmap
+import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.client.registry.RenderingRegistry
-import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.LogManager
 import java.util.*
 
 object Glacia_Entity : IForgeRegistryCollection<EntityType<*>> {
     // <editor-fold defaultstate="collapsed" desc="Registration util methods">
     @Suppress("TYPE_PARAMETER_OF_PROPERTY_NOT_USED_IN_RECEIVER", "UNCHECKED_CAST")
     private inline val <E: Entity> EntityType<*>.type; get() = this as EntityType<E>
-    private inline fun <reified E: Entity> entityType(registryName: String, classification: EntityClassification, crossinline provider: EntityType<*>.(world: World)->E) : EntityType<E> = EntityType.Builder.create({ type: EntityType<E>, world -> provider(type, world)}, classification).build(registryName).apply {setRegistryName(registryName)}
+    private inline fun <reified E: Entity> entityType(registryName: String, classification: EntityClassification, crossinline provider: EntityType<*>.(world: World)->E) : EntityType<E> = EntityType.Builder.create({ type: EntityType<E>, world -> provider(type, world)}, classification).build("${ModLoadingContext.get().activeNamespace}:$registryName").apply {setRegistryName(registryName)}
     private inline fun <reified E: MobEntity> EntityType<E>.registerSpawn(placementType: PlacementType, heithMapType: Heightmap.Type, noinline spawnPlacementPredicate: (EntityType<E>.(world: IWorld, spawnReason: SpawnReason, blockPos: BlockPos, random: Random)->Boolean)?=null)
-            = EntitySpawnPlacementRegistry.register(this, placementType, heithMapType, EntitySpawnPlacementRegistry.IPlacementPredicate(spawnPlacementPredicate ?: {world, _, pos, _ -> world.getBlockState(pos.down()).run {this == Glacia.Blocks.GLACIAL_DIRT.stateSnowy || block == Blocks.GRASS_BLOCK} && world.getLightSubtracted(pos, 0) > 8;}))
+            = EntitySpawnPlacementRegistry.register(this, placementType, heithMapType, EntitySpawnPlacementRegistry.IPlacementPredicate(spawnPlacementPredicate ?: {world, _, pos, _ -> world.getBlockState(pos.down()).run {(block is BlockGlaciaDirt && get(BlockGlaciaDirt.SNOWY)) || block == Blocks.GRASS_BLOCK} && world.getLightSubtracted(pos, 0) > 8;}))
     private fun <E: Entity> EntityType<E>.registerRenderer(renderer: EntityRendererManager.()->EntityRenderer<E>) = RenderingRegistry.registerEntityRenderingHandler(this) {manager -> renderer(manager)}
     private fun <E: MobEntity> EntityType<E>.registerRenderer(model: EntityModel<E>, scale: Float, texture: String?=this.registryName?.path) = registerRenderer {object : MobRenderer<E, EntityModel<E>>(this, model, scale) {
         private val TEXTURE = ResourceLocation(registryName?.namespace ?: Glacia.MODID, "textures/entity/$texture.png")

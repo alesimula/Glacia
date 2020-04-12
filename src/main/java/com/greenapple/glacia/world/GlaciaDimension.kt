@@ -54,16 +54,6 @@ class GlaciaDimension(world: World, type: DimensionType) : Dimension(world, type
         return ChunkGeneratorType.FLOATING_ISLANDS.create(this.world, BiomeProviderType.THE_END.create(BiomeProviderType.THE_END.createSettings().setSeed(this.world.seed)), endgenerationsettings)*/
     }
 
-    //TODO per-biome skycolor
-    /**
-     * @see Biome.calculateSkyColor()
-     * @see Biome.getSkyColor()
-     */
-    /*override fun getSkyColor(cameraPos: BlockPos?, partialTicks: Float) = super.getSkyColor(cameraPos, partialTicks).run {
-        Vec3d(x*0.55, y*0.15, z*0.7)
-        //return SKY_RENDERER.customSkyColor
-    }*/
-
     override fun calcSunriseSunsetColors(celestialAngle: Float, partialTicks: Float): FloatArray? = super.calcSunriseSunsetColors(celestialAngle, partialTicks)?.apply {
         this[0] *= 0.55F
         this[1] *= 2F

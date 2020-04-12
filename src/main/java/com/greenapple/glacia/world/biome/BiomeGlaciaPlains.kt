@@ -34,11 +34,11 @@ class BiomeGlaciaPlains : Biome {
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSprings(this)
         DefaultBiomeFeatures.addFreezeTopLayer(this)
-        this.addSpawn(EntityClassification.MONSTER, SpawnListEntry(EntityType.SLIME, 50, 4, 4))
         this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.GLACIAL_TURTLE, 15, 4, 4))
         this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.SABER_TOOTHED_CAT, 12, 4, 4))
         this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.REINDEER, 6, 5, 8))
         this.addSpawn(EntityClassification.CREATURE, SpawnListEntry(Glacia.Entity.PENGUIN, 5, 5, 8))
+        this.addSpawn(EntityClassification.MONSTER, SpawnListEntry(EntityType.SLIME, 50, 4, 4))
         this.addSpawn(EntityClassification.MONSTER, SpawnListEntry(Glacia.Entity.GLACIAL_SEEKER, 100, 5, 8))
     }
 
