@@ -6,4 +6,5 @@ import net.minecraft.advancements.ICriterionTrigger
 
 object Glacia_Triggers : ICustomRegistryCollection<ICriterionTrigger<*>> ({CriteriaTriggers.register(this)}) {
     val TURTLE_DISGUISE = BaseCriterionTrigger("turtle_disguise")
+    val EXPLOSIVE_SALT = BaseCriterionTrigger("explosive_salt")
 }

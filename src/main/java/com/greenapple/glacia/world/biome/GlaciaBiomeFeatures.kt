@@ -1,6 +1,5 @@
 package com.greenapple.glacia.world.biome
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Lists
 import com.greenapple.glacia.Glacia
@@ -15,8 +14,6 @@ import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.feature.*
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer
 import net.minecraft.world.gen.placement.*
-import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator
-import net.minecraft.world.gen.treedecorator.TreeDecorator
 import net.minecraftforge.common.IPlantable
 import java.util.function.Predicate
 
@@ -72,6 +69,12 @@ object GlaciaBiomeFeatures {
         //biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.withConfiguration(MultipleRandomFeatureConfig(listOf(Glacia.Feature.GLACIAL_TREE.noConfig.func_227227_a_(0.33333334F)), Glacia.Feature.GLACIAL_TREE.noConfig)).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(AtSurfaceWithExtraConfig(0, 0.05f, 1))))
         biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.RANDOM_SELECTOR.withConfiguration(MultipleRandomFeatureConfig(listOf(Feature.FANCY_TREE.withConfiguration(GLACIA_TREE).func_227227_a_(0.1F)), Feature.NORMAL_TREE.withConfiguration(GLACIA_TREE))).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(AtSurfaceWithExtraConfig(0, 0.1F, 1))));
         biomeIn.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Glacia.Feature.FLORA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.NOISE_HEIGHTMAP_32.configure(NoiseDependant(-0.8, 15, 4))))
+    }
+
+    fun addStoneVariants(biomeIn: Biome) {
+        biomeIn.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig(FILLER_GLACIAL_STONE, Glacia.Blocks.GLACIAL_DIRT.defaultState, 33)).withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(10, 0, 0, 256))))
+        //same rarity as granite
+        biomeIn.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig(FILLER_GLACIAL_STONE, Glacia.Blocks.QUADIUM_SALT.defaultState, 33)).withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(10, 0, 0, 80))))
     }
 
     fun addOres(biomeIn: Biome) {

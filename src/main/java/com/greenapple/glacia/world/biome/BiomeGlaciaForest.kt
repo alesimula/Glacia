@@ -32,7 +32,7 @@ class BiomeGlaciaForest : Biome {
         GlaciaBiomeFeatures.addGlacialTrees(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
         //DefaultBiomeFeatures.func_222283_Y(this)
-        //DefaultBiomeFeatures.addStoneVariants(this)
+        GlaciaBiomeFeatures.addStoneVariants(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSprings(this)

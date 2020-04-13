@@ -1,0 +1,28 @@
+{
+  "parent": "greenapple_glacia:glacia/wooden_pickaxe",
+  "display": {
+    "icon": {
+      "item": "greenapple_glacia:quadium_salt"
+    },
+    "title": {
+      "translate": "advancements.greenapple_glacia.explosive_salt.title"
+    },
+    "description": {
+      "translate": "advancements.greenapple_glacia.explosive_salt.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "salt_explosion": {
+      "trigger": "greenapple_glacia:explosive_salt"
+    }
+  },
+  "requirements": [
+    [
+      "salt_explosion"
+    ]
+  ]
+}

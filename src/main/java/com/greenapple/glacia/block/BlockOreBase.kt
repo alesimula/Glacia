@@ -8,7 +8,6 @@ import net.minecraft.advancements.criterion.MinMaxBounds
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.enchantment.Enchantments
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemTier
@@ -24,13 +23,15 @@ import net.minecraft.world.storage.loot.functions.ExplosionDecay
 /**
  * Don't forget to add the block to the 'fences' tag group
  */
-class BlockOreBase(registryName: String, unlocalizedName: String, private val droppedItem: Item, private val minPickaxeTier: ItemTier=ItemTier.WOOD, private val dropWithSilkTouch: Boolean=true, initializer: (Properties.()->Unit)?=null) : BlockBase(registryName, unlocalizedName, Glacia.ItemGroup.BLOCKS, Material.ROCK, initializer) {
+open class BlockOreBase(registryName: String, unlocalizedName: String, private val droppedItem: Item, protected val minPickaxeTier: ItemTier=ItemTier.WOOD, private val dropWithSilkTouch: Boolean=true, initializer: (Properties.()->Unit)?=null) : BlockBase(registryName, unlocalizedName, Glacia.ItemGroup.BLOCKS, Material.ROCK, initializer) {
+
+    protected val requiresCustomPickaxe = true
 
     override fun getExpDrop(state: BlockState, reader: net.minecraft.world.IWorldReader, pos: BlockPos, fortune: Int, silktouch: Int): Int {
         return if (silktouch == 0) MathHelper.nextInt(RANDOM, 3, 7); else 0
     }
 
-    override fun getDrops(state: BlockState, builder: LootContext.Builder) = generateOreDrops(state, builder, droppedItem, minPickaxeTier, dropWithSilkTouch, true)
+    override fun getDrops(state: BlockState, builder: LootContext.Builder) = generateOreDrops(state, builder, droppedItem, minPickaxeTier, dropWithSilkTouch, requiresCustomPickaxe)
 }
 
 private val CONDITION_SILKTOUCH by lazy {MatchTool.builder(ItemPredicate.Builder.create().enchantment(EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1))))}

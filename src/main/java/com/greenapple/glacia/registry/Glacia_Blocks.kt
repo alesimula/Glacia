@@ -50,6 +50,8 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
             .apply {seeThroughGroup = true; isTranslucent = true; renderType = RenderType.getTranslucent()}
     val ICE_BRICKS = BlockBase("ice_bricks", "Ice Bricks", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(1F).slipperiness(0.98F).variableOpacity().sound(SoundType.GLASS).notSolid()}
             .apply {seeThroughGroup = true; isTranslucent = true; renderType = RenderType.getTranslucent()}
+    val QUADIUM_SALT = BlockExplosiveBase("quadium_salt", "Quadium Salt Block", Glacia.Items.QUADIUM_SALT, ItemTier.DIAMOND) {hardnessAndResistance(1.8F, 9F).variableOpacity().sound(SoundType.GLASS).notSolid()}
+            .apply {seeThroughGroup = true; isTranslucent = true; renderType = RenderType.getTranslucent()}
     val ICE_BRICKS_SLAB = BlockSlabBase("ice_bricks_slab", "Ice Bricks Slab", Glacia_ItemGroup.BLOCKS, ICE_BRICKS)
             .apply {seeThroughGroup = true; isTranslucent = true; renderType = RenderType.getTranslucent()}
     val PLASMA = BlockFluidBase("plasma", "Plasma", null, Material.LAVA.deepClone(), Glacia.Fluids.PLASMA) {lightValue(15).noDrops()}

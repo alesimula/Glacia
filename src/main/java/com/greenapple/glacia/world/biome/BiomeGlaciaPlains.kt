@@ -29,7 +29,7 @@ class BiomeGlaciaPlains : Biome {
         GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
         //DefaultBiomeFeatures.func_222283_Y(this)
-        //DefaultBiomeFeatures.addStoneVariants(this)
+        GlaciaBiomeFeatures.addStoneVariants(this)
         GlaciaBiomeFeatures.addSedimentDisks(this)
         GlaciaBiomeFeatures.addOres(this)
         GlaciaBiomeFeatures.addSprings(this)

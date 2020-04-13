@@ -23,7 +23,7 @@ class BiomeGlaciaBeach(registryName : String) : Biome(Biome.Builder().surfaceBui
         //DefaultBiomeFeatures.addStructures(this)
         GlaciaBiomeFeatures.addLakes(this)
         //DefaultBiomeFeatures.addMonsterRooms(this)
-        //DefaultBiomeFeatures.addStoneVariants(this)
+        GlaciaBiomeFeatures.addStoneVariants(this)
         GlaciaBiomeFeatures.addOres(this)
         //DefaultBiomeFeatures.addSedimentDisks(this)
         GlaciaBiomeFeatures.addSprings(this)
