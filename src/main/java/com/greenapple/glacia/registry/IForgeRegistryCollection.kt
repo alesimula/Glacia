@@ -1,6 +1,7 @@
 package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.block.IBlockBase
+import com.greenapple.glacia.utils.extends
 import com.greenapple.glacia.utils.runClient
 import net.minecraft.block.Block
 import net.minecraft.client.renderer.RenderType
@@ -14,6 +15,7 @@ import net.minecraftforge.common.extensions.IForgeBlock
 import net.minecraftforge.common.extensions.IForgeFluid
 import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
+import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 interface IAbstractRegistryCollection <E: Any>
@@ -42,8 +44,8 @@ private inline fun <reified E : Any> IAbstractRegistryCollection<E>.toRegistryEn
 inline fun <reified E : IForgeRegistryEntry<E>> IForgeRegistry<E>.register(registryCollection: IForgeRegistryCollection<E>) = registryCollection.toRegistryEntryArray().let {entries ->
     this.registerAll(*entries)
     runClient {when {
-        E::class.isSubclassOf(IForgeBlock::class) -> for (block in entries) (block as? Block)?.registerRenderType()
-        E::class.isSubclassOf(IForgeFluid::class) -> for (fluid in entries) (fluid as? Fluid)?.registerRenderType()
+        E::class extends IForgeBlock::class -> for (block in entries) (block as? Block)?.registerRenderType()
+        E::class extends IForgeFluid::class -> for (fluid in entries) (fluid as? Fluid)?.registerRenderType()
     }}
 }
 @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
