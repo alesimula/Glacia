@@ -3,14 +3,14 @@
  */
 package com.greenapple.glacia.delegate
 
-import com.greenapple.glacia.collections.ConcurrentReferenceHashMap
+import com.greenapple.glacia.collections.ConcurrentIdentityHashMap
 import com.greenapple.glacia.utils.WrappedClass
 import com.greenapple.glacia.utils.wrappedClass
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KProperty
 
-inline fun <This: Any, Return> fieldProperty(reference: Boolean = true, crossinline referenceProvider: (This.()->Any?) = {this}, crossinline initializer: This.()->Return) = object : IDelegateVar<This, Return> {
-    private val values : MutableMap<Any?, WrappedClass<Return>> = if (reference) ConcurrentReferenceHashMap(ConcurrentReferenceHashMap.ReferenceType.WEAK) else ConcurrentHashMap()
+inline fun <This: Any, Return> fieldProperty(identity: Boolean = true, crossinline referenceProvider: (This.()->Any?) = {this}, crossinline initializer: This.()->Return) = object : IDelegateVar<This, Return> {
+    private val values : MutableMap<Any?, WrappedClass<Return>> = if (identity) ConcurrentIdentityHashMap() else ConcurrentHashMap()
     private fun This.initialize(property: KProperty<*>) = runCatching {initializer()}.getOrElse {throw ExceptionInInitializerError("${this::class.java.simpleName}: field ${property.name} not initialized").initCause(it)}
 
     override fun getValue(thisRef: This, property: KProperty<*>): Return = values.computeIfAbsent(referenceProvider(thisRef)) {wrappedClass(thisRef.initialize(property))}.value
