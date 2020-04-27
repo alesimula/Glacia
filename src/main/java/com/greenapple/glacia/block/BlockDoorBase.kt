@@ -15,7 +15,7 @@ import net.minecraftforge.registries.IForgeRegistry
 /**
  * Don't forget to add the block to the 'fences' tag group
  */
-class BlockDoorBase(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, block: Block) : DoorBlock(Properties.from(block)), IBlockBase {
+class BlockDoorBase(registryName: String, override val unlocalizedName: String, override val itemGroup: ItemGroup?, block: Block) : DoorBlock(Properties.from(block).notSolid()), IBlockBase {
 
     init {
         setRegistryName(registryName)
