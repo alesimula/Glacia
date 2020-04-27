@@ -977,13 +977,11 @@ public final class ConcurrentIdentityHashMap<K, V> extends AbstractMap<K, V> imp
      * @param value value to be associated with the specified key
      * @return the previous value associated with <tt>key</tt>, or <tt>null</tt>
      *         if there was no mapping for <tt>key</tt>
-     * @throws NullPointerException if the specified key or value is null
+     * @throws NullPointerException if the specified key is null
      */
     @Override
     public V put(K key, V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        if (value == null) return remove(key);
         int hash = hashOf(key);
         return segmentFor(hash).put(key, hash, value, false);
     }
@@ -991,12 +989,10 @@ public final class ConcurrentIdentityHashMap<K, V> extends AbstractMap<K, V> imp
     /**
      * @return the previous value associated with the specified key, or
      *         <tt>null</tt> if there was no mapping for the key
-     * @throws NullPointerException if the specified key or value is null
+     * @throws NullPointerException if the specified key is null
      */
     public V putIfAbsent(K key, V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        if (value == null) return null;
         int hash = hashOf(key);
         return segmentFor(hash).put(key, hash, value, true);
     }
@@ -1017,14 +1013,6 @@ public final class ConcurrentIdentityHashMap<K, V> extends AbstractMap<K, V> imp
     public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
         int hash = hashOf(key);
         return segmentFor(hash).compute(key, hash, remappingFunction, null);
-    }
-
-    public V compu(K key, V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
-        int hash = hashOf(key);
-        return segmentFor(hash).put(key, hash, value, true);
     }
 
     /**
@@ -1081,12 +1069,10 @@ public final class ConcurrentIdentityHashMap<K, V> extends AbstractMap<K, V> imp
     /**
      * @return the previous value associated with the specified key, or
      *         <tt>null</tt> if there was no mapping for the key
-     * @throws NullPointerException if the specified key or value is null
+     * @throws NullPointerException if the specified key is null
      */
     public V replace(K key, V value) {
-        if (value == null) {
-            throw new NullPointerException();
-        }
+        if (value == null) return remove(key);
         int hash = hashOf(key);
         return segmentFor(hash).replace(key, hash, value);
     }
