@@ -1,6 +1,6 @@
 package com.greenapple.glacia.entity
 
-import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.delegate.lazyProperty
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.network.datasync.DataParameter
@@ -22,7 +22,7 @@ interface IEntityDataDelegate<This: Entity, Return> {
     operator fun setValue(thisRef:This, property: KProperty<*>, value: Return)
 }
 private class EntityDataDelegate<This: Entity, Return> (serializer: IDataSerializer<Return>, private val defaultProvider: This.()->Return, private val sideEffect: This.(Return)->Unit={}) : IEntityDataDelegate<This, Return> {
-    private val KClass<out This>.dataParameter : DataParameter<Return> by LazyWithReceiver(false) {EntityDataManager.createKey(this.java, serializer)}
+    private val KClass<out This>.dataParameter : DataParameter<Return> by lazyProperty(false) {EntityDataManager.createKey(this.java, serializer)}
     private val This.cachedDataManager : EntityDataManager; get() = dataManagerCache.putIfAbsent(uniqueID, WeakReference(dataManager))?.get() ?: dataManager
     private val This.dataParameter; get() = this::class.dataParameter
     private fun This.getOrSet(value: Return) = cachedDataManager.runCatching {get(dataParameter) ?: value.also {if (it!=null) set(dataParameter, value)}}.getOrElse {cachedDataManager.set(dataParameter, value); value}

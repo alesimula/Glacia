@@ -1,23 +1,20 @@
 @file:Suppress("UNUSED_PARAMETER")
 package com.greenapple.glacia
 
-import com.greenapple.glacia.delegate.SingletonReceiver
+import com.greenapple.glacia.event.BlockEvents
 import com.greenapple.glacia.event.PlayerEvents
 import com.greenapple.glacia.registry.*
 import com.greenapple.glacia.utils.addListenerKt
 import com.greenapple.glacia.world.GlaciaDimension
 import com.greenapple.glacia.event.RenderingEvents
+import com.greenapple.glacia.event.WorldEvents
 import com.greenapple.glacia.utils.runClient
-import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
-import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.ModDimension
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.DistExecutor
-import net.minecraftforge.fml.InterModComms
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
@@ -70,6 +67,8 @@ class Glacia {
         MinecraftForge.EVENT_BUS.register(this)
         MinecraftForge.EVENT_BUS.register(RenderingEvents())
         MinecraftForge.EVENT_BUS.register(PlayerEvents())
+        MinecraftForge.EVENT_BUS.register(WorldEvents())
+        MinecraftForge.EVENT_BUS.register(BlockEvents())
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

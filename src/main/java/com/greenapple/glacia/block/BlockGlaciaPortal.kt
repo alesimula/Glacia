@@ -1,7 +1,7 @@
 package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.delegate.lazyProperty
 import com.greenapple.glacia.registry.renderType
 import com.greenapple.glacia.utils.changeDim
 import com.greenapple.glacia.world.GlaciaTeleporter
@@ -283,5 +283,5 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
         }
     }
 
-    private val ServerWorld.glaciaTeleporter : GlaciaTeleporter by LazyWithReceiver(false) {GlaciaTeleporter(this, this@BlockGlaciaPortal)}
+    private val ServerWorld.glaciaTeleporter : GlaciaTeleporter by lazyProperty(false) {GlaciaTeleporter(this, this@BlockGlaciaPortal)}
 }

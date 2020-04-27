@@ -1,6 +1,6 @@
 package com.greenapple.glacia.utils
 
-import com.greenapple.glacia.delegate.ReflectField
+import com.greenapple.glacia.delegate.reflectField
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.network.play.server.*
@@ -12,9 +12,9 @@ import net.minecraft.world.storage.WorldInfo
 import net.minecraftforge.common.ForgeHooks
 import net.minecraftforge.fml.hooks.BasicEventHooks
 
-var ServerPlayerEntity.lastExperienceKt : Int by ReflectField("field_71144_ck")
-var ServerPlayerEntity.lastHealthKt : Float by ReflectField("field_71149_ch")
-var ServerPlayerEntity.lastFoodLevelKt : Int by ReflectField("field_71146_ci")
+var ServerPlayerEntity.lastExperienceKt : Int by reflectField("field_71144_ck")
+var ServerPlayerEntity.lastHealthKt : Float by reflectField("field_71149_ch")
+var ServerPlayerEntity.lastFoodLevelKt : Int by reflectField("field_71146_ci")
 
 fun ServerPlayerEntity.changeDim(pos: BlockPos, destination: DimensionType, teleporter: Teleporter) = changeDim(pos, destination) {teleporter}
 

@@ -2,22 +2,26 @@ package com.greenapple.glacia.event
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.advancement.GuiGlaciaAdvancementScreen
+import com.greenapple.glacia.delegate.reflectField
 import com.greenapple.glacia.entity.model.ModelPlayerSnowMan
 import com.greenapple.glacia.utils.*
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementRewards
+import net.minecraft.block.BlockState
+import net.minecraft.block.Blocks
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.advancements.AdvancementsScreen
 import net.minecraft.client.renderer.entity.PlayerRenderer
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ResourceLocation
+import net.minecraft.util.palette.PalettedContainer
 import net.minecraftforge.client.event.GuiScreenEvent
 import net.minecraftforge.client.event.RenderHandEvent
 import net.minecraftforge.client.event.RenderPlayerEvent
+import net.minecraftforge.event.world.BlockEvent
+import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.registries.GameData
-import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.LogManager
 
 class RenderingEvents {
     private val MODEL_SNOWMAN = ModelPlayerSnowMan(0)

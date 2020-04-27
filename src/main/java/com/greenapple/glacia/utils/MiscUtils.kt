@@ -1,14 +1,12 @@
 package com.greenapple.glacia.utils
 
-import com.google.gson.Gson
-import com.greenapple.glacia.delegate.ReflectField
+import com.greenapple.glacia.delegate.reflectField
+import net.minecraft.block.Block
+import net.minecraft.block.BlockState
 import net.minecraft.potion.EffectInstance
-import kotlin.reflect.KClass
 
-infix fun KClass<*>.extends(klass: KClass<*>) = klass.java.isAssignableFrom(java)
-
-inline fun <reified O: Any> O.deepClone(): O = Gson().let {gson-> gson.fromJson<O>(gson.toJson(this, O::class.java), O::class.java)}
-inline fun <reified O: Any, reified R: O> O.deepCloneTo(klass: KClass<R>): R = Gson().let {gson-> gson.fromJson<R>(gson.toJson(this, O::class.java), R::class.java)}
+fun Block.overrideLightValue(value: Int? = null) = stateContainer.validStates.forEach {it.lightLevelKt = value ?: getLightValue(it)}
+var BlockState.lightLevelKt : Int by reflectField("field_215708_d", true)
 
 //Effect
-var EffectInstance.durationKt : Int by ReflectField("field_76460_b")
+var EffectInstance.durationKt : Int by reflectField("field_76460_b")

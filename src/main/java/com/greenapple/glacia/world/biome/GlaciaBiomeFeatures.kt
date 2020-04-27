@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet
 import com.google.common.collect.Lists
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.BlockGlaciaDirt
-import com.greenapple.glacia.delegate.ReflectEnumConstructor
+import com.greenapple.glacia.delegate.reflectConstructor
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.world.biome.Biome
@@ -17,7 +17,7 @@ import net.minecraft.world.gen.placement.*
 import net.minecraftforge.common.IPlantable
 import java.util.function.Predicate
 
-private val fillerBlockTypeConstructor by ReflectEnumConstructor<OreFeatureConfig.FillerBlockType>()
+private val fillerBlockTypeConstructor by reflectConstructor<OreFeatureConfig.FillerBlockType>()
 fun fillerBlockType(name: String, shouldReplace: BlockState.()->Boolean) = fillerBlockTypeConstructor(name, Predicate(shouldReplace))
 
 object GlaciaBiomeFeatures {

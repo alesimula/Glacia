@@ -1,7 +1,7 @@
 package com.greenapple.glacia.utils
 
-import com.greenapple.glacia.delegate.ReflectField
-import com.greenapple.glacia.delegate.SingletonReceiver
+import com.greenapple.glacia.delegate.reflectField
+import com.greenapple.glacia.delegate.staticProperty
 import com.mojang.authlib.minecraft.MinecraftProfileTexture
 import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.vertex.IVertexBuilder
@@ -17,18 +17,17 @@ import net.minecraft.client.renderer.entity.model.PlayerModel
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.HandSide
 import net.minecraft.util.ResourceLocation
 
-private var <T: LivingEntity, M: EntityModel<T>> LivingRenderer<T, M>.entityModelKt : M by ReflectField("field_77045_g")
-private var <T: LivingEntity, M: EntityModel<T>> LivingRenderer<T, M>.layerRenderersKt : MutableList<LayerRenderer<T, M>> by ReflectField("field_177097_h")
-private var AbstractClientPlayerEntity.playerInfoKt : NetworkPlayerInfo by ReflectField("field_175157_a")
-private var NetworkPlayerInfo.playerTexturesKt : MutableMap<MinecraftProfileTexture.Type, ResourceLocation> by ReflectField("field_187107_a")
-private var NetworkPlayerInfo.playerTexturesLoadedKt : Boolean by ReflectField("field_178864_d")
+private var <T: LivingEntity, M: EntityModel<T>> LivingRenderer<T, M>.entityModelKt : M by reflectField("field_77045_g")
+private var <T: LivingEntity, M: EntityModel<T>> LivingRenderer<T, M>.layerRenderersKt : MutableList<LayerRenderer<T, M>> by reflectField("field_177097_h")
+private var AbstractClientPlayerEntity.playerInfoKt : NetworkPlayerInfo by reflectField("field_175157_a")
+private var NetworkPlayerInfo.playerTexturesKt : MutableMap<MinecraftProfileTexture.Type, ResourceLocation> by reflectField("field_187107_a")
+private var NetworkPlayerInfo.playerTexturesLoadedKt : Boolean by reflectField("field_178864_d")
 
 private fun <T: Entity, M: EntityModel<T>> LayerRenderer<*, *>.autoCast() = this as LayerRenderer<T, M>
-private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT : BipedArmorLayer<*,*,*> by SingletonReceiver {this}
-private val PlayerRenderer.MODEL_PLAYER_DEFAULT : PlayerModel<AbstractClientPlayerEntity> by SingletonReceiver {entityModel}
+private val BipedArmorLayer<*, *, *>.LAYER_ARMOR_DEFAULT : BipedArmorLayer<*,*,*> by staticProperty {this}
+private val PlayerRenderer.MODEL_PLAYER_DEFAULT : PlayerModel<AbstractClientPlayerEntity> by staticProperty {entityModel}
 private val MODEL_ARMOR_EMPTY = object : BipedModel<AbstractClientPlayerEntity>(1f) {
     override fun setRotationAngles(entityIn: AbstractClientPlayerEntity, limbSwing: Float, limbSwingAmount: Float, ageInTicks: Float, netHeadYaw: Float, headPitch: Float) {}
     override fun render(stack: MatrixStack, vertexBuilder: IVertexBuilder, p_225598_3_: Int, p_225598_4_: Int, p_225598_5_: Float, p_225598_6_: Float, p_225598_7_: Float, p_225598_8_: Float) {}

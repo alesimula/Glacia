@@ -1,6 +1,6 @@
 package com.greenapple.glacia.utils
 
-import com.greenapple.glacia.delegate.LazyWithReceiver
+import com.greenapple.glacia.delegate.lazyProperty
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.eventbus.api.Event
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryManager
 
 inline fun <E: Event>IEventBus.addListenerKt(crossinline method : (E)->Any) = addListener<E> {event-> method.invoke(event)}
 
-private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry : ForgeRegistry<T> by LazyWithReceiver {RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>}
+private val <T: ForgeRegistryEntry<T>, C: Class<T>> C.registry : ForgeRegistry<T> by lazyProperty {RegistryManager.ACTIVE.getRegistry<T>(this) as ForgeRegistry<T>}
 val <T: ForgeRegistryEntry<T>> T.registry; get() = this.registryType.registry
 val <T: ForgeRegistryEntry<T>> T.id; get() = this.registry.getID(this)
 
