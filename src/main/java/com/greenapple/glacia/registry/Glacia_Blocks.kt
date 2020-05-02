@@ -13,6 +13,8 @@ import net.minecraft.potion.Effects
 
 @Suppress("UNUSED")
 object Glacia_Blocks : IForgeRegistryCollection<Block> {
+    val PLASMA_TORCH = BlockTorchBase("plasma_torch") {Glacia.Items.PLASMA_TORCH}
+    val PLASMA_WALL_TORCH = BlockWallTorchBase("plasma_wall_torch") {Glacia.Items.PLASMA_TORCH}
     val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Glacia_ItemGroup.BLOCKS, Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
             .addItemVariant("snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
     val PERMAFROST = BlockBase("permafrost", "Permafrost", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops().notSolid()}

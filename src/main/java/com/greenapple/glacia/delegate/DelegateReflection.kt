@@ -14,9 +14,10 @@ var Field.modifiersKt : Int by reflectField("modifiers")
 private val Constructor<*>.constructorAccessorKt : ConstructorAccessor? by reflectField("constructorAccessor")
 private val constructorAccessorRetriever by lazy {Constructor::class.java.getDeclaredMethod("acquireConstructorAccessor").apply {isAccessible = true}}
 
-fun interface IConstructor<O> : (Array<out Any?>) -> O {
+fun interface IFunction<O>: (Array<out Any?>) -> O {
     override operator fun invoke(vararg args: Any?): O
 }
+typealias IConstructor<O> = IFunction<O>
 
 private class ReflectEnumConstructor<This: Enum<*>> (thisRef: KClass<This>, vararg args: KClass<*>) : IDelegateVal<Any?, IConstructor<This>> {
     private val id = AtomicInteger()

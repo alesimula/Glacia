@@ -15,11 +15,14 @@ import net.minecraftforge.common.extensions.IForgeBlock
 import net.minecraftforge.common.extensions.IForgeFluid
 import net.minecraftforge.registries.IForgeRegistry
 import net.minecraftforge.registries.IForgeRegistryEntry
-import kotlin.reflect.KClass
-import kotlin.reflect.full.isSubclassOf
 
 interface IAbstractRegistryCollection <E: Any>
 interface IForgeRegistryCollection <E: IForgeRegistryEntry<E>> : IAbstractRegistryCollection<E>
+abstract class IForgeDeferredRegistryCollection <E: IForgeRegistryEntry<E>>(private val lateRegistrationMethod: E.()->Unit) : IForgeRegistryCollection<E> {
+    companion object {
+        internal inline fun <reified E : IForgeRegistryEntry<E>> IForgeDeferredRegistryCollection<E>.initializeInternal(entries: Array<E>) = entries.forEach {this.lateRegistrationMethod(it)}
+    }
+}
 abstract class ICustomRegistryCollection <E: Any>(private val registrationMethod: E.()->Unit) : IAbstractRegistryCollection<E> {
     companion object {
         internal inline fun <reified E : Any> ICustomRegistryCollection<E>.registerAllInternal(entries: Array<E>) = entries.forEach {this.registrationMethod(it)}
@@ -49,7 +52,9 @@ inline fun <reified E : IForgeRegistryEntry<E>> IForgeRegistry<E>.register(regis
     }}
 }
 @Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
-inline fun <reified E : Any> ICustomRegistryCollection<E>.registerAll() = ICustomRegistryCollection.apply {registerAllInternal(toRegistryEntryArray())}
+inline fun <reified E : Any> ICustomRegistryCollection<E>.registerAll() = ICustomRegistryCollection.run {registerAllInternal(toRegistryEntryArray())}
+@Suppress("NON_PUBLIC_CALL_FROM_PUBLIC_INLINE")
+inline fun <reified E: IForgeRegistryEntry<E>> IForgeDeferredRegistryCollection<E>.initializeAll() = IForgeDeferredRegistryCollection.run {initializeInternal(toRegistryEntryArray())}
 
 private fun IForgeRegistry<Item>.getBlockItems(registryCollection: IForgeRegistryCollection<Block>, defaultGroup: ItemGroup?=null)
         = registryCollection.toRegistryEntryArray().mapNotNull {block ->  (block as? IBlockBase)?.let {return@mapNotNull block.getBlockItemForRegistry(this)}

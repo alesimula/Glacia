@@ -51,6 +51,9 @@ object Glacia_Items : IForgeRegistryCollection<Item> {
     val MYSTERIUS_ARMOR_SHARD = ItemBase("mysterious_armor_shard", "Mysterious Armor Shard", Glacia.ItemGroup.MISC)
     val PENGUIN_FEATHERS = ItemBase("penguin_feathers", "Penguin Feathers", Glacia.ItemGroup.MISC)
     val PLASMA_BUCKET = ItemBucketBase("plasma_bucket", "Plasma Bucket", Glacia.Fluids.PLASMA)
+    // Decorations
+
+    val PLASMA_TORCH: ItemWallOrFloorBase = ItemWallOrFloorBase("plasma_torch", "Plasma Torch", Glacia.Blocks.PLASMA_TORCH, Glacia.Blocks.PLASMA_WALL_TORCH, Glacia.ItemGroup.DECORATIONS)
     // Tools
     val GLACIAL_WOOD_PICKAXE = ItemPickaxeBase("glacial_wood_pickaxe", "Glacial Wood Pickaxe", ItemTier.WOOD, 1, -2.7F)
     val GLACIAL_WOOD_AXE = ItemAxeBase("glacial_wood_axe", "Glacial Wood Axe", ItemTier.WOOD, 6.8F, -3F)

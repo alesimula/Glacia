@@ -6,6 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
+import net.minecraft.particles.ParticleType
 import net.minecraft.potion.Effect
 import net.minecraftforge.event.RegistryEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -16,6 +17,7 @@ import net.minecraftforge.common.ModDimension
 import net.minecraft.world.biome.Biome
 import net.minecraft.world.gen.carver.WorldCarver
 import net.minecraft.world.gen.feature.Feature
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 object RegistryEvents {
@@ -28,6 +30,11 @@ object RegistryEvents {
         DimensionManager.registerDimension(Glacia.DIMENSION.registryName, Glacia.DIMENSION, null, true)
         LOGGER.info("AAAAAA: Dimension registered")
     }
+
+    @JvmStatic @SubscribeEvent
+    fun onParticleRegistry(event: RegistryEvent.Register<ParticleType<*>>) = event.registry.register(Glacia.Particles)
+    @JvmStatic @SubscribeEvent
+    fun onParticleClientRegistry(event: ParticleFactoryRegisterEvent) = Glacia.Particles.initializeAll()
 
     @JvmStatic @SubscribeEvent
     fun onItemsRegistry(event: RegistryEvent.Register<Item>) = event.registry.run {

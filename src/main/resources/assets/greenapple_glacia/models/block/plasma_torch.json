@@ -1,0 +1,6 @@
+{
+    "parent": "block/template_torch",
+    "textures": {
+        "torch": "greenapple_glacia:block/plasma_torch"
+    }
+}
