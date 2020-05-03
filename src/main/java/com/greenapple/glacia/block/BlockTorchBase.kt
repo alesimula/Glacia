@@ -3,21 +3,18 @@ package com.greenapple.glacia.block
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.BlockItemBase
 import com.greenapple.glacia.registry.renderType
+import com.greenapple.glacia.utils.RenderTypeBase
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.item.DyeColor
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.particles.ParticleTypes
 import net.minecraft.state.EnumProperty
-import net.minecraft.state.StateContainer
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraft.world.storage.loot.LootContext
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.registries.IForgeRegistry
 import java.util.*
 
@@ -27,7 +24,7 @@ class BlockTorchBase(registryName: String, private val torchItemProvider: () -> 
 
     init {
         setRegistryName(registryName)
-        renderType = RenderType.getCutout()
+        renderType = RenderTypeBase.CUTOUT
     }
 
     override val unlocalizedName: String = registryName
@@ -44,7 +41,7 @@ class BlockWallTorchBase(registryName: String, private val torchItemProvider: ()
 
     init {
         setRegistryName(registryName)
-        renderType = RenderType.getCutout()
+        renderType = RenderTypeBase.CUTOUT
     }
 
     override val unlocalizedName: String = registryName

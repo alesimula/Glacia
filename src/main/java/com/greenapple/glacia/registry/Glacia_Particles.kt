@@ -11,15 +11,14 @@ import net.minecraft.client.particle.ParticleManager
 import net.minecraft.particles.BasicParticleType
 import net.minecraft.particles.IParticleData
 import net.minecraft.particles.ParticleType
-import kotlin.reflect.KFunction1
 
 private var <T: IParticleData> ParticleType<T>.factoryProvider: ParticleManager.IParticleMetaFactory<T>? by fieldProperty {null}
 
 object Glacia_Particles : IForgeDeferredRegistryCollection<ParticleType<*>> ({runClient {this as BasicParticleType; Glacia_Particles.particleManager.registerFactory(this, factoryProvider!!)}}) {
     // <editor-fold defaultstate="collapsed" desc="Registration util methods">
     private val particleManager by lazy {Minecraft.getInstance().particles}
-    private fun <T: IParticleData?> particleType(name: String, factoryProvider: KFunction1<IAnimatedSprite, IParticleFactory<T>>, alwaysShow: Boolean = false) = BasicParticleType(alwaysShow).also {
-        it.setRegistryName(name).factoryProvider = ParticleManager.IParticleMetaFactory(factoryProvider)
+    private fun <T: IParticleData?> particleType(name: String, factoryProvider: (IAnimatedSprite)->IParticleFactory<T>, alwaysShow: Boolean = false) = BasicParticleType(alwaysShow).also {
+        it.setRegistryName(name).runClient {this.factoryProvider = ParticleManager.IParticleMetaFactory(factoryProvider)}
     }
     // </editor-fold>
 

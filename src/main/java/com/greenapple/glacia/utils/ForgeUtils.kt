@@ -1,6 +1,7 @@
 package com.greenapple.glacia.utils
 
 import com.greenapple.glacia.delegate.lazyProperty
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.eventbus.api.Event
@@ -20,6 +21,29 @@ operator fun ResourceLocation.plus(extra: String) = ResourceLocation(namespace, 
 operator fun ResourceLocation.rem(extra: String) = ResourceLocation(namespace, "$extra/$path")
 
 val TranslationTextComponent?.modKey by lazy {"§5§r§e§e§n§a§7§7§l§e§r"}
+
+@Suppress("NON_PUBLIC_PRIMARY_CONSTRUCTOR_OF_INLINE_CLASS")
+inline class RenderTypeBase private constructor(val type: RenderType?) {
+    companion object {
+        val CUTOUT = renderType {RenderType.getCutout()}
+        val SOLID = renderType {RenderType.getSolid()}
+        val TRANSLUCENT = renderType {RenderType.getTranslucent()}
+
+        private fun renderType(provider: ()->RenderType) = RenderTypeBase(runClient(provider))
+    }
+}
+
+/*sealed class RenderTypeBase(private val renderType: RenderType?): ()->RenderType? {
+    companion object {
+        val CUTOUT = renderType {RenderType.getCutout()}
+        val SOLID = renderType {RenderType.getSolid()}
+        val TRANSLUCENT = renderType {RenderType.getTranslucent()}
+
+        private fun renderType(provider: ()->RenderType): RenderTypeBase = RenderTypeProvider(provider)
+    }
+    override fun invoke() = renderType
+    private class RenderTypeProvider(provider: ()->RenderType) : RenderTypeBase(runClient(provider))
+}*/
 
 inline fun <R> runClient(block: () -> R): R? = if (FMLEnvironment.dist.isClient) block() else null
 inline fun <R> runServer(block: () -> R): R? = if (FMLEnvironment.dist.isDedicatedServer) block() else null

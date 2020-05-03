@@ -55,21 +55,28 @@ class Glacia {
     }
 
     init {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListenerKt(this::setup)
-        // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListenerKt(this::enqueueIMC)
-        // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListenerKt(this::processIMC)
-        // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListenerKt(this::doClientStuff)
-
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this)
-        MinecraftForge.EVENT_BUS.register(RenderingEvents())
-        MinecraftForge.EVENT_BUS.register(PlayerEvents())
-        MinecraftForge.EVENT_BUS.register(WorldEvents())
-        MinecraftForge.EVENT_BUS.register(BlockEvents())
+        // Listeners
+        FMLJavaModLoadingContext.get().modEventBus.let {bus ->
+            // Register the setup method for modloading
+            bus.addListenerKt(::setup)
+            // Register the enqueueIMC method for modloading
+            bus.addListenerKt(::enqueueIMC)
+            // Register the processIMC method for modloading
+            bus.addListenerKt(::processIMC)
+            // Register the doClientStuff method for modloading
+            bus.addListenerKt(::doClientStuff)
+        }
+        // Common events
+        MinecraftForge.EVENT_BUS.run {
+            register(this@Glacia)
+            register(PlayerEvents())
+            register(WorldEvents())
+            register(BlockEvents())
+        }
+        // Client side events
+        MinecraftForge.EVENT_BUS.runClient {
+            register(RenderingEvents())
+        }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

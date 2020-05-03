@@ -1,6 +1,7 @@
 package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.block.IBlockBase
+import com.greenapple.glacia.utils.RenderTypeBase
 import com.greenapple.glacia.utils.extends
 import com.greenapple.glacia.utils.runClient
 import net.minecraft.block.Block
@@ -29,11 +30,11 @@ abstract class ICustomRegistryCollection <E: Any>(private val registrationMethod
     }
 }
 
-private val renderTypeMap = mutableMapOf<IForgeRegistryEntry<*>, RenderType>()
+private val renderTypeMap = mutableMapOf<IForgeRegistryEntry<*>, RenderTypeBase>()
 var Block.renderType get() = renderTypeMap[this]; set(value) {if (value!=null) renderTypeMap[this] = value else renderTypeMap.remove(this)}
 var Fluid.renderType get() = renderTypeMap[this]; set(value) {if (value!=null) renderTypeMap[this] = value else renderTypeMap.remove(this)}
-private fun Block.registerRenderType() = renderTypeMap.remove(this)?.let {renderType-> RenderTypeLookup.setRenderLayer(this, renderType)}
-private fun Fluid.registerRenderType() = renderTypeMap.remove(this)?.let {renderType-> RenderTypeLookup.setRenderLayer(this, renderType)}
+private fun Block.registerRenderType() = renderTypeMap.remove(this)?.let {renderType-> RenderTypeLookup.setRenderLayer(this, renderType.type!!)}
+private fun Fluid.registerRenderType() = renderTypeMap.remove(this)?.let {renderType-> RenderTypeLookup.setRenderLayer(this, renderType.type!!)}
 
 /*private inline fun <reified E : IForgeRegistryEntry<E>> IForgeRegistryCollection<E>.toRegistryEntryArray() =
         this::class.declaredMemberProperties.filter {property -> property.visibility == KVisibility.PUBLIC && property.parameters.size==1 && property.returnType.isSubtypeOf(E::class.starProjectedType)}

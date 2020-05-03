@@ -3,15 +3,13 @@ package com.greenapple.glacia.block
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.BlockItemBase
 import com.greenapple.glacia.registry.renderType
+import com.greenapple.glacia.utils.RenderTypeBase
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.potion.Effect
-import net.minecraft.state.properties.BlockStateProperties
-import net.minecraft.state.properties.SlabType
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.IWorldReader
@@ -22,7 +20,7 @@ class BlockFlowerBase(registryName: String, override val unlocalizedName: String
 
     init {
         setRegistryName(registryName)
-        renderType = RenderType.getCutout()
+        renderType = RenderTypeBase.CUTOUT
     }
 
     override var blockItem: BlockItemBase?=null

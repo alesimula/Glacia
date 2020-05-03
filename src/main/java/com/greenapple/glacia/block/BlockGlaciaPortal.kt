@@ -3,12 +3,12 @@ package com.greenapple.glacia.block
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.delegate.lazyProperty
 import com.greenapple.glacia.registry.renderType
+import com.greenapple.glacia.utils.RenderTypeBase
 import com.greenapple.glacia.utils.changeDim
 import com.greenapple.glacia.world.GlaciaTeleporter
 import net.minecraft.block.*
 import net.minecraft.block.material.Material
 import net.minecraft.block.pattern.BlockPattern
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.world.gen.Heightmap
@@ -51,7 +51,7 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
         //renderLayer = BlockRenderLayer.TRANSLUCENT
         seeThroughGroup = true
         isTranslucent = true
-        renderType = RenderType.getTranslucent()
+        renderType = RenderTypeBase.TRANSLUCENT
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {

@@ -3,19 +3,18 @@ package com.greenapple.glacia.block
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.item.BlockItemBase
 import com.greenapple.glacia.registry.renderType
+import com.greenapple.glacia.utils.RenderTypeBase
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
 import net.minecraft.block.SaplingBlock
 import net.minecraft.block.SoundType
 import net.minecraft.block.material.Material
 import net.minecraft.block.trees.Tree
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.item.Item
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.IBlockReader
-import net.minecraft.world.biome.DefaultBiomeFeatures
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider
 import net.minecraft.world.gen.feature.ConfiguredFeature
 import net.minecraft.world.gen.feature.Feature
@@ -37,7 +36,7 @@ class BlockSaplingBase(registryName: String, override val unlocalizedName: Strin
     }
     init {
         setRegistryName(registryName)
-        renderType = RenderType.getCutout()
+        renderType = RenderTypeBase.CUTOUT
     }
 
     override fun isValidGround(state: BlockState, worldIn: IBlockReader, pos: BlockPos) = state.block === Glacia.Blocks.GLACIAL_DIRT

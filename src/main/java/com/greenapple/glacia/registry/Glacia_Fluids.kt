@@ -1,27 +1,24 @@
 package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
-import com.greenapple.glacia.utils.deepCloneTo
+import com.greenapple.glacia.utils.RenderTypeBase
 import com.greenapple.glacia.utils.rem
 import net.minecraft.block.FlowingFluidBlock
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.fluid.FlowingFluid
 import net.minecraft.fluid.Fluid
 import net.minecraft.fluid.Fluids
 import net.minecraft.fluid.IFluidState
 import net.minecraft.state.StateContainer
-import net.minecraft.util.ResourceLocation
 import net.minecraft.world.IWorldReader
 import net.minecraftforge.fluids.FluidAttributes
 import net.minecraftforge.fluids.ForgeFlowingFluid
 import net.minecraftforge.registries.GameData
-import java.util.function.BiFunction
 
 object Glacia_Fluids : IForgeRegistryCollection<Fluid> {
     class FluidBase constructor(registryNameStr: String, private val properties: Properties, private val flowing: Boolean=false) : ForgeFlowingFluid(properties) {
         @Suppress("FunctionName")
         companion object {
-            fun Still(registryNameStr: String, flowingFluidProvider: ()->FluidBase, blockProvider: ()->FlowingFluidBlock, renderType: RenderType? = null, properties: (Properties.()->Unit)?=null, attributes: (FluidAttributes.Builder.()->Unit)?=null) : FluidBase {
+            fun Still(registryNameStr: String, flowingFluidProvider: ()->FluidBase, blockProvider: ()->FlowingFluidBlock, renderType: RenderTypeBase? = null, properties: (Properties.()->Unit)?=null, attributes: (FluidAttributes.Builder.()->Unit)?=null) : FluidBase {
                 var stillFluid : FluidBase? = null
                 stillFluid = FluidBase(registryNameStr, Properties({stillFluid}, flowingFluidProvider, FluidAttributes.builder(GameData.checkPrefix("${registryNameStr}_still", true) % "fluid", GameData.checkPrefix("${registryNameStr}_flow" , true)  % "fluid").apply {attributes?.invoke(this)}).block(blockProvider).apply {properties?.invoke(this)}, false)
                 if (renderType != null) stillFluid.renderType = renderType
@@ -49,6 +46,6 @@ object Glacia_Fluids : IForgeRegistryCollection<Fluid> {
         }
     }
 
-    val PLASMA : FluidBase = FluidBase.Still("plasma", {PLASMA_FLOWING}, {Glacia.Blocks.PLASMA}, RenderType.getTranslucent(), {bucket {Glacia.Items.PLASMA_BUCKET}}) {luminosity(10).density(Fluids.LAVA.attributes.density).viscosity(Fluids.LAVA.attributes.viscosity)}
+    val PLASMA : FluidBase = FluidBase.Still("plasma", {PLASMA_FLOWING}, {Glacia.Blocks.PLASMA}, RenderTypeBase.TRANSLUCENT, {bucket {Glacia.Items.PLASMA_BUCKET}}) {luminosity(10).density(Fluids.LAVA.attributes.density).viscosity(Fluids.LAVA.attributes.viscosity)}
     val PLASMA_FLOWING : FluidBase = FluidBase.Flowing("plasma_flowing", PLASMA)
 }
