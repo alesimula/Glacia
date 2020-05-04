@@ -18,8 +18,8 @@ class ShapedRecipeNoStack(id: ResourceLocation, group: String, recipeWidth: Int,
     /*override fun getCraftingResult(inv: CraftingInventory) =
             super.getCraftingResult(inv).apply {count = inv.iterable.fold(64) {count, stack-> min(count, if(!stack.isEmpty && stack.isStackable) stack.count else 64)}}*/
 
-    var consumePercent: Int = 0
-    val shouldConsume get() = Random.nextInt(1,101) in 0..consumePercent
+    private var consumePercent: Int = 0
+    private val shouldConsume get() = Random.nextInt(1,101) in 0..consumePercent
 
     override fun getRemainingItems(inv: CraftingInventory): NonNullList<ItemStack>? {
         val list = NonNullList.withSize(inv.sizeInventory, ItemStack.EMPTY)
