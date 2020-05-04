@@ -52,6 +52,7 @@ class Glacia {
         @JvmStatic val Effects; get() = Glacia_Effects
         @JvmStatic val Triggers; get() = Glacia_Triggers
         @JvmStatic val Particles; get() = Glacia_Particles
+        @JvmStatic val RecipeSerializer; get() = Glacia_RecipeSerializer
     }
 
     init {

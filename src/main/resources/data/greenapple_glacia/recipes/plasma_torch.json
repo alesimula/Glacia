@@ -1,0 +1,20 @@
+{
+  "type": "greenapple_glacia:crafting_shaped_nostack",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "greenapple_glacia:glacial_wood_rod"
+    },
+    "X": {
+      "item": "greenapple_glacia:plasma_bucket"
+    }
+  },
+  "result": {
+    "item": "greenapple_glacia:plasma_torch",
+    "count": 3
+  },
+  "consumePt": 10
+}

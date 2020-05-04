@@ -6,6 +6,7 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EntityType
 import net.minecraft.fluid.Fluid
 import net.minecraft.item.Item
+import net.minecraft.item.crafting.IRecipeSerializer
 import net.minecraft.particles.ParticleType
 import net.minecraft.potion.Effect
 import net.minecraftforge.event.RegistryEvent
@@ -62,6 +63,9 @@ object RegistryEvents {
 
     @JvmStatic @SubscribeEvent
     fun onPotionEffectRegistry(event: RegistryEvent.Register<Effect>) = event.registry.register(Glacia.Effects)
+
+    @JvmStatic @SubscribeEvent
+    fun onRecipeSerializerRegistry(event: RegistryEvent.Register<IRecipeSerializer<*>>) = event.registry.register(Glacia.RecipeSerializer)
 
     @JvmStatic @SubscribeEvent
     fun onCriteriaTriggerRegistry(event: RegistryEvent.Register<Effect>) = Glacia.Triggers.registerAll()
