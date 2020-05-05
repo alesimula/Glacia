@@ -27,6 +27,7 @@ interface IBlockBase : IForgeBlock {
 }
 
 fun <B: IBlockBase> B.addItemVariant(registryNameSuffix: String, name: String?=null, stateInit: BlockState.()->BlockState) : B {
-    itemVariantProvider = {registry -> name?.let {addVariant(registry, registryNameSuffix, name, stateInit)} ?: addVariant(registry, registryNameSuffix) {stateInit(this)}}
+    val oldProvider = itemVariantProvider
+    itemVariantProvider = {registry -> oldProvider?.invoke(this, registry); name?.let {addVariant(registry, registryNameSuffix, name, stateInit)} ?: addVariant(registry, registryNameSuffix) {stateInit(this)}}
     return this
 }
