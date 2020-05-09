@@ -14,7 +14,11 @@ class WorldEvents {
             Blocks.TORCH.overrideLightValue(0)
             Blocks.WALL_TORCH.overrideLightValue(0)
         }
-        else {
+    }
+
+    @SubscribeEvent
+    fun onWorldUnload(event: WorldEvent.Unload) = event.runClient {
+        if (world.dimension.type.id == Glacia.DIMENSION.dimensionType.id) {
             Blocks.TORCH.overrideLightValue()
             Blocks.WALL_TORCH.overrideLightValue()
         }
