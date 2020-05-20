@@ -11,7 +11,6 @@ import com.greenapple.glacia.renderer.*
 import com.greenapple.glacia.utils.*
 import net.minecraft.block.TorchBlock
 import net.minecraft.block.WallTorchBlock
-import net.minecraft.client.Minecraft
 import net.minecraft.world.World
 import net.minecraft.world.dimension.Dimension
 import net.minecraft.world.dimension.DimensionType
@@ -27,8 +26,6 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import org.apache.logging.log4j.Level
 import org.apache.logging.log4j.LogManager
-import java.lang.Exception
-import java.lang.RuntimeException
 import java.util.function.BiFunction
 import java.util.stream.Collectors
 
@@ -65,31 +62,6 @@ class Glacia {
     }
 
     init {
-        //attachAgentToJVM(arrayOf(MyCustomAgent::class.java), getPidFromRuntimeMBean())
-        val uao = ClassCoso()
-        /*ClassCoso::class.addMethodAfter("ciao") {
-            LogManager.getLogger().log(Level.ERROR, "AAAAAAAA inserted after")
-        }
-        ClassCoso::class.addMethodBefore("ciao") {
-            LogManager.getLogger().log(Level.ERROR, "AAAAAAAA inserted before")
-        }*/
-        LogManager.getLogger().log(Level.ERROR, "EEEEEEEEE before")
-        ClassCoso::class.replaceMethodOrFallback(ClassCoso::ciao.name) {
-            LogManager.getLogger().log(Level.ERROR, "AAAAAAAA replaced")
-            1
-        }
-        LogManager.getLogger().log(Level.ERROR, "EEEEEEEEE first")
-        TorchBlock::class.replaceMethodOrFallback("func_180655_c") {(_, world) ->
-            if ((world as World).dimension?.type != Glacia.DIMENSION.type) RedefineUtils.fallback()
-        }
-        LogManager.getLogger().log(Level.ERROR, "EEEEEEEEE second")
-        WallTorchBlock::class.replaceMethodOrFallback("func_180655_c") {(_, world) ->
-            if ((world as World).dimension?.type != Glacia.DIMENSION.type) RedefineUtils.fallback()
-        }
-        LogManager.getLogger().log(Level.ERROR, "EEEEEEEEE third")
-        //TorchBlock::class.replaceMethod(TorchBlock::animateTick) {}
-        ClassCoso().ciao()
-        uao.ciao()
         // Listeners
         FMLJavaModLoadingContext.get().modEventBus.let {bus ->
             // Register the setup method for modloading
@@ -118,8 +90,6 @@ class Glacia {
         runClient {
             Entity.registerProperties()
         }
-        //ClassCoso::class.editMethod("ciao")
-        //ClassCoso().ciao()
         ///BiomeManager.addBiome(GlaciaLayerUtils.BIOME_TYPE_GLACIA, BiomeEntry(Glacia.Biomes.PLAINS, 3))
         //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.registryName)
         /*(event.container.modInfo as ModInfo).apply {
