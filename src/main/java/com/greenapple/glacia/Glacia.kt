@@ -62,6 +62,14 @@ class Glacia {
     }
 
     init {
+        /**animateTick**/
+        TorchBlock::class.replaceMethodOrFallback("func_180655_c") {(_, world) ->
+            if ((world as World).dimension?.type != Glacia.DIMENSION.type) RedefineUtils.fallback()
+        }
+        /**animateTick**/
+        WallTorchBlock::class.replaceMethodOrFallback("func_180655_c") {(_, world) ->
+            if ((world as World).dimension?.type != Glacia.DIMENSION.type) RedefineUtils.fallback()
+        }
         // Listeners
         FMLJavaModLoadingContext.get().modEventBus.let {bus ->
             // Register the setup method for modloading
