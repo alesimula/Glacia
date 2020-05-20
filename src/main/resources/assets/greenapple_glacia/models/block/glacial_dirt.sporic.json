@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "up": "greenapple_glacia:block/glacial_spores",
+    "east": "greenapple_glacia:block/glacial_sporic_dirt",
+    "west": "greenapple_glacia:block/glacial_sporic_dirt",
+    "north": "greenapple_glacia:block/glacial_sporic_dirt",
+    "south": "greenapple_glacia:block/glacial_sporic_dirt",
+    "down": "greenapple_glacia:block/glacial_dirt",
+    "particle": "greenapple_glacia:block/glacial_dirt"
+  }
+}

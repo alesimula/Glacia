@@ -1,6 +1,13 @@
 {
-  "variants": {
-    "snowy=true": {"model": "greenapple_glacia:block/glacial_dirt.snowy"},
-    "snowy=false": {"model": "greenapple_glacia:block/glacial_dirt"}
-  }
+  "multipart": [
+    {"apply": {
+      "model": "greenapple_glacia:block/glacial_dirt"
+    }},
+    {"when": {"snowy": "true"}, "apply": {
+      "model": "greenapple_glacia:block/glacial_dirt.snowy"
+    }},
+    {"when": {"sporic": "true"}, "apply": {
+      "model": "greenapple_glacia:block/glacial_dirt.sporic"
+    }}
+  ]
 }

@@ -1,6 +1,8 @@
 package com.greenapple.glacia.block
 
 import com.greenapple.glacia.Glacia
+import com.greenapple.glacia.registry.renderType
+import com.greenapple.glacia.utils.RenderTypeBase
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.Blocks
@@ -10,6 +12,7 @@ import net.minecraft.block.material.MaterialColor
 import net.minecraft.item.DyeColor
 import net.minecraft.item.ItemGroup
 import net.minecraft.state.BooleanProperty
+import net.minecraft.state.IntegerProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Direction
@@ -30,14 +33,20 @@ open class BlockGlaciaDirt : BlockBase {
 
     companion object {
         val SNOWY = BooleanProperty.create("snowy")
+        val SPORIC = BooleanProperty.create("sporic")
+        val LIGHT_LEVEL = IntegerProperty.create("light_level", 0, 15)
         val (Properties.()->Unit)?.init : Properties.() -> Unit; get() = {
             tickRandomly()
             this@init?.invoke(this)
         }
     }
 
+    override fun isEmissiveRendering(state: BlockState) = state.lightValue > 0
+
+    //override fun getLightValue(state: BlockState, world: IBlockReader?, pos: BlockPos?) = if (state.has(LIGHT_LEVEL)) state.get(LIGHT_LEVEL) else super.getLightValue(state, world, pos)
+
     init {
-        defaultState = stateContainer.baseState.with(SNOWY, false)
+        defaultState = stateContainer.baseState.with(SNOWY, false).with(SPORIC, false)
     }
     val stateSnowy = defaultState.with(SNOWY, true)
 
@@ -51,7 +60,7 @@ open class BlockGlaciaDirt : BlockBase {
     override fun canBeReplacedByLogs(state: BlockState?, world: IWorldReader?, pos: BlockPos?) = true
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
-        builder.add(SNOWY)
+        builder.add(SNOWY).add(SPORIC).add(LIGHT_LEVEL)
     }
 
     private fun isSurfaceExposed(state: BlockState, world: IWorldReader, pos: BlockPos): Boolean {

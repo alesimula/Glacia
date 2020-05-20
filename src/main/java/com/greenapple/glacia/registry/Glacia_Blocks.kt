@@ -2,8 +2,10 @@ package com.greenapple.glacia.registry
 
 import com.greenapple.glacia.Glacia
 import com.greenapple.glacia.block.*
+import com.greenapple.glacia.utils.PropertyPair
 import com.greenapple.glacia.utils.RenderTypeBase
 import com.greenapple.glacia.utils.deepClone
+import com.greenapple.glacia.utils.overrideLightValue
 import com.greenapple.glacia.world.biome.GlaciaBiomeFeatures
 import net.minecraft.block.Block
 import net.minecraft.block.SoundType
@@ -17,6 +19,7 @@ object Glacia_Blocks : IForgeRegistryCollection<Block> {
     val PLASMA_WALL_TORCH = BlockWallTorchBase("plasma_wall_torch") {Glacia.Items.PLASMA_TORCH}
     val GLACIAL_DIRT = BlockGlaciaDirt("glacial_dirt", "Glacial dirt", Glacia_ItemGroup.BLOCKS, Material.EARTH) {hardnessAndResistance(0.6F).sound(SoundType.GROUND)}
             .addItemVariant("snowy", "Glacial snowy dirt") {with(BlockGlaciaDirt.SNOWY, true)}
+            .addItemVariant("sporic", "Glacial sporic dirt") {with(BlockGlaciaDirt.SPORIC, true)}.also {it.overrideLightValue(15, PropertyPair(BlockGlaciaDirt.SPORIC, true))}
     val PERMAFROST = BlockBase("permafrost", "Permafrost", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(-1.0F, 3600000.0F).noDrops().notSolid()}
             .apply {seeThroughGroup = true; renderType = RenderTypeBase.TRANSLUCENT}
     val GLACIAL_STONE = BlockBase("glacial_stone", "Glacial stone", Glacia_ItemGroup.BLOCKS, Material.ROCK) {hardnessAndResistance(2F, 10F)}

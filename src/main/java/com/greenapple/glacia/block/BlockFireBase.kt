@@ -39,7 +39,7 @@ class BlockFireBase(registryName: String, override val unlocalizedName: String) 
      */
     override fun onBlockAdded(state: BlockState, world: World, pos: BlockPos, oldState: BlockState, isMoving: Boolean) {
         if (oldState.block !== state.block) {
-            if (world.dimension.type !== DimensionType.OVERWORLD && world.dimension.type !== Glacia.DIMENSION.dimensionType || !Glacia.Blocks.GLACIA_PORTAL.trySpawnPortal(world, pos)) {
+            if (world.dimension.type !== DimensionType.OVERWORLD && world.dimension.type !== Glacia.DIMENSION.type || !Glacia.Blocks.GLACIA_PORTAL.trySpawnPortal(world, pos)) {
                 if (!state.isValidPosition(world, pos)) {
                     world.removeBlock(pos, false)
                 } else {

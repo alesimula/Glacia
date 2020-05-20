@@ -9,4 +9,5 @@ object Glacia_Biomes : IForgeRegistryCollection<Biome> {
     val OCEAN = BiomeGlaciaOcean("ocean")
     val BEACH = BiomeGlaciaBeach("beach")
     val RIVER = BiomeGlaciaRiver("river")
+    val SPORIC_LAND = BiomeSporicLand("sporic_land")
 }

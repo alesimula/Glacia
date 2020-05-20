@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 class WorldEvents {
     @SubscribeEvent
     fun onWorldLoad(event: WorldEvent.Load) = event.runClient {
-        if (world.dimension.type.id == Glacia.DIMENSION.dimensionType.id) {
+        if (world.dimension.type.id == Glacia.DIMENSION.type.id) {
             Blocks.TORCH.overrideLightValue(0)
             Blocks.WALL_TORCH.overrideLightValue(0)
         }
@@ -18,7 +18,7 @@ class WorldEvents {
 
     @SubscribeEvent
     fun onWorldUnload(event: WorldEvent.Unload) = event.runClient {
-        if (world.dimension.type.id == Glacia.DIMENSION.dimensionType.id) {
+        if (world.dimension.type.id == Glacia.DIMENSION.type.id) {
             Blocks.TORCH.overrideLightValue()
             Blocks.WALL_TORCH.overrideLightValue()
         }

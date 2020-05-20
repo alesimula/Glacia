@@ -100,7 +100,7 @@ open class BlockGlaciaPortal(registryName: String, name: String) : BlockBase(reg
     //TODO test ActionResultType
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, playerIn: PlayerEntity, hand: Hand, rts: BlockRayTraceResult): ActionResultType {
         if (!worldIn.isRemote) worldIn.server?.let {server ->
-            val dimension =  if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) Glacia.DIMENSION.dimensionType else DimensionType.OVERWORLD
+            val dimension =  if (worldIn.dimension.type.id == DimensionType.OVERWORLD.id) Glacia.DIMENSION.type else DimensionType.OVERWORLD
             val newWorld = server.getWorld(dimension)
             val newPos = newWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos)
             (playerIn as ServerPlayerEntity).changeDim(newPos, dimension) {glaciaTeleporter}

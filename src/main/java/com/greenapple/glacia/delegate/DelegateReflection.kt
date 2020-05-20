@@ -1,8 +1,10 @@
 package com.greenapple.glacia.delegate
 
+import com.greenapple.glacia.utils.decodeFromString
 import com.greenapple.glacia.utils.extends
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import sun.reflect.ConstructorAccessor
+import java.io.Serializable
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
@@ -14,8 +16,11 @@ var Field.modifiersKt : Int by reflectField("modifiers")
 private val Constructor<*>.constructorAccessorKt : ConstructorAccessor? by reflectField("constructorAccessor")
 private val constructorAccessorRetriever by lazy {Constructor::class.java.getDeclaredMethod("acquireConstructorAccessor").apply {isAccessible = true}}
 
-fun interface IFunction<O>: (Array<out Any?>) -> O {
+fun interface IFunction<O>: (Array<out Any?>) -> O, Serializable {
     override operator fun invoke(vararg args: Any?): O
+    companion object {
+        @JvmStatic fun <O> readFromString(string: String) = IFunction::class.decodeFromString(string) as IFunction<O>
+    }
 }
 typealias IConstructor<O> = IFunction<O>
 

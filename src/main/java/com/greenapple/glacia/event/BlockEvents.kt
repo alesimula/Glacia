@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 class BlockEvents {
     @SubscribeEvent
     fun onNeighbourUpdate(event: BlockEvent.NeighborNotifyEvent) = event.run {
-        if (state.block == Blocks.FIRE && world.dimension.type.id == Glacia.DIMENSION.dimensionType.id) {
+        if (state.block == Blocks.FIRE && world.dimension.type.id == Glacia.DIMENSION.type.id) {
             world.removeBlock(pos, false)
         }
     }
