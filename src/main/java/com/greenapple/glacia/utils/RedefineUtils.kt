@@ -29,6 +29,17 @@ object RedefineUtils {
     fun interface IMethod<O, R>: (O, Array<out Any?>) -> R, Serializable {
         override fun invoke(receiver: O, vararg args: Any?): R
     }
+    class Primitive<T: Any> private constructor(clazz: KClass<T>, val primitive: CtClass): KClass<T> by clazz {companion object {
+        val void = Primitive(Unit::class, CtClass.voidType)
+        val byte = Primitive(Byte::class, CtClass.byteType)
+        val char = Primitive(Char::class, CtClass.charType)
+        val boolean = Primitive(Boolean::class, CtClass.booleanType)
+        val short = Primitive(Short::class, CtClass.shortType)
+        val int = Primitive(Int::class, CtClass.intType)
+        val long = Primitive(Long::class, CtClass.longType)
+        val float = Primitive(Float::class, CtClass.floatType)
+        val double = Primitive(Double::class, CtClass.doubleType)
+    }}
     private class RedefineAgent {
         companion object {
             @JvmStatic private lateinit var instrumentation: Instrumentation
@@ -93,9 +104,10 @@ object RedefineUtils {
 private val ATOMIC_INDEX = AtomicLong(0)
 private val LOGGER by lazy {LogManager.getLogger(RedefineUtils::class.java)}
 private val CLASS_POOL by lazy {ClassPool.getDefault().apply {appendClassPath(LoaderClassPath(Thread.currentThread().contextClassLoader))}}
+private val KClass<*>.ctClass: CtClass? get() = (this as? RedefineUtils.Primitive)?.primitive ?: CLASS_POOL[qualifiedName]
 
 private inline fun <O : Any> KClass<O>.editClassDef(block: CtClass.(@ParameterName("instrumentation") Instrumentation) -> Unit) = try {
-    CLASS_POOL[qualifiedName]?.apply {
+    ctClass?.apply {
         defrost()
         block(this, RedefineUtils.INSTRUMENTATION)
         RedefineUtils.INSTRUMENTATION.redefineClasses(ClassDefinition(this@editClassDef.java, this.toBytecode()))
@@ -104,7 +116,7 @@ private inline fun <O : Any> KClass<O>.editClassDef(block: CtClass.(@ParameterNa
 
 private inline fun <O : Any> KClass<O>.editMethodDef(methodName: String, vararg args: KClass<*>, block: CtMethod.(@ParameterName("instrumentation") Instrumentation) -> Unit) = editClassDef { instrumentation->
     if (args.isEmpty()) block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName)), instrumentation)
-    else block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName), *args.map {CLASS_POOL[it.qualifiedName]}.toTypedArray()), instrumentation)
+    else block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName), *args.map {it.ctClass}.toTypedArray()), instrumentation)
 }
 
 private fun <O : Any> CtMethod.newStaticMethodCall(function: TMethod<O, Any?>, shouldReturn: Boolean = false) = StringBuffer().apply {
