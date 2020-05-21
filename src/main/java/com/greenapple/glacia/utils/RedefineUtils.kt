@@ -102,8 +102,9 @@ private inline fun <O : Any> KClass<O>.editClassDef(block: CtClass.(@ParameterNa
     } ?: LOGGER.log(Level.ERROR, "Class ${this.java.name} not found")
 } catch (ex: Exception) {LOGGER.log(Level.ERROR, "Failed redefining class ${this.java.name}", ex)}
 
-private inline fun <O : Any> KClass<O>.editMethodDef(methodName: String, block: CtMethod.(@ParameterName("instrumentation") Instrumentation) -> Unit) = editClassDef { instrumentation->
-    block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName)), instrumentation)
+private inline fun <O : Any> KClass<O>.editMethodDef(methodName: String, vararg args: KClass<*>, block: CtMethod.(@ParameterName("instrumentation") Instrumentation) -> Unit) = editClassDef { instrumentation->
+    if (args.isEmpty()) block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName)), instrumentation)
+    else block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName), *args.map {CLASS_POOL[it.qualifiedName]}.toTypedArray()), instrumentation)
 }
 
 private fun <O : Any> CtMethod.newStaticMethodCall(function: TMethod<O, Any?>, shouldReturn: Boolean = false) = StringBuffer().apply {
@@ -125,14 +126,14 @@ private fun String.wrapTryOrFallback() = "try $this catch (${RedefineUtils.FallB
 /**
  * Appends a function at end of a method
  */
-fun <O : Any> KClass<O>.addMethodAfter(methodName: String, function: TMethodNoReturn<O>) = editMethodDef(methodName) {
+fun <O : Any> KClass<O>.addMethodAfter(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O>) = editMethodDef(methodName, *args) {
     insertAfter(newStaticMethodCall(function))
 }
 
 /**
  * Appends a function at the start of a method
  */
-fun <O : Any> KClass<O>.addMethodBefore(methodName: String, function: TMethodNoReturn<O>) = editMethodDef(methodName) {
+fun <O : Any> KClass<O>.addMethodBefore(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O>) = editMethodDef(methodName, *args) {
     insertBefore(newStaticMethodCall(function))
 }
 
@@ -140,13 +141,13 @@ fun <O : Any> KClass<O>.addMethodBefore(methodName: String, function: TMethodNoR
  * Replaces a method
  * Must call RedefineUtils.fallback() to revert to default behaviour
  */
-fun <O : Any> KClass<O>.replaceMethodOrFallback(methodName: String, function: TMethod<O, Any?>) = editMethodDef(methodName) {
+fun <O : Any> KClass<O>.replaceMethodOrFallback(methodName: String, vararg args: KClass<*>, function: TMethod<O, Any?>) = editMethodDef(methodName, *args) {
     insertBefore(newStaticMethodCall(function, true).wrapTryOrFallback())
 }
 
 /**
  * Replaces a method
  */
-fun <O : Any> KClass<O>.replaceMethod(methodName: String, function: TMethod<O, Any?>) = editMethodDef(methodName) {
+fun <O : Any> KClass<O>.replaceMethod(methodName: String, vararg args: KClass<*>, function: TMethod<O, Any?>) = editMethodDef(methodName, *args) {
     setBody(newStaticMethodCall(function, true))
 }
