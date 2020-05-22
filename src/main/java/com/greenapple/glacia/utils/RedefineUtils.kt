@@ -5,6 +5,7 @@ import com.greenapple.glacia.delegate.reflectField
 import com.sun.nio.zipfs.ZipPath
 import cpw.mods.modlauncher.api.INameMappingService
 import javassist.*
+import javassist.bytecode.AccessFlag
 import net.minecraftforge.fml.ModLoadingContext
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper
 import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo
@@ -119,13 +120,14 @@ private inline fun <O : Any> KClass<O>.editMethodDef(methodName: String, vararg 
     else block(getDeclaredMethod(ObfuscationReflectionHelper.remapName(INameMappingService.Domain.METHOD, methodName), *args.map {it.ctClass}.toTypedArray()), instrumentation)
 }
 
-private fun <O : Any> CtMethod.newStaticMethodCall(function: TMethod<O, Any?>, shouldReturn: Boolean = false) = StringBuffer().apply {
+private fun <O : Any> CtMethod.newStaticMethodCall(function: TMethod<O?, Any?>, shouldReturn: Boolean = false) = StringBuffer().apply {
     val extrasClass = "__GreenappleRedefineAgent__\$extras_${ATOMIC_INDEX.getAndIncrement()}"
     CLASS_POOL.makeClass(extrasClass).apply {
         addField(CtField.make("public static ${RedefineUtils.IMethod::class.java.name} __callable__ = null;\n", this))
         toClass().getDeclaredField("__callable__").set(null, RedefineUtils.IMethod(function))
     }
-    append("{\nObject __returnValue__ = $extrasClass.__callable__.invoke($0, \$args);\n")
+    val isStatic = ((modifiers and AccessFlag.STATIC) == AccessFlag.STATIC)
+    append("{\nObject __returnValue__ = $extrasClass.__callable__.invoke(${if (isStatic) "null" else "$0"}, \$args);\n")
     if (shouldReturn && returnType.name != "void")
         append("return ((${(returnType as? CtPrimitiveType)?.wrapperName ?: returnType.name})(__returnValue__))${if (returnType.isPrimitive) ".${returnType.name}Value()" else ""};\n")
     else if (shouldReturn) append("return;\n")
@@ -138,14 +140,14 @@ private fun String.wrapTryOrFallback() = "try $this catch (${RedefineUtils.FallB
 /**
  * Appends a function at end of a method
  */
-fun <O : Any> KClass<O>.addMethodAfter(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O>) = editMethodDef(methodName, *args) {
+fun <O : Any> KClass<O>.addMethodAfter(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O?>) = editMethodDef(methodName, *args) {
     insertAfter(newStaticMethodCall(function))
 }
 
 /**
  * Appends a function at the start of a method
  */
-fun <O : Any> KClass<O>.addMethodBefore(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O>) = editMethodDef(methodName, *args) {
+fun <O : Any> KClass<O>.addMethodBefore(methodName: String, vararg args: KClass<*>, function: TMethodNoReturn<O?>) = editMethodDef(methodName, *args) {
     insertBefore(newStaticMethodCall(function))
 }
 
@@ -153,13 +155,13 @@ fun <O : Any> KClass<O>.addMethodBefore(methodName: String, vararg args: KClass<
  * Replaces a method
  * Must call RedefineUtils.fallback() to revert to default behaviour
  */
-fun <O : Any> KClass<O>.replaceMethodOrFallback(methodName: String, vararg args: KClass<*>, function: TMethod<O, Any?>) = editMethodDef(methodName, *args) {
+fun <O : Any> KClass<O>.replaceMethodOrFallback(methodName: String, vararg args: KClass<*>, function: TMethod<O?, Any?>) = editMethodDef(methodName, *args) {
     insertBefore(newStaticMethodCall(function, true).wrapTryOrFallback())
 }
 
 /**
  * Replaces a method
  */
-fun <O : Any> KClass<O>.replaceMethod(methodName: String, vararg args: KClass<*>, function: TMethod<O, Any?>) = editMethodDef(methodName, *args) {
+fun <O : Any> KClass<O>.replaceMethod(methodName: String, vararg args: KClass<*>, function: TMethod<O?, Any?>) = editMethodDef(methodName, *args) {
     setBody(newStaticMethodCall(function, true))
 }
