@@ -31,7 +31,7 @@ object RedefineUtils {
     fun interface IMethod<O, R>: (O, Array<out Any?>) -> R, Serializable {
         override fun invoke(receiver: O, vararg args: Any?): R
     }
-    val void: KClass<Unit> = TPrimitive(Unit::class, CtClass.voidType)
+    val void: KClass<Void> = TPrimitive(Void.TYPE.kotlin, CtClass.voidType)
     val byte: KClass<Byte> = TPrimitive(Byte::class, CtClass.byteType)
     val char: KClass<Char> = TPrimitive(Char::class, CtClass.charType)
     val boolean: KClass<Boolean> = TPrimitive(Boolean::class, CtClass.booleanType)
