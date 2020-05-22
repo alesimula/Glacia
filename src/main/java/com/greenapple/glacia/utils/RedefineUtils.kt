@@ -21,6 +21,7 @@ import kotlin.reflect.KClass
 
 private typealias TMethodNoReturn<O> = TMethod<O, Unit>
 private typealias TMethod<O, R> = O.(@ParameterName("args") Array<out Any?>) -> R
+private class TPrimitive<T: Any> (clazz: KClass<T>, val ctPrimitive: CtClass): KClass<T> by clazz
 
 /**
  * Utility to redefine methods in a class
@@ -30,18 +31,16 @@ object RedefineUtils {
     fun interface IMethod<O, R>: (O, Array<out Any?>) -> R, Serializable {
         override fun invoke(receiver: O, vararg args: Any?): R
     }
-    class Primitive<T: Any> private constructor(clazz: KClass<T>, val ctPrimitive: CtClass): KClass<T> by clazz {
-        companion object {
-        val void: KClass<Unit> = Primitive(Unit::class, CtClass.voidType)
-        val byte: KClass<Byte> = Primitive(Byte::class, CtClass.byteType)
-        val char: KClass<Char> = Primitive(Char::class, CtClass.charType)
-        val boolean: KClass<Boolean> = Primitive(Boolean::class, CtClass.booleanType)
-        val short: KClass<Short> = Primitive(Short::class, CtClass.shortType)
-        val int: KClass<Int> = Primitive(Int::class, CtClass.intType)
-        val long: KClass<Long> = Primitive(Long::class, CtClass.longType)
-        val float: KClass<Float> = Primitive(Float::class, CtClass.floatType)
-        val double: KClass<Double> = Primitive(Double::class, CtClass.doubleType)
-    }}
+    val void: KClass<Unit> = TPrimitive(Unit::class, CtClass.voidType)
+    val byte: KClass<Byte> = TPrimitive(Byte::class, CtClass.byteType)
+    val char: KClass<Char> = TPrimitive(Char::class, CtClass.charType)
+    val boolean: KClass<Boolean> = TPrimitive(Boolean::class, CtClass.booleanType)
+    val short: KClass<Short> = TPrimitive(Short::class, CtClass.shortType)
+    val int: KClass<Int> = TPrimitive(Int::class, CtClass.intType)
+    val long: KClass<Long> = TPrimitive(Long::class, CtClass.longType)
+    val float: KClass<Float> = TPrimitive(Float::class, CtClass.floatType)
+    val double: KClass<Double> = TPrimitive(Double::class, CtClass.doubleType)
+
     private class RedefineAgent {
         companion object {
             @JvmStatic private lateinit var instrumentation: Instrumentation
@@ -106,7 +105,7 @@ object RedefineUtils {
 private val ATOMIC_INDEX = AtomicLong(0)
 private val LOGGER by lazy {LogManager.getLogger(RedefineUtils::class.java)}
 private val CLASS_POOL by lazy {ClassPool.getDefault().apply {appendClassPath(LoaderClassPath(Thread.currentThread().contextClassLoader))}}
-private val KClass<*>.ctClass: CtClass? get() = (this as? RedefineUtils.Primitive)?.ctPrimitive ?: CLASS_POOL[javaObjectType.name]
+private val KClass<*>.ctClass: CtClass? get() = (this as? TPrimitive)?.ctPrimitive ?: CLASS_POOL[javaObjectType.name]
 
 private inline fun <O : Any> KClass<O>.editClassDef(block: CtClass.(@ParameterName("instrumentation") Instrumentation) -> Unit) = try {
     ctClass?.apply {
